@@ -8,7 +8,7 @@ projectTitle: CodeOnly
 The `nextFrame` function invokes a callback on the next update cycle.
 
 ```js
-import { nextFrame} from "@toptensoftware/codeonly"
+import { nextFrame} from "codeonly";
 
 nextFrame(() => { /* do something */ });
 ```

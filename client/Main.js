@@ -1,4 +1,4 @@
-import { Component, Style } from "@toptensoftware/codeonly";
+import { Component, Style } from "codeonly";;
 import { Header } from "./Header.js";
 import { router } from "./router.js";
 
@@ -6,8 +6,8 @@ import "./ArticlePage.js";
 import "./lab/LabPage.js";
 import "./NotFoundPage.js";
 
-// Main application
-class Application extends Component
+// Main 
+class Main extends Component
 {
     constructor()
     {
@@ -71,6 +71,6 @@ Style.declare(`
 // Main entry point, create Application and mount
 export function main()
 {
-    new Application().mount("body");
+    new Main().mount("body");
     router.start();
 }

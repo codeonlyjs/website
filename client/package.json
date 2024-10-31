@@ -2,7 +2,7 @@
   "name": "cosandbox",
   "version": "1.0.0",
   "description": "",
-  "main": "Application.js",
+  "main": "Main.js",
   "type": "module",
   "scripts": {
     "build": "vite build"

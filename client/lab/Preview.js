@@ -1,4 +1,4 @@
-import { Component, Style } from "@toptensoftware/codeonly";
+import { Component, Style } from "codeonly";;
 import { PreviewIFrame } from "./PreviewIFrame.js";
 
 // The preview pane

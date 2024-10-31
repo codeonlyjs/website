@@ -16,7 +16,7 @@ style routing (not hash based routing).
 The router functionality is implemented by the `Router` class:
 
 ```js
-import { Router } from "@toptensoftware/codeonly"
+import { Router } from "codeonly";
 
 // Create router
 let router = new Router();
@@ -28,7 +28,7 @@ However since you only ever need one instance, there is a built-in
 singleton instance available as `router`.
 
 ```js
-import { router } from "@toptensoftware/codeonly"
+import { router } from "codeonly";
 
 // Use router...
 ```
@@ -220,7 +220,7 @@ trying to restore the scroll position until the page data is loaded.
 (See below for more about view state restoration)
 
 ```js
-import { Component, router } from `@toptensoftware/codeonly`
+import { Component, router } from `codeonly`
 
 // A component for the product page
 class ProductPage extends Component
@@ -264,7 +264,7 @@ the main content area of your app.  Also, call the router's `start` method to ho
 do the initial page navigation.
 
 ```js
-import { Component, router } from `@toptensoftware/codeonly`
+import { Component, router } from `codeonly`
 
 // Main application instance mounted to DOM
 class Application extends Component

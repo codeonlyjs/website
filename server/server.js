@@ -2,7 +2,7 @@ import path from 'node:path';
 import url from 'node:url';
 import express from 'express';
 import 'express-async-errors';
-import { bundleFree } from '@toptensoftware/bundle-free';
+import { bundleFree } from '@codeonlyjs/bundle-free';
 import livereload from 'livereload';
 import logger from "morgan";
 import { convert_toc } from './convert_toc.js';
@@ -64,11 +64,11 @@ else
         path: path.join(__dirname, "../client"),
         spa: true,
         modules: [ 
-            "@toptensoftware/codeonly",
-            "@toptensoftware/stylish",
+            "codeonly",
+            "@codeonlyjs/stylish",
         ],
         replace: [
-            { from: "./Application.js", to: "/Application.js" },
+            { from: "./Main.js", to: "/Main.js" },
         ],
         livereload: true,
     }));

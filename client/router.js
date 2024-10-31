@@ -1,4 +1,4 @@
-import { Router, WebHistoryRouterDriver, ViewStateRestoration } from "@toptensoftware/codeonly";
+import { Router, WebHistoryRouterDriver, ViewStateRestoration } from "codeonly";;
 
 export let router = new Router(new WebHistoryRouterDriver());
 

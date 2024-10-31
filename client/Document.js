@@ -1,5 +1,5 @@
-import { Component, Style, Transition } from "@toptensoftware/codeonly";
-import { env } from "@toptensoftware/codeonly";
+import { Component, Style, Transition } from "codeonly";;
+import { env } from "codeonly";;
 import { openLabWithCode } from "./lab/LabPage.js";
 import { htmlIcon } from "./Icon.js";
 

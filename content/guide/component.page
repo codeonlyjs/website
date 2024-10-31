@@ -14,7 +14,7 @@ definition of a component can be collected into a single `.js` file.
 Most components will conform to the following basic structure.
 
 ```js
-import { Component, Style } from "@toptensoftware/codeonly.js";
+import { Component, Style } from "codeonly.js";
 
 // Each component is implemented as class
 // extending `Component`

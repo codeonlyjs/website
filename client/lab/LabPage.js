@@ -1,4 +1,4 @@
-import { Component, Style, Html } from "@toptensoftware/codeonly";
+import { Component, Style, Html } from "codeonly";;
 import { router } from "../router.js";
 import { CodeEditor } from "./CodeEditor.js";
 import { Preview } from "./Preview.js";

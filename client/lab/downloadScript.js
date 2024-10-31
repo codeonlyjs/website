@@ -5,18 +5,20 @@ export function downloadScript(script)
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CodeOnly Lab</title>
-<link href="${window.location.origin}/stylish.css" type="text/css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish/stylish.css" type="text/css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish/stylish-theme.min.js"></script>
+
 <script type="importmap">
 {
     "imports": {
-        "@toptensoftware/codeonly": "${window.location.origin}/codeonly.js"
+        "codeonly": "https://cdn.jsdelivr.net/gh/codeonlyjs/dist/codeonly.min.js"
     }
 }
 </script>
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "@toptensoftware/codeonly";
+import { Component, Style } from "codeonly";;
 ${script}
 new Main().mount("body");
 </script>

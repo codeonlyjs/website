@@ -73,7 +73,7 @@ var oi=Object.defineProperty;var wt=s=>{throw TypeError(s)};var ai=(s,e,t)=>e in
 <script type="importmap">
 {
     "imports": {
-        "@toptensoftware/codeonly": "/codeonly.js"
+        "codeonly": "/codeonly.js"
     }
 }
 <\/script>
@@ -86,7 +86,7 @@ window.addEventListener("error", (ev) => {
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "@toptensoftware/codeonly";
+import { Component, Style } from "codeonly";;
 `,Si=`
 <\/script>
 </body>
@@ -118,14 +118,14 @@ import { Component, Style } from "@toptensoftware/codeonly";
 <script type="importmap">
 {
     "imports": {
-        "@toptensoftware/codeonly": "${window.location.origin}/codeonly.js"
+        "codeonly": "${window.location.origin}/codeonly.js"
     }
 }
 <\/script>
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "@toptensoftware/codeonly";
+import { Component, Style } from "codeonly";;
 ${s}
 new Main().mount("body");
 <\/script>

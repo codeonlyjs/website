@@ -1,4 +1,4 @@
-import { Component  } from "@toptensoftware/codeonly";
+import { Component  } from "codeonly";;
 
 export class CodeEditor extends Component
 {
