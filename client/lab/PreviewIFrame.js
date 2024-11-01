@@ -1,4 +1,4 @@
-import { Component } from "codeonly";;
+import { Component } from "codeonly";
 
 // srcdoc for the iFrame
 let head = `<html>
@@ -19,7 +19,7 @@ window.addEventListener("error", (ev) => {
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "codeonly";;
+import { Component, Style } from "codeonly";
 `;
 
 let tail = `

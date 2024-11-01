@@ -86,7 +86,7 @@ window.addEventListener("error", (ev) => {
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "codeonly";;
+import { Component, Style } from "codeonly";
 `,Si=`
 <\/script>
 </body>
@@ -127,7 +127,7 @@ import { Component, Style } from "codeonly";;
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "codeonly";;
+import { Component, Style } from "codeonly";
 ${s}
 new Main().mount("body");
 <\/script>

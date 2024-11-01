@@ -1,4 +1,4 @@
-import { Component, Style, router } from "codeonly";;
+import { Component, Style, router } from "codeonly";
 
 // The main header
 export class MainContent extends Component

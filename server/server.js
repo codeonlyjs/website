@@ -65,7 +65,13 @@ else
         spa: true,
         modules: [ 
             "codeonly",
+            /*
+            "commonmark",
+            "mdurl",
+            "entities",
+            { module: "mdurl/encode.js", url: "/node_modules/mdurl/encode.js" },
             "@codeonlyjs/stylish",
+            */
         ],
         replace: [
             { from: "./Main.js", to: "/Main.js" },

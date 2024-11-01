@@ -1,4 +1,4 @@
-import { Component, Style } from "codeonly";;
+import { Component, Style } from "codeonly";
 
 // The main header
 export class MobileBar extends Component
