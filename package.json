@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@codeonlyjs/bundle-free": "github:codeonlyjs/bundle-free",
+    "commonmark": "^0.31.2",
     "express": "^4.21.1",
     "express-async-errors": "^3.1.1",
     "livereload": "^0.9.3",
