@@ -8,6 +8,7 @@ COPY client/dist ./client/dist/
 COPY content ./content/
 COPY server ./server/
 COPY package* ./
+RUN npm config set strict-ssl false
 RUN npm install --omit=dev --loglevel verbose
 
 EXPOSE 3000
