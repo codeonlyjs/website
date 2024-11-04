@@ -1,4 +1,4 @@
-import { Component, Style } from "codeonly";
+import { Component, Style } from "@codeonlyjs/core";
 import { makeIcon } from "./Icon.js";
 
 // The main header

@@ -1,4 +1,4 @@
-import { Component, Style } from "codeonly";
+import { Component, Style } from "@codeonlyjs/core";
 import { PreviewIFrame } from "./PreviewIFrame.js";
 
 // The preview pane

@@ -18,7 +18,7 @@ export function downloadScript(script)
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "codeonly";
+import { Component, Style } from "@codeonlyjs/core";
 ${script}
 new Main().mount("body");
 </script>

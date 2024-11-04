@@ -1,4 +1,4 @@
-import { Component, Style, Html } from "codeonly";
+import { Component, Style, Html } from "@codeonlyjs/core";
 
 // The main header
 export class MainNavigation extends Component

@@ -48,7 +48,7 @@ Templates are JIT compiled, minimal DOM updates and we've tuned it to run *fast!
 ...all in self contained .js files.
 
 ```js
-import { Component, Style } from "codeonly";
+import { Component, Style } from "@codeonlyjs/core";
 
 class MyComponent extends Component
 {

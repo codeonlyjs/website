@@ -16,7 +16,7 @@ style routing (not hash based routing).
 The router functionality is implemented by the `Router` class:
 
 ```js
-import { Router } from "codeonly";
+import { Router } from "@codeonlyjs/core";
 
 // Create router
 let router = new Router();
@@ -28,7 +28,7 @@ However since you only ever need one instance, there is a built-in
 singleton instance available as `router`.
 
 ```js
-import { router } from "codeonly";
+import { router } from "@codeonlyjs/core";
 
 // Use router...
 ```
