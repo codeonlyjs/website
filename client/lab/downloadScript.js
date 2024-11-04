@@ -11,7 +11,7 @@ export function downloadScript(script)
 <script type="importmap">
 {
     "imports": {
-        "codeonly": "https://cdn.jsdelivr.net/gh/codeonlyjs/dist/codeonly.min.js"
+        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.min.js"
     }
 }
 </script>
