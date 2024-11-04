@@ -1,5 +1,5 @@
-import { Component, Style, Transition } from "codeonly";
-import { env } from "codeonly";;
+import { Component, Style, Transition } from "@codeonlyjs/core";
+import { env } from "@codeonlyjs/core";;
 import { openLabWithCode } from "./lab/LabPage.js";
 import { htmlIcon } from "./Icon.js";
 import * as commonmark from "commonmark";

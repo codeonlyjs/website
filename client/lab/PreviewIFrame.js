@@ -1,4 +1,4 @@
-import { Component } from "codeonly";
+import { Component } from "@codeonlyjs/core";
 
 // srcdoc for the iFrame
 let head = `<html>
@@ -6,7 +6,7 @@ let head = `<html>
 <script type="importmap">
 {
     "imports": {
-        "codeonly": "https://cdn.jsdelivr.net/gh/codeonlyjs/dist/codeonly.min.js"
+        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.min.js"
     }
 }
 </script>
@@ -19,7 +19,7 @@ window.addEventListener("error", (ev) => {
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "codeonly";
+import { Component, Style } from "@codeonlyjs/core";
 `;
 
 let tail = `

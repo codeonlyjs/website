@@ -15,13 +15,6 @@ let app = express();
 // Enable logging
 app.use(logger('dev', { stream: { write: (m) => console.log(m.trimEnd()) } } ));
 
-// Allow codeonly.js cross origin
-app.get('/codeonly.js', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
-});
-
 app.use("/", express.static(path.join(__dirname, "public")));
 
 // Serve static content files
@@ -56,15 +49,12 @@ else
 {
     console.log("Running as development");
 
-    // Serve unbundled code only
-    app.use("/codeonly", express.static(path.join(__dirname, "../../src/")));
-
     // Module handling
     app.use(bundleFree({
         path: path.join(__dirname, "../client"),
         spa: true,
         modules: [ 
-            "codeonly",
+            "@codeonlyjs/core",
             "commonmark",
         ],
         replace: [

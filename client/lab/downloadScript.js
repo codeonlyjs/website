@@ -11,14 +11,14 @@ export function downloadScript(script)
 <script type="importmap">
 {
     "imports": {
-        "codeonly": "https://cdn.jsdelivr.net/gh/codeonlyjs/dist/codeonly.min.js"
+        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.min.js"
     }
 }
 </script>
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "codeonly";
+import { Component, Style } from "@codeonlyjs/core";
 ${script}
 new Main().mount("body");
 </script>

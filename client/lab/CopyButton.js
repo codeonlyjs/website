@@ -1,4 +1,4 @@
-import { Component  } from "codeonly";
+import { Component  } from "@codeonlyjs/core";
 
 export class CopyButton extends Component
 {
