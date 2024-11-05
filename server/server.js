@@ -1,21 +1,47 @@
 import path from 'node:path';
 import url from 'node:url';
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import 'express-async-errors';
 import { bundleFree } from '@codeonlyjs/bundle-free';
+import moe from '@toptensoftware/moe-js';
 import livereload from 'livereload';
 import logger from "morgan";
 import { convert_toc } from './convert_toc.js';
+import { sessionMiddleware, sessionIsLoggedIn } from './session.js';
+import { config } from "./config.js";
+import { routes as publicRoutes } from "./public.js";
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
 // Setup app
 let app = express(); 
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(sessionMiddleware);
+app.engine('moe', moe.express(app));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'moe');
+app.use((req,res,next) =>  {
+    res.locals.config = config;
+    next();
+});
 
 // Enable logging
-app.use(logger('dev', { stream: { write: (m) => console.log(m.trimEnd()) } } ));
+if (app.get('env') === 'production')
+    app.use(logger('combined'));
+else
+    app.use(logger('dev', { stream: { write: (m) => console.log(m.trimEnd()) } } ));
 
+// Static files
 app.use("/", express.static(path.join(__dirname, "public")));
+
+// Public routes
+app.use(publicRoutes);
+
+// Everything from here on requires logged in user
+app.use(sessionIsLoggedIn);
 
 // Serve static content files
 app.use("/content", express.static(path.join(__dirname, "../content")));

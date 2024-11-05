@@ -1,0 +1,100 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CodeOnly</title>
+    <link href="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish/stylish.css" type="text/css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish/stylish-theme.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>
+:root
+{
+    --header-height: 50px;
+}
+body
+{
+    padding: 0;
+    margin: 0;
+}
+#header
+{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--header-height);
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-bottom: 1px solid var(--gridline-color);
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: rgb(from var(--back-color) r g b / 75%);
+    z-index: 1;
+
+    .title 
+    {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        color: var(--body-fore-color);
+        transition: opacity 0.2s;
+
+        &:hover
+        {
+            opacity: 75%;
+        }
+
+        img
+        {
+            height: calc(var(--header-height) - 25px);
+            padding-right: 10px
+        }
+    }
+
+
+    .buttons
+    {
+        font-size: 12pt;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+
+        .theme-switch
+        {
+            transform: translateY(-1.5px);
+        }
+    }
+
+    .lablink
+    {
+        svg 
+        { 
+            transform: translateY(-1px) scale(1.1);
+            margin-right: 2px;
+        };
+    }
+}
+main
+{
+    text-align: center;
+    padding-top: 50px;
+}
+</style>
+</head>
+<body>
+
+<header id="header">
+    <a class="title" href="/"><img src="/codeonly-logo.svg">CodeOnlyJS</a>
+    <div class="buttons">
+        <input type="checkbox" checked="checked" class="theme-switch" onclick="window.stylish.toggleTheme()">
+    </div>
+</header>
+
+<main>
+{{{ inner.body }}}
+</main>
+
+</body>
+</html>
+

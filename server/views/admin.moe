@@ -1,0 +1,7 @@
+<h1>Admin</h1>
+
+<main>
+<form method="post" action="/admin/indexPhotos">
+<button type="submit">Index Photos</button>
+</form>
+</main>

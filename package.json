@@ -15,15 +15,20 @@
   "license": "ISC",
   "dependencies": {
     "@codeonlyjs/bundle-free": "github:codeonlyjs/bundle-free",
+    "@toptensoftware/moe-js": "^0.4.0",
+    "@toptensoftware/sqlite": "github:toptensoftware/sqlite",
     "commonmark": "^0.31.2",
+    "cookie-parser": "^1.4.7",
     "express": "^4.21.1",
     "express-async-errors": "^3.1.1",
     "livereload": "^0.9.3",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.9.16",
+    "uuid": "^11.0.2"
   },
   "devDependencies": {
-    "@codeonlyjs/stylish": "github:codeonlyjs/stylish",
     "@codeonlyjs/core": "file:../core",
+    "@codeonlyjs/stylish": "github:codeonlyjs/stylish",
     "rollup": "^4.24.3",
     "vite": "^5.4.9"
   }

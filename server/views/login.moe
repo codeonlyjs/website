@@ -1,0 +1,13 @@
+<h1>Login</h1>
+
+{{#if model.error}}
+<div class="error">{{model.error}}</div>
+{{/if}}
+
+<form method="post">
+    <fieldset>
+        <label for="email">Email or User Name:</label> <input type="text" id="email" name="email" />
+    </fieldset>
+
+    <button type="submit">Login</button>
+</form>
