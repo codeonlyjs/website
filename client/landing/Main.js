@@ -1,6 +1,6 @@
 import { Component, Style, Html } from "@codeonlyjs/core";
 import { Header } from "./Header.js";
-import { HomePage } from "./HomePage.js";
+import { HeroPage } from "./HeroPage.js";
 import { Register } from "./Register.js";
 
 // Main 
@@ -17,7 +17,7 @@ class Main extends Component
         id: "layoutRoot",
         $: [
             Header,
-            HomePage,
+            HeroPage,
             Register,
         ]
     }

@@ -10,8 +10,6 @@ export let routes = express.Router();
 // Prod or Dev?
 if (process.env.NODE_ENV == "production")
 {
-    console.log("Running as production");
-
     // Serve bundled client
     routes.use(bundleFree({
         path: path.join(__dirname, "../client/dist"),
@@ -21,8 +19,6 @@ if (process.env.NODE_ENV == "production")
 }
 else
 {
-    console.log("Running as development");
-
     // Module handling
     routes.use(bundleFree({
         path: path.join(__dirname, "../client"),

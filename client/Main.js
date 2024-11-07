@@ -1,7 +1,7 @@
 import { Component, Style } from "@codeonlyjs/core";
 import { Header } from "./Header.js";
 import { router } from "./router.js";
-import { HomePage } from "./landing/HomePage.js";
+import { HomePage } from "./HomePage.js";
 
 import "./ArticlePage.js";
 import "./lab/LabPage.js";

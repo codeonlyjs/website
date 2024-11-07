@@ -2,7 +2,7 @@ import { Component, Style, Html } from "@codeonlyjs/core";
 import { featureBoxes } from "./Copy.js";
 
 // Main 
-export class HomePage extends Component
+export class HeroPage extends Component
 {
     onMount()
     {
@@ -63,6 +63,7 @@ main
         max-width: 800px;
         margin-top: -130px;
         margin-bottom: -100px;
+        aspect-ratio: 3179 / 1611;
     }
     h2
     {

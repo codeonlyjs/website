@@ -15,11 +15,17 @@ export class Preview extends Component
         this.#script = value;
         this.invalidate();
     }
+    get script()
+    {  
+        return this.#script;
+    }
 
     // Helper to create a new iFrame component each time
     // the script changes
     createIframe()
     {
+        if (this.#script === "")
+            return null;
         // Create an iframe component for this script
         return new PreviewIFrame(this.#script);
     }

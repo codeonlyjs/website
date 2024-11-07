@@ -3,16 +3,21 @@ import { Component, Style, Html, transition } from "@codeonlyjs/core";
 // The main header
 export class Register extends Component
 {
-    mode = "";
+    mode = "unregistered";
     message = "";
     submittedEmail;
 
     async onSubmit(ev)
     {
         ev.preventDefault();
-        if (this.mode == "")
+        if (this.mode == "unregistered")
         {
             this.submittedEmail = this.email.value;
+
+            this.mode = "";
+            this.invalidate();
+
+            let pause = new Promise((r) => setTimeout(r, 1000));
 
             // Fetch the page
             const response = await fetch(`/api/register`, {
@@ -28,12 +33,13 @@ export class Register extends Component
             if (!response.ok)
             {
                 alert("Something went wrong, please try again later");
-                this.mode = "";
-                this.invalidate();
             }
 
 
             let json = await response.json();
+
+            await pause;
+
             this.mode = json.mode;
             this.message = json.message;
             this.invalidate();
@@ -44,6 +50,9 @@ export class Register extends Component
     async onSubmitOtp(ev)
     {   
         ev.preventDefault();
+
+        let pause = new Promise((r) => setTimeout(r, 1000));
+
         const response = await fetch(`/api/otp`, {
             method: "POST",
             headers: {
@@ -56,8 +65,12 @@ export class Register extends Component
         });
 
         let json = await response.json();
+
         if (json.redirect)
         {
+            this.mode = "";
+            this.invalidate();
+            await pause;
             window.location = json.redirect;
         }
         else
@@ -73,8 +86,9 @@ export class Register extends Component
         class: "register",
         $: [
             {
+                //if: c => c.mode == "unregistered",
                 if: transition({
-                    value: c => c.mode == "",
+                    value: c => c.mode == "unregistered",
                     mode: "leave-enter",
                 }),
                 type: "form",
@@ -145,6 +159,18 @@ Style.declare(`
         transition: opacity 1s, transform 1s;
     }
 
+    form
+    {
+        text-align: center;
+    }
+
+    #thanks
+    {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    form.page.tx-entering,
     #thanks.page.tx-entering
     {
         transition: transform 1s  linear(

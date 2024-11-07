@@ -1,4 +1,4 @@
-import { Component, Style, Html } from "@codeonlyjs/core";
+import { Component, Style, Html, nextFrame } from "@codeonlyjs/core";
 import { router } from "./router.js";
 import { Document } from "./Document.js";
 import { LayoutDocumentation } from "./LayoutDocumentation.js";
@@ -11,7 +11,18 @@ export class ArticlePage extends Component
     constructor(document)
     {
         super();
-        this.document = document;
+        this.#document = document;
+    }
+
+    #document;
+    get document()
+    {
+        return this.#document;
+    }
+    set document(value)
+    {
+        this.#document = value;
+        this.invalidate();
     }
 
     get inPageLinks()
@@ -32,7 +43,9 @@ export class ArticlePage extends Component
 
     onMount()
     {
-        this.document.mountDemos();
+        nextFrame(() => {
+            this.document.mountDemos();
+        });
     }
 
     onUnmount()
@@ -43,7 +56,7 @@ export class ArticlePage extends Component
     static template = {
         type: "div",
         class: "article",
-        $: c => Html.raw(c.document.html)
+        $: c => Html.raw(c.document?.html ?? "")
     }
 }
 
@@ -174,8 +187,8 @@ router.register({
     match: async (to) => {
         try
         {
-            to.document = new Document(to.match.groups.pathname);
-            await to.document.load();
+            to.document = new Document();
+            await to.document.load(to.match.groups.pathname);
             to.page = new ArticlePage(to.document);
             return true;
         }

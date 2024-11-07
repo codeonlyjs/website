@@ -6,17 +6,15 @@ import * as commonmark from "commonmark";
 
 export class Document
 {
-    constructor(pathname)
+    constructor()
     {
-        this.pathname = pathname;
     }
     
-    load()
+    load(pathname)
     {
         return env.load(async () => {
 
             // Work out "index" filename
-            let pathname = this.pathname;
             if (pathname == "" || pathname.endsWith("/"))
                 pathname += "index";
     
@@ -170,7 +168,7 @@ export class Document
                 wrapper_html += `
 <div class="demo-header">
     <span>Result:</span>
-    <a id="edit-${id}" class="edit-demo-link vcenter" href="#">${htmlIcon("science", 22)}<span> Edit in The Lab</span></a>
+    <a id="edit-${id}" class="edit-demo-link vcenter" href="#">${htmlIcon("science", 22)}<span> Edit</span></a>
 </div>
 <div id="${id}" class="demo">
 </div>

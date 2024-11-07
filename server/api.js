@@ -26,14 +26,14 @@ async function loginOrRegister(req, res)
             });
             return res.json({ 
                 mode: "registered",
-                message: "Thanks, we'll be in touch!" 
+                message: "👍 Thanks, we'll be in touch!" 
             });
         }
         if (!user.access)
         {
             return res.json({ 
                 mode: "registered",
-                message: "Thanks, we haven't forgetten - we'll be in touch!" 
+                message: "👍 Thanks, we haven't forgetten - we'll be in touch!" 
             });
         }
     }

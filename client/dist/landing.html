@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,34 +8,30 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
-    <link id="hljs-theme" href="" rel="stylesheet">
+    <link id="hljs-theme" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/github-dark.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs/loader.js"></script>
     <script>
     require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs' } });
     </script>
-    <script>
-        function updateHighlightTheme()
-        {
-            let el = document.getElementById("hljs-theme");
-            let themeFile = stylish.darkMode ? "github-dark.min.css" : "github.min.css";
-            let new_href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/${themeFile}`;
-            el.setAttribute("href", new_href);
-        }
-        stylish.addEventListener("darkModeChanged", updateHighlightTheme);
-        updateHighlightTheme();
-    </script>
-<style>
-:root
-{
-}
-body
-{
-    padding: 0;
-    margin: 0;
-}
-</style>
-  <script type="module" crossorigin src="/assets/landing-Cv9SOsph.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/NotFoundPage-DZ_cnhDZ.js">
+    <style>
+    :root
+    {
+        --dark-accent-color: #9D79E5;
+    }
+    :root.home-colors
+    {
+        --dark-body-back-color: #04061E;
+        --dark-body-back-color: #0a0b1a;
+        --light-body-back-color: #dfe3fc;
+    }
+    body
+    {
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+  <script type="module" crossorigin src="/assets/landing-uUAs2T2O.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/HeroPage-CrKSjh82.js">
 </head>
 <body>
 </body>

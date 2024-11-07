@@ -83,7 +83,7 @@ Style.declare( /* CSS styles (with `.counter` as scoping class) */
 <div class="tip">
 
 Above is an embedded, running version of this component - try clicking the "Click Me" 
-button.  You can also click the "Edit in The Lab" link to experiment with the code.
+button.  You can also click the "Edit" link to experiment with the code.
 
 </div>
 

@@ -20,15 +20,19 @@ class LabPage extends Component
     {
         super();
         this.init();
-        this.editor.value = initData?.code ?? hello_world;
-        this.preview.script = this.editor.value;
+        this.preview.script = initData?.code ?? hello_world;
+        this.editor.value = this.preview.script;
 
         // Display errors from iFrame preview
         this.onIFrameMessage = this.onIFrameMessage.bind(this);
+    }
+
+    onMount()
+    {
         window.addEventListener("message", this.onIFrameMessage);
     }
 
-    destroy()
+    onUnmount()
     {
         window.removeEventListener("message", this.onIFrameMessage);
     }
