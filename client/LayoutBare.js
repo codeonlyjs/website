@@ -1,4 +1,4 @@
-import { Component, Style, Transition } from "@codeonlyjs/core";
+import { Component, Style } from "@codeonlyjs/core";
 import { MobileBar } from "./MobileBar.js";
 import { MainNavigation } from "./MainNavigation.js";
 import { SecondaryNavigation } from "./SecondaryNavigation.js";

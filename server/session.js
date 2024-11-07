@@ -66,9 +66,9 @@ export function sessionLogin(res, email, otp)
 export function sessionLogout(res, session_id)
 {
     // Delete from cache
-    session_id_map.delete(session_id);
+    session_id_map.delete(res.locals.session_id);
 
-    db.delete("Sessions", { id: session_id });
+    db.delete("Sessions", { id: res.locals.session_id });
 
     // Delete cookie
     res.clearCookie("session");
@@ -83,6 +83,7 @@ export function sessionMiddleware(req, res, next)
     if (session_id)
     {
         res.locals.session_user = getSessionUser(session_id);
+        res.locals.session_id = session_id;
         if (res.locals.session_user)
         {
             // Refresh cookie

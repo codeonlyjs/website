@@ -1,4 +1,4 @@
-import { Component, Style, Transition } from "@codeonlyjs/core";
+import { Component, Style } from "@codeonlyjs/core";
 import { MobileBar } from "./MobileBar.js";
 import { MainNavigation } from "./MainNavigation.js";
 import { SecondaryNavigation } from "./SecondaryNavigation.js";
@@ -11,9 +11,6 @@ export class LayoutDocumentation extends Component
     {
         super();
         this.init();
-        this.showSidePanelTransition = new Transition(this.rootNode, "show-side-panel");
-        this.showSecondaryPanelTransition = new Transition(this.rootNode, "show-secondary-panel");
-
         router.addEventListener("mayLeave", () => this.hidePanel());
     }
 
@@ -24,23 +21,23 @@ export class LayoutDocumentation extends Component
         this.invalidate();
     }
 
+    activePanel;
+
     showPanel()
     {
-        this.showSidePanelTransition.enter();
-        this.showSecondaryPanelTransition.leave();
-
+        this.activePanel = "primary";
+        this.invalidate();
     }
     showSecondaryPanel()
     {
-        this.showSecondaryPanelTransition.toggle();
-        this.showSidePanelTransition.leave();
+        this.activePanel = "secondary";
+        this.invalidate();
     }
     hidePanel()
     {
-        this.showSidePanelTransition.leave();
-        this.showSecondaryPanelTransition.leave();
+        this.activePanel = null;
+        this.invalidate();
     }
-
 
     static template = {
         type: "div",

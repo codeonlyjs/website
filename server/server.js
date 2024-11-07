@@ -4,7 +4,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import 'express-async-errors';
 import logger from "morgan";
-import { sessionMiddleware, sessionIsLoggedIn } from './session.js';
+import { sessionMiddleware, sessionLogout } from './session.js';
 import { routes as apiRoutes } from "./api.js";
 import { routes as landingRoutes } from "./landing.js";
 import { routes as mainSiteRoutes } from "./mainsite.js";
@@ -28,10 +28,20 @@ else
 app.use("/", express.static(path.join(__dirname, "public")));
 
 // API routes
-app.use(apiRoutes);
+app.use("/api", apiRoutes);
 
-app.use(landingRoutes);
-//app.use(mainSiteRoutes);
+// Logout
+app.get("/logout", (req, res, next) => {
+    sessionLogout(res);
+    return res.redirect("/");
+});
+
+app.use(function (req, res, next) {
+    if (!res.locals.session_user)
+        return landingRoutes(req, res, next);
+    else
+        return mainSiteRoutes(req, res, next);
+});
 
 // Not found
 app.use((req, res, next) => {

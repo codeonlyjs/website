@@ -1,10 +1,19 @@
 import { Component, Style } from "@codeonlyjs/core";
 import { Header } from "./Header.js";
 import { router } from "./router.js";
+import { HomePage } from "./landing/HomePage.js";
 
 import "./ArticlePage.js";
 import "./lab/LabPage.js";
 import "./NotFoundPage.js";
+
+router.register({
+    pattern: "/",
+    match: (to) => {
+        to.page = new HomePage();
+        return true;
+    }
+});
 
 // Main 
 class Main extends Component

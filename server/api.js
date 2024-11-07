@@ -24,10 +24,18 @@ async function loginOrRegister(req, res)
             db.insert("Users", {
                 email: req.body.email,
             });
-            return res.json({ message: "Thanks, we'll be in touch!" });
+            return res.json({ 
+                mode: "registered",
+                message: "Thanks, we'll be in touch!" 
+            });
         }
         if (!user.access)
-            return res.json({ message: "Thanks, we haven't forgetten - we'll be in touch!" });
+        {
+            return res.json({ 
+                mode: "registered",
+                message: "Thanks, we haven't forgetten - we'll be in touch!" 
+            });
+        }
     }
     
     if (user)
@@ -60,6 +68,7 @@ async function loginOrRegister(req, res)
         });
 
         return res.json({
+            mode: "otp",
             message: "We've emailed you a one-time password.",
         });
     }
