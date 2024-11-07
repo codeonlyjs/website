@@ -136,7 +136,7 @@ changes to the array are reflected immediately in the DOM by monitoring
 the array's contents as they change.
 
 ```js
-import { Component, ObservableArray } from "codeonly.js";
+import { Component, ObservableArray } from "@codeonlyjs/core";
 
 export class MyComponent extends Component
 {

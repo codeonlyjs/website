@@ -57,7 +57,7 @@ else
 
     // Live reload
     let lrs = livereload.createServer({
-        extraExts: "page",
+        extraExts: "md",
     });
     lrs.watch([
         path.join(__dirname, "../client"),

@@ -124,3 +124,10 @@ back-end server for your client front end:
 * Compatible with production bundling.
 
 To setup a project this way, run the CLI tool:
+
+
+## Next Steps
+
+* [Get Started](start)
+* Learn more about [Components](component)
+* Learn more about [Templates](template)

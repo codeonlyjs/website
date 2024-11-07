@@ -19,7 +19,7 @@ class LabPage extends Component
     constructor(initData)
     {
         super();
-        this.init();
+        this.create();
         this.preview.script = initData?.code ?? hello_world;
         this.editor.value = this.preview.script;
 

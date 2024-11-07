@@ -29,7 +29,7 @@ update itself.
 First, we have the `Post` object fire a notification when it changes:
 
 ```js
-import { updateManager } from "codeonly.js";
+import { updateManager } from "@codeonlyjs/core";
 
 class Post
 {
@@ -53,7 +53,7 @@ Second, the `PostView` component needs to listen to the update manager
 for notifications of when its associated `Post` changes:
 
 ```js
-import { Component, updateManager } from "codeonly.js";
+import { Component, updateManager } from "@codeonlyjs/core";
 
 class PostView extends Component
 {

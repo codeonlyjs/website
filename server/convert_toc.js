@@ -29,11 +29,11 @@ export async function convert_toc(filename)
         let filename = l.trim();
         if (filename.length == 0)
             continue;
-        let full_filename = path.join(baseDir, filename + ".page");
+        let full_filename = path.join(baseDir, filename + ".md");
         let file_content = await fs.readFile(full_filename, "utf8");
 
 
-        let title = file_content.match(/^# (.*)$/m);
+        let title = file_content.match(/^title:\s*"?(.*?)"?\s*$/m);
         if (title)
         {
             section.pages.push({

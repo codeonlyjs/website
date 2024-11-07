@@ -3,14 +3,12 @@ index
 start
 
 # Components
+components
+componentsAdvanced
 component
-componentMount
-componentUpdates
-componentRetemplating
-componentLoading
 
 # Templates
-template
+templates
 templateDynamic
 templateText
 templateBooleanClasses

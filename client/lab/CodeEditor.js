@@ -5,7 +5,7 @@ export class CodeEditor extends Component
     constructor()
     {
         super();
-        this.init();
+        this.create();
 
         this.updateTheme = this.updateTheme.bind(this);
 

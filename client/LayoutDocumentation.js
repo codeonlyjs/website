@@ -10,7 +10,7 @@ export class LayoutDocumentation extends Component
     constructor()
     {
         super();
-        this.init();
+        this.create();
         router.addEventListener("mayLeave", () => this.hidePanel());
     }
 

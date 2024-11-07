@@ -19,7 +19,7 @@ export class Document
                 pathname += "index";
     
             // Fetch the page
-            const response = await fetch(`/content/${pathname}.page`);
+            const response = await fetch(`/content/${pathname}.md`);
             if (!response.ok)
                 throw new Error(`Response status: ${response.status} - ${response.statusText}`);
     

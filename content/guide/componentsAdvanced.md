@@ -1,9 +1,67 @@
 ---
-title: "Component Re-templating"
+title: "Advanced"
 subtitle: "A simple, lightweight, code-only front-end Web framework."
 projectTitle: CodeOnly
 ---
-# Component Re-templating
+# Component Advanced Topics
+
+## Deep Component Updates
+
+By default, when a template is updated any embedded components will
+have changed dynamic properties applied, but the component's `update()`
+method is not called - it's left to the component to detect property
+changes an update or invalidate itself.
+
+This behaviour can be changed with the `update` property in the parent
+template, which can have one of the following values:
+
+* A function - the template will call the function and if it returns
+  a truthy value, the component will be updated.
+* The string "auto" - the component will be updated if any of its 
+  dynamic properties changed in value.
+* Any other truthy value - the component will always be updated
+* A falsey value - the component will never be updated
+
+eg: Always update:
+
+```js
+template = {
+    type: MyComponent,
+
+    // update MyComponent when this template updates
+    update: true,           
+};
+```
+
+eg: Conditionally update:
+
+```js
+template = { 
+    type: MyComponent,
+
+    // update MyComponent if c.shouldUpdate is true
+    update: c => c.shouldUpdate
+}
+```
+
+eg: Automatically update:
+
+```js
+template = { 
+    type: MyComponent,
+
+    // update MyComponent only if any of the 
+    // dynamic properties below changed
+    update: "auto"
+
+    prop1: c => c.prop1,
+    prop2: c => c.prop2,
+    prop3: c => c.prop3,
+}
+```
+
+
+## Component Re-templating
 
 Component re-templating is a technique where the template of a component
 is modified by the component before it's compiled.
