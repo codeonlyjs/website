@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
@@ -6,6 +7,10 @@ export default defineConfig({
     emptyOutDir: true,
     outDir: './dist',
     rollupOptions: {
+      input: {
+        mainsite: resolve(__dirname, 'index.html'),
+        landing: resolve(__dirname, 'landing.html'),
+      },
       external: [
       ],
     },

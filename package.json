@@ -15,7 +15,6 @@
   "license": "ISC",
   "dependencies": {
     "@codeonlyjs/bundle-free": "github:codeonlyjs/bundle-free",
-    "@toptensoftware/moe-js": "^0.4.0",
     "@toptensoftware/sqlite": "github:toptensoftware/sqlite",
     "commonmark": "^0.31.2",
     "cookie-parser": "^1.4.7",

@@ -25,15 +25,59 @@ kept as close to pure JavaScript as possible.</p>
 
 </div>
 
-<div class="register">
+<div id="register">
+<form method="post" action="/register" id="register-form">
 <p>Coming Soon. Register to get early access...</p>
-<form method="post" action="/register">
-<input type="email" placeholder="joe@sixpack.com" name="email" />
+<input type="email" placeholder="joe@sixpack.com" name="email" id="email" />
 <input type="submit" />
 </form>
+<div id="thanks">
+<p>Thanks, we'll be in touch!</p>
+</div>
 </div>
 
 </main>
+
+<script>
+document.getElementById("register-form").addEventListener("submit", async (ev) => {
+
+    ev.preventDefault();
+
+    let response = await fetch("/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            email: document.getElementById("email").value,
+        })
+    });
+    if (!response.ok)
+    {
+        alert("Something went wrong, please try again later");
+        return;
+    }
+
+    // Check response
+    let result = await response.json();
+    if (result.result != "OK")
+    {
+        alert(result.error);
+        return;
+    }
+
+    // Redirect?
+    if (result.redirect)
+    {
+        window.location.href = result.redirect;
+    }
+    else
+    {
+        document.getElementById("register").classList.add("registered");
+    }
+    
+});
+</script>
 
 <style>
 .home
@@ -89,6 +133,26 @@ kept as close to pure JavaScript as possible.</p>
     input[type=submit]
     {
         visibility: hidden;
+    }
+
+    #register
+    {
+        #thanks
+        {
+            display: none;
+        }
+    }
+
+    #register.registered
+    {
+        form
+        {
+            display: none;
+        }
+        #thanks
+        {
+            display: block;
+        }
     }
 
 }

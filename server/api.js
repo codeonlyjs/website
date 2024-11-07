@@ -7,20 +7,6 @@ import { config } from "./config.js";
 
 export let routes = express.Router();
 
-routes.get("/", (req, res, next) => {
-    if (res.locals.session_user)
-        return next();
-
-    res.render("index");
-});
-
-routes.get("/login", (req, res) => {
-    if (res.locals.session_user)
-        return res.redirect("/");
-
-    res.render("login");
-});
-
 async function loginOrRegister(req, res)
 {
     let isRegister = req.path.endsWith("/register");
@@ -31,13 +17,17 @@ async function loginOrRegister(req, res)
                         .where("email = ? COLLATE NOCASE", req.body.email)
                         );
 
-    if (!user && isRegister)
+    if (isRegister)
     {
-        db.insert("Users", {
-            email: req.body.email,
-        });
-        res.render("/thanks");
-        return;
+        if (!user)
+        {
+            db.insert("Users", {
+                email: req.body.email,
+            });
+            return res.json({ message: "Thanks, we'll be in touch!" });
+        }
+        if (!user.access)
+            return res.json({ message: "Thanks, we haven't forgetten - we'll be in touch!" });
     }
     
     if (user)
@@ -69,15 +59,15 @@ async function loginOrRegister(req, res)
             `,
         });
 
-
-        // Prompt for OTP
-        res.render("otp", {
-            email: user.email,
+        return res.json({
+            message: "We've emailed you a one-time password.",
         });
     }
     else
     {
-        res.render("login", { error: "Unknown User" });
+        res.status(401).json({ 
+            message: "Unknown User" 
+        });
     }
 }
 
@@ -85,21 +75,23 @@ async function loginOrRegister(req, res)
 routes.post("/login", loginOrRegister);
 routes.post("/register", loginOrRegister);
 
+
 routes.post("/otp", (req, res) => {
 
     let user = sessionLogin(res, req.body.email, req.body.otp);
     if (user == null)
     {
-        // Prompt for OTP
-        res.render("otp", {
+        return res.status(401).json({
             email: req.body.email,
             error: "Incorrect Password",
         });
-        return 
     }
-
-    // redirect
-    res.redirect("/");
+    else
+    {
+        return res.json({
+            redirect: "/"
+        })
+    }
 });
 
 // Logout
@@ -107,7 +99,8 @@ routes.get("/logout", (req, res) => {
 
     if (req.cookies.session)
         sessionLogout(res, req.cookies.session);
-    res.redirect("/");
-
+    return res.json({
+        redirect: "/"
+    });
 });
 

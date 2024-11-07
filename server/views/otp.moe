@@ -8,9 +8,7 @@
 
 <form method="post" action="/otp">
     <input type="hidden" name="email" value="{{model.email}}" />
-    <fieldset>
-        <label for="email">One-time Password:</label> <input type="text" id="otp" name="otp" placeholder="We sent you an email with your password" />
-    </fieldset>
+    <p><input type="text" id="otp" name="otp" class="center" /></p>
 
     <button type="submit">Login</button>
 </form>

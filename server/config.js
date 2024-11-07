@@ -1,6 +1,6 @@
 export let config = {
 
-    siteName: "codeonlyjs",
+    siteName: "codeonlyjs.org",
 
     server: 
     {
