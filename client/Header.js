@@ -4,6 +4,16 @@ import { makeIcon } from "./Icon.js";
 // The main header
 export class Header extends Component
 {
+    onMount()
+    {
+        stylish.addEventListener("darkModeChanged", this.invalidate);
+    }
+
+    onUnmount()
+    {
+        stylish.removeEventListener("darkModeChanged", this.invalidate);
+    }
+
     static template = {
         _: "header",
         id: "header",
@@ -15,7 +25,7 @@ export class Header extends Component
                 $: [
                     { 
                         type: "img", 
-                        attr_src: "/codeonly-logo.svg",
+                        attr_src: c => `/codeonly-logo-${stylish.darkMode ? "dark" : "light"}.svg`,
                     },
                 ]
             },
@@ -70,7 +80,7 @@ Style.declare(`
     border-bottom: 1px solid var(--gridline-color);
     padding-left: 10px;
     padding-right: 10px;
-    background-color: rgb(from var(--back-color) r g b / 25%);
+    background-color: rgb(from var(--back-color) r g b / 50%);
     z-index: 1;
 
     .title 

@@ -1,4 +1,4 @@
-import { Component, Style } from "@codeonlyjs/core";
+import { Component, Style, transition } from "@codeonlyjs/core";
 import { MobileBar } from "./MobileBar.js";
 import { MainNavigation } from "./MainNavigation.js";
 import { SecondaryNavigation } from "./SecondaryNavigation.js";
@@ -21,7 +21,7 @@ export class LayoutDocumentation extends Component
         this.invalidate();
     }
 
-    activePanel;
+    activePanel = null;
 
     showPanel()
     {
@@ -55,11 +55,13 @@ export class LayoutDocumentation extends Component
                     {
                         type: "div",
                         id: "backdrop",
+                        class_active: transition(c => c.activePanel != null),
                         on_click: c => c.hidePanel(),
                     },
                     {
                         type: "div",
                         id: "div-lhs",
+                        class_active: transition(c => c.activePanel == "primary"),
                         $: {
                             type: MainNavigation,
                             url: c => c.url,
@@ -76,6 +78,7 @@ export class LayoutDocumentation extends Component
                     {
                         type: "div",
                         id: "div-rhs",
+                        class_active: transition(c => c.activePanel == "secondary"),
                         $: {
                             type: SecondaryNavigation,
                             inPageLinks: c => c.page?.inPageLinks,
@@ -227,40 +230,81 @@ Style.declare(`
     {
     }
 
+
+    #backdrop,
+    #div-lhs,
+    #div-rhs
+    {
+        transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+    }
+
+    #backdrop.active
+    {
+        display: block;
+        opacity: 1;
+
+        &.tx-enter-start,
+        &.tx-leave-end
+        {
+            opacity: 0;
+        }
+    }   
+
+    #div-lhs.active
+    {
+        display: unset;
+        margin-left: 0;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        z-index: 100;
+
+        &.tx-enter-start,
+        &.tx-leave-end
+        {
+            transform: translateX(calc(var(--side-panel-width) * -1));
+            opacity: 0;
+        }
+    }
+
+    #div-rhs.active
+    {
+        display: flex;
+        align-items: stretch;
+        top: calc(var(--header-height) * 2 + 1rem);
+        left: 15%;
+        right: 15%;
+        width: 70%;
+        height: unset;
+        bottom: unset;
+        background-color: var(--body-back-color);
+        border: 1px solid var(--accent-color);
+        border-radius: 0.5rem;
+        z-index: 100;
+        overflow: hidden;
+
+        nav
+        {
+            flex-grow: 1;
+            position: relative;
+            max-height: 50vh;
+            overflow: auto;
+            padding: 1rem;
+        }
+
+        &.tx-enter-start,
+        &.tx-leave-end
+        {
+            transform: translateY(-20px);
+            opacity: 0;
+        }
+    }
+
+
+
+
     #layoutDocumentation.show-secondary-panel
     {
-        #div-rhs
-        {
-            display: flex;
-            align-items: stretch;
-            top: calc(var(--header-height) * 2 + 1rem);
-            left: 15%;
-            right: 15%;
-            width: 70%;
-            height: unset;
-            bottom: unset;
-            background-color: var(--body-back-color);
-            border: 1px solid var(--accent-color);
-            border-radius: 0.5rem;
-            z-index: 100;
-            overflow: hidden;
-
-            nav
-            {
-                flex-grow: 1;
-                position: relative;
-                max-height: 50vh;
-                overflow: auto;
-                padding: 1rem;
-            }
-        }
-
-        #backdrop
-        {
-            display: block;
-            opacity: 1;
-        }
-
         &.show-secondary-panel-enter,
         &.show-secondary-panel-leave
         {
@@ -300,16 +344,6 @@ Style.declare(`
 
     #layoutDocumentation.show-side-panel
     {
-        #div-lhs
-        {
-            display: unset;
-            margin-left: 0;
-            top: 0;
-            bottom: 0;
-            height: 100%;
-            z-index: 100;
-        }
-
         #backdrop
         {
             display: block;

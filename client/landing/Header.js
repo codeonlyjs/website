@@ -3,6 +3,16 @@ import { Component, Style } from "@codeonlyjs/core";
 // The main header
 export class Header extends Component
 {
+    onMount()
+    {
+        stylish.addEventListener("darkModeChanged", this.invalidate);
+    }
+
+    onUnmount()
+    {
+        stylish.removeEventListener("darkModeChanged", this.invalidate);
+    }
+
     static template = {
         _: "header",
         id: "header",
@@ -14,7 +24,7 @@ export class Header extends Component
                 $: [
                     { 
                         type: "img", 
-                        attr_src: "/codeonly-logo.svg",
+                        attr_src: c => `/codeonly-logo-${stylish.darkMode ? "dark" : "light"}.svg`,
                     },
                 ]
             },
@@ -22,6 +32,13 @@ export class Header extends Component
                 _: "div",
                 class: "buttons",
                 $: [
+                    {
+                        type: "input",
+                        attr_type: "checkbox",
+                        attr_checked: window.stylish.darkMode ? "checked" : undefined,
+                        class: "theme-switch",
+                        on_click: () => window.stylish.toggleTheme(),
+                    },
                 ]
             }
         ]

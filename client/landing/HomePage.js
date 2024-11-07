@@ -4,13 +4,25 @@ import { featureBoxes } from "./Copy.js";
 // Main 
 export class HomePage extends Component
 {
+    onMount()
+    {
+        stylish.addEventListener("darkModeChanged", this.invalidate);
+        document.documentElement.classList.add("home-colors");
+    }
+
+    onUnmount()
+    {
+        stylish.removeEventListener("darkModeChanged", this.invalidate);
+        document.documentElement.classList.remove("home-colors");
+    }
+
     static template = {
         type: "main",
         $: [
             {
                 type: "img",
                 id: "hero",
-                attr_src: "/hero.svg",
+                attr_src: c => `/hero-${stylish.darkMode ? "dark" : "light"}.svg`,
             },
             {
                 type: "h2",

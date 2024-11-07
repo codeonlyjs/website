@@ -48,7 +48,7 @@ Style.declare(`
     border-bottom: 1px solid var(--gridline-color);
     padding-left: 10px;
     padding-right: 10px;
-    background-color: rgb(from var(--back-color) r g b / 75%);
+    background-color: rgb(from var(--back-color) r g b / 50%);
     z-index: 1;
     display: none;
 
