@@ -11,22 +11,31 @@ component
 templates
 templateText
 templateHtmlElements
-templateFragments
 templateComponents
 templateIf
 templateForEach
 templateEmbedSlots
 templateContentProperty
+templateTransitions
 templateUpdateSemantics
+templateInternals
 templateDebugDirectives
 
+# Router
+
+routerBasics
+routerLifeCycle
+routerViewState
+routerTips
+
+
 # Utilities
+
 html
 updateManager
 utilities
 nextFrame
 observableArray
-Router
 
 # Miscellaneous
 

@@ -1,9 +1,9 @@
 ---
-title: "Basics"
+title: "Internals"
 subtitle: "A simple, lightweight, code-only front-end Web framework."
 projectTitle: CodeOnly
 ---
-# Template Basics
+# Template Internals
 
 A CodeOnly template is a JavaScript object that can be used to create and update
 DOM elements.
