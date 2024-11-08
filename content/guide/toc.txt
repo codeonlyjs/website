@@ -9,28 +9,35 @@ component
 
 # Templates
 templates
-templateDynamic
 templateText
-templateBooleanClasses
-templateBooleanStyles
-templateDisplay
-templateIf
-templateFragments
-templateBinding
-templateForEach
+templateHtmlElements
 templateComponents
+templateIf
+templateForEach
 templateEmbedSlots
 templateContentProperty
+templateTransitions
 templateUpdateSemantics
+templateInternals
+templateDebugDirectives
+
+# Router
+
+routerBasics
+routerLifeCycle
+routerViewState
+routerTips
+
 
 # Utilities
+
 html
-updateManager
 utilities
 nextFrame
 observableArray
-Router
 
 # Miscellaneous
-debugDirectives
 
+stylish
+bundle-free
+cli

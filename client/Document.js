@@ -206,6 +206,12 @@ function convertHeadingTextToId(text)
     // Lower case
     text = text.toLowerCase();
 
+    // Remove async prefix
+    text = text.replace(/^async /, "");
+
+    // Remove method parameters
+    text = text.replace(/\b\(.*?\)/g, "");
+
     // Convert all non-letter-digits to hyphens
     text = text.replace(/[^\p{L}\p{N}]+/gu, "-");
 

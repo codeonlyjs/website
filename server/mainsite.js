@@ -13,9 +13,25 @@ export let routes = express.Router();
 routes.use("/content", express.static(path.join(__dirname, "../content")));
 
 // Generate TOCs from .txt to .json
+let tocMap = new Map();
 routes.get(/^\/content\/(?:(.*)\/)?toc$/, async (req, res) => {
+
+    // Get path
     let pathname = req.params[0] ? req.params[0] + "/" : "";
-    let toc = await convert_toc(path.join(__dirname, `../content/${pathname}toc.txt`));
+
+    // Check cache
+    let toc = tocMap.get(pathname);
+    if (!toc)
+    {
+        // Create it
+        toc = await convert_toc(path.join(__dirname, `../content/${pathname}toc.txt`));
+
+        // Only cache in production
+        if (process.env.NODE_ENV == "production")
+            tocMap.set(pathname, toc);
+    }
+
+    // Send it
     res.json(toc);
 });
 

@@ -5,7 +5,10 @@ projectTitle: CodeOnly
 ---
 # The Content `$` Property
 
-The `$` property is a special property for setting the inner content.
+The `$` property is a special property for setting the inner content of nodes.
+Exactly what it does depends on the kind of node.
+
+## HTML Elements
 
 For HTML elements, if the `$` property is a string or raw HTML string 
 then `$` is an alias for the `text` property:
@@ -63,6 +66,10 @@ property directly:
 ```
 
 For HTML elements any non-string value of `$` is an alias for the `childNodes` property.
+
+
+
+## Components
 
 For components, the `$` property is an alias for a property called
 `content`:

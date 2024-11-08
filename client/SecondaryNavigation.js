@@ -1,5 +1,4 @@
 import { Component, Style, Html } from "@codeonlyjs/core";
-import { appState } from "./AppState.js";
 
 
 // The main header

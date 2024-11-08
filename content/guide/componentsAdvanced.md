@@ -5,6 +5,13 @@ projectTitle: CodeOnly
 ---
 # Component Advanced Topics
 
+<div class="tip">
+
+TODO: This page is still being written
+
+</div>
+
+
 ## Deep Component Updates
 
 By default, when a template is updated any embedded components will
@@ -66,25 +73,27 @@ template = {
 Component re-templating is a technique where the template of a component
 is modified by the component before it's compiled.
 
-Normally the `Component.compileTemplate` method compiles the component's 
-static `template` property as is, but by overriding this method we can 
-adjust the template before it's compiled.
+Normally the component compiles the template declared by the static `template` 
+property but you can replace that mechanism by overriding one of the following 
+methods:
+
+* `onProvideDomTreeConstructor()` - to provide a custom DOM tree constructor function
+* `onProvideTemplate()` - to provide an alternative template declaration object
+
+For example, instead of using the component's static `.template` property
+directly we can override `onProvideTemplate()` to provide a custom template.
 
 ```js
 class MyComponent extends Component
 {
-    // Called by Component the first time
-    // an instance of this class is constructed
-    static compileTemplate()
+    // Called by Component to get the template to be compiled
+    static onProvideTemplate()
     {
-        // Set up the modified template, lifting settings
-        // from derived class template available on `this.template`
         let modifiedTemplate = {
             // ... whatever ...
         };
 
-        // Now compile the modified template
-        return Template.compile(modifiedTemplate);
+        return modifiedTemplate;
     }
 }
 ```
@@ -100,26 +109,26 @@ class Dialog extends Component
 {
     showModal()
     {
-        // `this.dom` represents the instantiated template
+        // `this.domTree` represents the instantiated template
         // - for single-root templates, the root node is
-        //   available as this.dom.rootNode
+        //   available as this.domTree.rootNode
         // - for multi-root templates, the root nodes are
-        //   available as this.dom.rootNodes
+        //   available as this.domTree.rootNodes
 
         // Add dialog to the document and show it
-        document.body.appendChild(this.dom.rootNode);
-        this.dom.rootNode.showModal();
+        document.body.appendChild(this.domTree.rootNode);
+        this.domTree.rootNode.showModal();
 
         // Remove from document when closed
-        this.dom.rootNode.addEventListener("close", () => {
-            this.dom.rootNode.remove();
+        this.domTree.rootNode.addEventListener("close", () => {
+            this.domTree.rootNode.remove();
         });
     }
 
     // Override to wrap template in dialog frame
-    static compileTemplate()
+    static onProvideTemplate()
     {
-        let wrapperTemplate = {
+        return {
             type: "dialog",
             class: "dialog",
             id: this.template.id,                   // From the derived class template
@@ -146,8 +155,6 @@ class Dialog extends Component
             }
         };
 
-        // Compile the wrapped template
-        return Template.compile(wrapperTemplate);
     }
 }
 

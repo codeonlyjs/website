@@ -30,17 +30,25 @@ export async function convert_toc(filename)
         if (filename.length == 0)
             continue;
         let full_filename = path.join(baseDir, filename + ".md");
-        let file_content = await fs.readFile(full_filename, "utf8");
-
-
-        let title = file_content.match(/^title:\s*"?(.*?)"?\s*$/m);
-        if (title)
+        let title = `${filename} (missing)`;
+        try
         {
-            section.pages.push({
-                url: filename,
-                title: title[1],
-            });
+            let file_content = await fs.readFile(full_filename, "utf8");
+
+            let m = file_content.match(/^title:\s*"?(.*?)"?\s*$/m)
+            if (m)
+                title = m[1];
         }
+        catch
+        {
+            // Ignore
+        }
+
+
+        section.pages.push({
+            url: filename,
+            title: title,
+        });
     }
     return result;
 }
