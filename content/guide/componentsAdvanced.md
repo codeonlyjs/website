@@ -70,7 +70,7 @@ Normally the component compiles the template declared by the static `template`
 property but you can replace that mechanism by overriding one of the following 
 methods:
 
-* `onProvideDomConstructor()` - to provide a custom DOM constructor function
+* `onProvideDomTreeConstructor()` - to provide a custom DOM tree constructor function
 * `onProvideTemplate()` - to provide an alternative template declaration object
 
 For example, instead of using the component's static `.template` property
@@ -102,19 +102,19 @@ class Dialog extends Component
 {
     showModal()
     {
-        // `this.dom` represents the instantiated template
+        // `this.domTree` represents the instantiated template
         // - for single-root templates, the root node is
-        //   available as this.dom.rootNode
+        //   available as this.domTree.rootNode
         // - for multi-root templates, the root nodes are
-        //   available as this.dom.rootNodes
+        //   available as this.domTree.rootNodes
 
         // Add dialog to the document and show it
-        document.body.appendChild(this.dom.rootNode);
-        this.dom.rootNode.showModal();
+        document.body.appendChild(this.domTree.rootNode);
+        this.domTree.rootNode.showModal();
 
         // Remove from document when closed
-        this.dom.rootNode.addEventListener("close", () => {
-            this.dom.rootNode.remove();
+        this.domTree.rootNode.addEventListener("close", () => {
+            this.domTree.rootNode.remove();
         });
     }
 

@@ -7,13 +7,13 @@ projectTitle: CodeOnly
 
 
 
-## domConstructor (static)
+## domTreeConstructor (static)
 
-Returns a function to construct the DOM template for this component.
+Returns a function to construct the DOM tree for this component.
 
 <div class="tip">
 
-The first time this property is accessed it calls [`onProvideDomConstructor()`](#onprovidedomconstructor-static)
+The first time this property is accessed it calls [`onProvideDomTreeConstructor()`](#onprovidedomtreeconstructor-static)
 to get the constructor function for the component's template.
 
 </div>
@@ -22,15 +22,21 @@ to get the constructor function for the component's template.
 
 ## create()
 
-Creates the DOM elements for this component.
+Creates the DOM tree for this component.
 
 Redundant if already called
 
 
 
+## created()
+
+Returns `true` if the components `domTree` has been created.
+
+
+
 ## destroy()
 
-Destroys the underlying DOM template elements effectively  removing 
+Destroys the underlying DOM tree elements effectively  removing 
 all event handlers and releasing all DOM element references.
 
 This method reverts the component to the "constructed" state that can
@@ -39,9 +45,9 @@ re-mounting the component.
 
 
 
-## dom
+## domTree
 
-Returns the instantiated DOM template of the component, creating
+Returns the instantiated DOM tree of the component, creating
 it if necessary.
 
 
@@ -127,6 +133,11 @@ The `mount()` method should only be used to mount top-level elements.  Mounting
 of components in other components should be left to the framework.
 
 
+## mounted
+
+Returns true if the component is currently mounted.
+
+
 
 ## onMount()
 
@@ -137,13 +148,13 @@ resources.  In particular you should use this method when adding event listeners
 to external objects otherwise the component may be kept alive by dangling 
 references to the component held by event sources.
 
-## onProvideDomConstructor() (static)
+## onProvideDomTreeConstructor() (static)
 
 Compiles the component's template as returned by [`onProvideTemplate()`](#onprovidetemplate-static).
 
 <div class="tip">
 
-Override this function to provide a custom DOM constructor.
+Override this function to provide a custom DOM tree constructor.
 
 </div>
 

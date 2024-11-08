@@ -18,6 +18,7 @@ templateForEach
 templateEmbedSlots
 templateContentProperty
 templateUpdateSemantics
+templateDebugDirectives
 
 # Utilities
 html
@@ -28,5 +29,4 @@ observableArray
 Router
 
 # Miscellaneous
-debugDirectives
 
