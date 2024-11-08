@@ -32,10 +32,12 @@ routerTips
 # Utilities
 
 html
-updateManager
 utilities
 nextFrame
 observableArray
 
 # Miscellaneous
 
+stylish
+bundle-free
+cli

@@ -5,6 +5,13 @@ projectTitle: CodeOnly
 ---
 # Router View State Restoration
 
+<div class="tip">
+
+TODO: This documentation is mostly out of date and needs to be updated.
+
+</div>
+
+
 ## View State Restoration
 
 View state restoration refers to the ability to capture and restore

@@ -5,10 +5,14 @@ projectTitle: CodeOnly
 ---
 # Using Components in Templates
 
-To use a component in a template, set the `type` attribute to a constructor
+Besides text and other HTML nodes, a template can also reference a component.
+
+## Component Type
+
+To use a component in a template, set the node's `type` attribute to a constructor
 or class reference.
 
-eg: suppose you have a component called "MyButton", with a title property.
+eg: suppose you have a component called `MyButton`, with a title property.
 
 ```js
 class MyButton extends Component
@@ -28,28 +32,132 @@ class MyButton extends Component
 }
 ```
 
-To use this component in another component's template:
+To use this component in a template, create a node with the `type` property set to 
+the component's class ie: `MyButton`
+
+<div class="tip">
+
+Note the component is referenced by it's JavaScript class, not a string of its name.
+
+</div>
 
 ```js
+import { MyButton } from "./MyButton.js"; /* Don't forget to import the component */
+
 {
     type: "div",
     $: [
-        { type: MyButton, title: "Button 1" },
-        { type: MyButton, title: "Button 2" },
+        { 
+            type: MyButton, /* Use a class name to create a component */
+            title: "Button 1" /* Other settings will be set as properties on the component */
+        },
+        { 
+            type: MyButton, /* Create multiple instances if needed*/
+            title: "Button 2", /* with different properties */
+        },
     ]
 }
 ```
 
-Components support the `bind`, `export`, `if` and `foreach` attributes, 
-and events can be connected using the `on_` prefix (`Component` extends 
-`EventTarget` and can raise their own events).  
+## Component Properties
 
-The `update` property controls if the component should be updated when
-this template is updated - see [Component Updates](componentUpdates).
+As shown in the above example  with the `title` property, any properties specified 
+by the template that aren't recognized by the template compiler are assumed to be 
+component properties and will be assigned to the component when it's created.
 
-The `$` property on a component reference is a short-cut alias for a 
-component property called `content`.
+Component properties can be dynamic callbacks:
 
-All other properties are assigned directly to the component instance.
+```js
+{
+    type: MyButton,
+    title: c => c.isLoggedIn ? "Sign Out" : "Sign In",
+}
+```
+
+## Handling Events
+
+Components extend the `EventTarget` class so are able to raise events.
+
+Adding event handlers to components is exactly the same as adding event
+handlers for HTML elements:
+
+eg: suppose the `MyButton` class has a click event:
+
+```js
+{
+    type: MyButton,
+    title: "Click Me!",
+    on_click: (c, ev) => c.onButtonClicked(ev),
+}
+```
+
+
+
+## The Content Property
+
+While the `$` property is used to add child nodes to HTML elements, for 
+components its simply a short cut to a property named `content`.
+
+Of course what your component decides to do with it's content is up to you.
+
+
+
+## Deep Updates
+
+Normally when compiled template is updates (either directly or indirectly via 
+`Component.invalidate()`) any component references will have changed properties
+assigned, but the component itself does not have it's `update` method called.
+
+The idea here is that components should handle updating themselves when their
+properties changed.
+
+This behaviour can be changed with the `update` property in the parent
+template, which can have one of the following values:
+
+* A function - the template will call the function and if it returns
+  a truthy value, the component will be updated.
+* The string "auto" - the component will be updated if any of its 
+  dynamic properties changed in value.
+* Any other truthy value - the component will always be updated
+* A falsey value - the component will never be updated
+
+eg: Always update:
+
+```js
+template = {
+    type: MyComponent,
+
+    // update MyComponent when this template updates
+    update: true,           
+};
+```
+
+eg: Conditionally update:
+
+```js
+template = { 
+    type: MyComponent,
+
+    // update MyComponent if c.shouldUpdate is true
+    update: c => c.shouldUpdate
+}
+```
+
+eg: Automatically update:
+
+```js
+template = { 
+    type: MyComponent,
+
+    // update MyComponent only if any of the 
+    // dynamic properties below changed
+    update: "auto"
+
+    prop1: c => c.prop1,
+    prop2: c => c.prop2,
+    prop3: c => c.prop3,
+}
+```
+
 
 

@@ -208,6 +208,15 @@ or, a string property key:
 }
 ```
 
+<div class="tip">
+
+Boolean classes can be used in conjunction with CodeOnly CSS transitions to 
+provide animation effects when a class is added or removed from an element. 
+See [CSS Transitions](templateTransitions) for more on this.
+
+</div>
+
+
 
 ## CSS Styles
 
@@ -303,5 +312,11 @@ display style setting:
 }
 ```
 
+<div class="tip">
 
+The `display` setting can be used in conjunction with CodeOnly 
+CSS transitions to provide animation effects when the element becomes 
+visible or hidden. See [CSS Transitions](templateTransitions) for more on 
+this.
 
+</div>

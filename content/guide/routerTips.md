@@ -5,6 +5,13 @@ projectTitle: CodeOnly
 ---
 # Router Tips and Tricks
 
+<div class="tip">
+
+TODO: This documentation is mostly out of date and needs to be updated.
+
+</div>
+
+
 ## Not Found Page
 
 To handle URL's not recognized by your app, you should register

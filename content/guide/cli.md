@@ -1,9 +1,10 @@
 ---
-title: "Transitions"
+title: "Command Line Tool"
 subtitle: "A simple, lightweight, code-only front-end Web framework."
 projectTitle: CodeOnly
 ---
-# Transitions
+# Command Line Tool
+
 
 <div class="tip">
 

@@ -5,6 +5,13 @@ projectTitle: CodeOnly
 ---
 # Template Internals
 
+<div class="tip">
+
+TODO: This page is still being written
+
+</div>
+
+
 A CodeOnly template is a JavaScript object that can be used to create and update
 DOM elements.
 

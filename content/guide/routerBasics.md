@@ -5,6 +5,12 @@ projectTitle: CodeOnly
 ---
 # Router Basics
 
+<div class="tip">
+
+TODO: This documentation is mostly out of date and needs to be updated.
+
+</div>
+
 
 CodeOnly includes a simple, but flexible URL router designed for use
 in single-page apps.
