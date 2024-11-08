@@ -5,15 +5,57 @@ projectTitle: CodeOnly
 ---
 # Getting Started
 
-<div class="tip">
+Because there's so many ways to use CodeOnly, the best way to
+get started will depend on what you're trying to achieve.
 
-TODO: This page is incomplete.
+<div class="box-container">
+
+<a class="box" href="#codeonly-lab">
+
+### CodeOnly Lab
+
+Learn the basics by running simple experiments right here in your browser.
+
+</a>
+
+<a class="box" href="#cdn-packages">
+
+### CDN Packages
+
+The easiest way to add CodeOnly to a project, no server required.
+
+</a>
+
+<a class="box" href="#npm-package">
+
+### NPM Package
+
+For use with popular build and bundling tools like
+Vite, Rollup, Webpack etc...
+
+</a>
+
+</a>
+
+<a class="box" href="#spa-project">
+
+### SPA Project
+
+Generate a single page app for use with
+simple file server or full server.
+
+</a>
+
+<a class="box" href="#full-stack-project">
+
+### Full-Stack Project
+
+A full-stack single page app. Client SPA, server, 
+live reload and Docker ready.
+
+</a>
 
 </div>
-
-
-There's a variety of ways you can use CodeOnly, so the best way to
-get started will depend on what you're trying to achieve.
 
 ## CodeOnly Lab
 
@@ -42,99 +84,152 @@ your browser.
   create multiple component classes - just put them one after the 
   other. 
 
-## Local Files
+## CDN Packages
 
-Currently CodeOnly isn't available via a CDN, but in the meantime, 
-you can reference the package from here:
+CDN packages for CodeOnly are available via [jsDelivr](https://www.jsdelivr.com/).
 
+ES6 Library:
 
-We recommend this package be used with an import map:
+* <https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.js>
+
+Minimized ES6 Library:
+
+* <https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.min.js>
+
+The easiest way to use these packages is with an import map:
 
 ```html
 <script type="importmap">
 {
     "imports": {
-        "@toptensoftware/codeonly": "https://codeonly.toptensoftware.com/codeonly.js"
+        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.min.js"
     }
 }
 </script>
 ```
 
-You can then import like so:
+You can then import from the library using the same `@codeonlyjs/core` package name as the NPM packages:
 
 ```html
 <script type="module">
-import { Component, Style } from "@toptensoftware/codeonly";
+import { Component, Style } from "@codeonlyjs/core";
 // etc...
-</script>
-```
-
-## CommonJS/UMD Web Package
-
-We don't really recommend using the CommonJS/UMD web package, but it's available 
-here if you really want it:
-
-* UMD/CommonJS - <https://codeonly.toptensoftware.com/codeonly.umd.cjs>
-
-To reference the package, use a script tag like so:
-
-```html
-<script src="https://codeonly.toptensoftware.com/codeonly.umd.cjs"></script>
-```
-
-You then need to qualify any imports with the `codeonly.` module prefix:
-
-eg:
-
-```html
-<script>
-class Main extends codeonly.Component /* Note the "codeonly." module reference */
-{
-    /// etc...
-}
-
-codeonly.Style.declare(``); /* Here too! */
 </script>
 ```
 
 ## NPM Package
 
-An NPM package is available from github:
+The CodeOnly NPM package is available from github:
 
 ```
-npm install --save github:toptensoftware/codeonly
+npm install --save codeonlyjs/core
 ```
 
-The NPM package can be used for client side development when using bundling
+The NPM package can be used with bundling
 tools like [Rollup](https://rollupjs.org/) and [Browserify](https://browserify.org/) 
 or build servers like [Vite](https://vite.dev/) and [Snowpack](https://www.snowpack.dev/).
 
+<div class="tip">
 
-## NodeJS, ExpressJS and Bundle-free
+Consider using a CodeOnly [Full Stack Project](#full-stack-project) as an alternative to a 
+development build server.
 
-An alternative (and our preferred) way of using the NPM package is with a 
-NodeJS/ExpressJS server configured to serve NPM packages using our related
-product [Bundle-free](https://www.npmjs.com/package/@toptensoftware/bundle-free).
+</div>
 
-Bundle-free is a small ExpressJS middleware that serve NPM packages to client
-side apps.
 
-This approach works especially well if you're already building an ExpressJS 
-back-end server for your client front end:
 
-* No need for a second build server (eg: Vite/Snowpack) during development - just
-  run your ExpressJS server and you get both client and server sides served up.
-* Since there's just one server there's no need for request proxying from the front
-  end build server through to the back-end server.
-* Supports [Live Reload](https://www.npmjs.com/package/livereload) for fast development
-* Handles fallback requests for single page apps using non-hash router URLs.
-* Compatible with production bundling.
+## SPA Project
 
-To setup a project this way, run the CLI tool:
+A CodeOnly SPA Project is an easy way to get started on a single page app.
+
+It includes the entry index.html file, a router, home page,
+header bar, and Stylish theme with light/dark mode support.
+
+<div class="tip">
+
+An SPA Project requires a file server and won't work by just opening the
+index.html from the file system.  The project includes instructions on how
+to easily work around this.
+
+</div>
+
+To create a CodeOnly Single Page App project:
+
+1. You'll need NodeJS to run the CLI tool - [get it here](https://nodejs.org/).
+2. From a command prompt, enter the following command (replacing 
+   "MyNewProject" with the name of your project):
+
+    ```
+    npx codeonlyjs/cli new spa MyNewProject
+    ```
+
+This will create a new directory containing everything required for a
+client side single page app.
+
+Included in the new project directory will be a readme.md file with information
+about the project structure and instructions on how to run it during development and build it for production.
+
+
+
+## Full Stack Project
+
+A CodeOnly Full-Stack project is an alternative to using a development build
+server (eg: Vite, SnowPack etc...).
+
+Rather than running a both a front-end build server and a back-end web server,
+a CodeOnly full-stack project includes a NodeJS/ExpressJS server that does
+both. 
+
+This has some nice advantages, especially during development: 
+
+* it serves NPM packages (including the CodeOnly NPM package) directly to 
+  the browser without the need for building or bundling
+* includes live-reload support - save your file and the browser updates
+  immediately
+* on Chromium based browsers it supports editing and saving files in the
+  debugger
+* since there's just one server there's no need for API request proxying 
+  from the build server to the back-end server
+
+For production:
+
+* everything is built, bundled and tree-shaken for fast, efficient delivery
+* project is configured and ready to run in Docker
+
+Most of this is made possible with our related product [Bundle-free](https://github.com/codeonlyjs/bundle-free).
+
+<div class="tip">
+
+Even if you don't plan to use the full-stack project's web server during 
+production, a full-stack project still provides an great development
+environment and you can still bundle and deploy to a separate production
+server later if necessary.
+
+</div>
+
+A full-stack project includes a front-end single page app client with entry
+index.html file, a router, home page, header bar, and Stylish theme 
+with light/dark mode support.
+
+
+To generate a full stack project:
+
+1. You'll need NodeJS to run the CLI tool - [get it here](https://nodejs.org/).
+2. From a command prompt, enter the following command (replacing 
+   "MyNewProject" with the name of your project):
+
+    ```
+    npx codeonlyjs/cli new fullstack MyNewProject
+    ```
+
+This will create a new directory containing the new project files.
+
+Included in the new project directory will be a readme.md file with information
+about the project structure and instructions on how to run it during development and build it for production.
+
 
 
 ## Next Steps
 
-* [Get Started](start)
 * Learn more about [Components](component)
 * Learn more about [Templates](template)
