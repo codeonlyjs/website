@@ -3,7 +3,7 @@ FROM node:latest
 ENV DEBIAN_FRONTEND=noninteractive
 #RUN apt update && apt upgrade && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/app/website
+WORKDIR /usr/src/app/
 COPY client/dist ./client/dist/
 COPY content ./content/
 COPY server ./server/

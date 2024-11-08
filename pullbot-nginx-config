@@ -1,6 +1,6 @@
 server {
-    server_name codeonly.org;
-    access_log /var/log/codeonly.org.access.log;
+    server_name codeonlyjs.org;
+    access_log /var/log/codeonlyjs.org.access.log;
     client_max_body_size 10M;
     
     location / {
@@ -18,20 +18,20 @@ server {
     
     listen 443 ssl; # managed by Certbot
     listen [::]:443 ssl;
-    ssl_certificate /etc/letsencrypt/live/codeonly.org/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/codeonly.org/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/codeonlyjs.org/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/codeonlyjs.org/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 }
 
 server {
-    if ($host = codeonly.org) {
+    if ($host = codeonlyjs.org) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
     listen 80;
     listen [::]:80;
-    server_name codeonly.org;
+    server_name codeonlyjs.org;
     return 404; # managed by Certbot
 }
 
