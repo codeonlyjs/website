@@ -39,7 +39,7 @@ Style.declare(`
 .homeDemo
 {
     max-width: 700px;
-    margin: 0 auto;
+    margin: -30px auto 0 auto;
     text-align: center;
 
     code

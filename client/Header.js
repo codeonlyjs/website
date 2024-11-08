@@ -14,6 +14,8 @@ export class Header extends Component
         stylish.removeEventListener("darkModeChanged", this.invalidate);
     }
 
+    loggedIn = false;
+
     static template = {
         _: "header",
         id: "header",
@@ -25,7 +27,13 @@ export class Header extends Component
                 $: [
                     { 
                         type: "img", 
+                        class: "hide-sm",
                         attr_src: c => `/codeonly-logo-${stylish.darkMode ? "dark" : "light"}.svg`,
+                    },
+                    { 
+                        type: "img", 
+                        class: "hide-lg",
+                        attr_src: c => `/codeonly-icon.svg`,
                     },
                 ]
             },
@@ -34,12 +42,14 @@ export class Header extends Component
                 class: "buttons",
                 $: [
                     {
+                        if: c => c.loggedIn,
                         type: "a",
                         class: "subtle button",
                         attr_href: "/guide/",
                         text: "Docs",
                     },
                     {
+                        if: c => c.loggedIn,
                         type: "a",
                         class: "subtle button labLink vcenter",
                         attr_href: "/lab",
@@ -125,5 +135,26 @@ Style.declare(`
             margin-right: 2px;
         };
     }
+
+    .hide-lg
+    {
+        display: none;
+    }
 }
+
+@media screen and (width < 550px) 
+{
+    #header
+    {
+        .hide-lg
+        {
+            display: block;
+        }
+        .hide-sm
+        {
+            display: none;
+        }
+    }
+}
+
 `);

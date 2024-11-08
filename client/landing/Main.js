@@ -1,5 +1,5 @@
 import { Component, Style, Html } from "@codeonlyjs/core";
-import { Header } from "./Header.js";
+import { Header } from "../Header.js";
 import { HeroPage } from "./HeroPage.js";
 import { Register } from "./Register.js";
 

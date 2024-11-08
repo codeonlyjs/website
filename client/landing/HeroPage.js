@@ -18,6 +18,7 @@ export class HeroPage extends Component
 
     static template = {
         type: "main",
+        class: "hero",
         $: [
             {
                 type: "img",
@@ -50,24 +51,27 @@ function makeFeatureBox(x)
 }
 
 Style.declare(`
-main
+main.hero
 {
     text-align: center;
     position: relative;
     max-width: 960px;
-    margin: 50px auto;
+    margin: 50px auto 20px auto;
+    padding: 10px 40px;
 
     #hero
     {
         width: 100%;
         max-width: 800px;
-        margin-top: -130px;
-        margin-bottom: -100px;
+        min-width: 300px;
+        margin-top: -100px;
+        margin-bottom: -10%;
         aspect-ratio: 3179 / 1611;
     }
     h2
     {
         margin: 0;
+        font-size: 1.2rem;
     }
 
     .row
@@ -106,17 +110,24 @@ main
 
 @media screen and (width < 550px) 
 {
-    main
+    main.hero
     {
+        padding: 10px 20px;
         .row
         {
             display: block;
+            text-align: center;
             .box
             {
-                width: 90%;
+                width: 100%;
                 display: block;
-                margin: 10px auto;
+                margin: 10px 0;
             }
+        }
+        h2
+        {
+            margin: 0;
+            font-size: 1.0rem;
         }
     }
 }

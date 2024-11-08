@@ -142,6 +142,7 @@ Style.declare(`
 .register
 {
     margin-top: 40px;
+    margin-bottom: 40px;
     width: 100%;
     height: 100px;
     position: relative;
@@ -198,6 +199,7 @@ Style.declare(`
     #register-em
     {
         width: 400px;
+        max-width: 80%;
     }
 }
 `);

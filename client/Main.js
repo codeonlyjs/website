@@ -54,7 +54,10 @@ class Main extends Component
         type: "div",
         id: "layoutRoot",
         $: [
-            Header,
+            {
+                type: Header,
+                loggedIn: true,
+            },
             {
                 type: "embed-slot",
                 bind: "layoutSlot",
