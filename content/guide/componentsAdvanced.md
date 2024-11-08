@@ -66,25 +66,27 @@ template = {
 Component re-templating is a technique where the template of a component
 is modified by the component before it's compiled.
 
-Normally the `Component.compileTemplate` method compiles the component's 
-static `template` property as is, but by overriding this method we can 
-adjust the template before it's compiled.
+Normally the component compiles the template declared by the static `template` 
+property but you can replace that mechanism by overriding one of the following 
+methods:
+
+* `onProvideDomConstructor()` - to provide a custom DOM constructor function
+* `onProvideTemplate()` - to provide an alternative template declaration object
+
+For example, instead of using the component's static `.template` property
+directly we can override `onProvideTemplate()` to provide a custom template.
 
 ```js
 class MyComponent extends Component
 {
-    // Called by Component the first time
-    // an instance of this class is constructed
-    static compileTemplate()
+    // Called by Component to get the template to be compiled
+    static onProvideTemplate()
     {
-        // Set up the modified template, lifting settings
-        // from derived class template available on `this.template`
         let modifiedTemplate = {
             // ... whatever ...
         };
 
-        // Now compile the modified template
-        return Template.compile(modifiedTemplate);
+        return modifiedTemplate;
     }
 }
 ```
@@ -117,9 +119,9 @@ class Dialog extends Component
     }
 
     // Override to wrap template in dialog frame
-    static compileTemplate()
+    static onProvideTemplate()
     {
-        let wrapperTemplate = {
+        return {
             type: "dialog",
             class: "dialog",
             id: this.template.id,                   // From the derived class template
@@ -146,8 +148,6 @@ class Dialog extends Component
             }
         };
 
-        // Compile the wrapped template
-        return Template.compile(wrapperTemplate);
     }
 }
 

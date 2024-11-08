@@ -9,16 +9,12 @@ component
 
 # Templates
 templates
-templateDynamic
 templateText
-templateBooleanClasses
-templateBooleanStyles
-templateDisplay
-templateIf
+templateHtmlElements
 templateFragments
-templateBinding
-templateForEach
 templateComponents
+templateIf
+templateForEach
 templateEmbedSlots
 templateContentProperty
 templateUpdateSemantics

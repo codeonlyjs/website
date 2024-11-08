@@ -1,9 +1,9 @@
 ---
-title: "Repeating Elements (foreach)"
+title: "Loop Blocks"
 subtitle: "A simple, lightweight, code-only front-end Web framework."
 projectTitle: CodeOnly
 ---
-# Repeating Elements (foreach)
+# Loop Blocks (foreach)
 
 Elements can be repeated using the `foreach` directive and two methods
 for updates are supported - Array Diffing and using ObservableArrays.

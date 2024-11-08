@@ -5,183 +5,205 @@ projectTitle: CodeOnly
 ---
 # Component API
 
-## constructor
 
-## getCompiledTemplate Static Method
 
-Gets the compiled template for this component class
+## domConstructor (static)
 
-## compileTemplate Static Method
+Returns a function to construct the DOM template for this component.
 
-Compiles the template for the component class
+<div class="tip">
 
-## isSingleRoot Static Property
+The first time this property is accessed it calls [`onProvideDomConstructor()`](#onprovidedomconstructor-static)
+to get the constructor function for the component's template.
 
-Returns true if the template for this component is a single
-DOM element as its root.
+</div>
 
-## create Method
+
+
+## create()
 
 Creates the DOM elements for this component.
 
 Redundant if already called
 
-```js
-component.create()
-```
 
-## dom Property
+
+## destroy()
+
+Destroys the underlying DOM template elements effectively  removing 
+all event handlers and releasing all DOM element references.
+
+This method reverts the component to the "constructed" state that can
+be re-created explicitly by calling `create()` or implicitly by
+re-mounting the component.
+
+
+
+## dom
 
 Returns the instantiated DOM template of the component, creating
 it if necessary.
 
-```js
-component.dom
-```
-
-## rootNode Property
-
-Gets the root node of this component, or throws an exception if
-this is not a multi-root component.
-
-```js
-component.rootNode
-```
 
 
-## rootNodes Property
+## getCompiledTemplate() (static)
 
-Gets an array of root nodes for the component.
-
-```js
-component.rootNodes
-```
+Gets the compiled template for this component class
 
 
-## invalidate Method
+
+## invalidate()
 
 Marks the component as needing a DOM update.
 
-```js
-component.invalidate()
-```
+<div info="tip">
 
-## validate Method
+The `invalidate` method is bound to the component instance
+so it can be passed directly to functions to add/remove event listeners.
 
-Updates the component's DOM, if it's marked as invalid by 
-a previous call to `invalidate()`.
+</div>
 
-```js
-component.validate()
-```
 
-## update Method
+
+## async load(callback)
+
+Performs and async data load:
+
+1. sets the `loading` property to true 
+2. clears the `loadError` property
+3. calls the `invalidate` method to mark the component for update
+4. dispatches a `loading` event
+5. calls and `await`s the supplied callback
+6. catches and stores any thrown errors to the `loadError` property
+7. calls the `invalidate` method again
+8. dispatches a `loaded` event
+
+Parameters:
+
+* `callback` - an async callback method to perform the actual data load
+
+Returns:
+
+* A promise for the value returned by the callback.
+
+
+
+## loadError
+
+Returns any exceptions thrown during the `load()` call.
+
+Setting this property also invalidates the component.
+
+
+
+## loading
+
+A read-only property that returns true during a call to `load()`.
+
+
+
+## loading (event)
+
+Raised when the `load()` method is called.
+
+
+
+## loaded (event)
+
+Raised when the `load()` method is about to exit.
+
+
+
+## mount(elementOrSelector)
+
+Mounts the component into a specified DOM element.
+
+Parameters:
+
+* `elementOrSelector` - either a DOM element reference, or a document element 
+  selector string.
+
+The `mount()` method should only be used to mount top-level elements.  Mounting
+of components in other components should be left to the framework.
+
+
+
+## onMount()
+
+Override this method to be notified when the component has been mounted.
+
+You should use `onMount()` and `onUnmount()` to acquire and release external
+resources.  In particular you should use this method when adding event listeners
+to external objects otherwise the component may be kept alive by dangling 
+references to the component held by event sources.
+
+## onProvideDomConstructor() (static)
+
+Compiles the component's template as returned by [`onProvideTemplate()`](#onprovidetemplate-static).
+
+<div class="tip">
+
+Override this function to provide a custom DOM constructor.
+
+</div>
+
+
+
+## onProvideTemplate() (static)
+
+Provides the template declaration for this component by returning `this.template`
+
+<div class="tip">
+
+Override this method to provide a custom template.  See 
+[Component Re-templateing](componentsAdvanced#component-re-templating).
+
+</div>
+
+
+
+## onUnmount()
+
+Override this method to be notified when the component has been unmounted.
+
+
+
+## template (static)
+
+The template declaration object for this component.
+
+The default returns an empty `{}` template.
+
+Nearly every component should override this property.
+
+
+
+## update()
 
 Immediately updates the DOM elements of this component and
 marks the component as not invalid.
 
-```js
-component.update()
-```
+<div info="tip">
 
-```js
-    loadError = null;
+The `update` method is bound to the component instance
+so it can be passed directly to functions to add/remove event listeners.
 
-    async load(callback)
-    {
-        this.#loading++;
-        if (this.#loading == 1)
-        {
-            this.loadError = null;
-            this.invalidate();  
-            env.enterLoading();
-            this.dispatchEvent(new Event("loading"));
-        }
-        try
-        {
-            return await callback();
-        }
-        catch (err)
-        {
-            this.loadError = err;
-        }
-        finally
-        {
-            this.#loading--;
-            if (this.#loading == 0)
-            {
-                this.invalidate();
-                this.dispatchEvent(new Event("loaded"));
-                env.leaveLoading();
-            }
-        }
-    }
+</div>
 
-    #loading = 0;
 
-    get loading()
-    {
-        return this.#loading != 0;
-    }
-    set loading(value)
-    {
-        throw new Error("setting Component.loading not supported, use load() function");
-    }
 
-    render(w)
-    {
-        this.dom.render(w);
-    }
+## unmount()
 
-    destroy()
-    {
-        if (this.#dom)
-        {
-            this.#dom.destroy();
-            this.#dom = null;
-        }
-    }
+Unmounts a previously mounted component.
 
-    onMount()
-    {
-    }
 
-    onUnmount()
-    {
-    }
 
-    #mounted = false;
-    setMounted(mounted)
-    {
-        this.#dom?.setMounted(mounted);
-        this.#mounted = mounted;
-        if (mounted)
-            this.onMount();
-        else
-            this.onUnmount();
-    }
+## validate()
 
-    mount(el)
-    {
-        if (typeof(el) === 'string')
-        {
-            el = document.querySelector(el);
-        }
-        el.append(...this.rootNodes);
-        this.setMounted(true);
-        return this;
-    }
+Updates the component's DOM, if it's marked as invalid by 
+a previous call to `invalidate()`.
 
-    unmount()
-    {
-        if (this.#dom)
-            this.rootNodes.forEach(x => x. remove());
-        this.setMounted(false);
-    }
 
-    static template = {};
-}
-```
 
 ## Next Steps
 

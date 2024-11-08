@@ -1,5 +1,5 @@
 ---
-title: "Using Components in Templates"
+title: "Components (in Templates)"
 subtitle: "A simple, lightweight, code-only front-end Web framework."
 projectTitle: CodeOnly
 ---
