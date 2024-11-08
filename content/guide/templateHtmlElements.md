@@ -6,7 +6,7 @@ projectTitle: CodeOnly
 
 # HTML Elements
 
-This section describes how to use declare HTML elements in CodeOnly templates.
+This section describes how to declare HTML elements in templates.
 
 <div class="tip">
 
@@ -19,7 +19,7 @@ learning this section well.
 ## Tag Name
 
 An HTML element is declared in a template by specifying the tag name as a 
-string for the`type` property of the node:
+string for the `type` property of the node:
 
 ```js
 {
@@ -27,7 +27,7 @@ string for the`type` property of the node:
 }
 ```
 
-Note: unlike most other properties, the `type` property *can not* be a dynamic
+Note: unlike most other properties, the `type` property can *not* be a dynamic
 callback function.
 
 ## Attributes
