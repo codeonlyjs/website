@@ -8,5 +8,6 @@ services:
       - 3105:3000
     volumes:
       - ./data/:/usr/src/app/data/
+      - ./data/docker-config.js:/usr/src/app/server/config.js
     restart: unless-stopped
     
