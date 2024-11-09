@@ -5,7 +5,7 @@ projectTitle: CodeOnly
 ---
 # Router Details
 
-This page covers the details of using CodeOnly's Router for more complex 
+This page covers use of CodeOnly's Router for more complex 
 setups than those covered by [basic URL routing](routerBasics).
 
 
@@ -26,10 +26,10 @@ level view of all the pieces:
   listeners.
 
 * Route Handlers - these are objects the your application registers with the 
-  router. They're responsible for matching to recognized URL's and populating
-  the route object with information about the page to be shown..
+  router that are responsible for matching recognized URL's and populating
+  the route object with information about the page to be shown.
 
-* Route Objects - a route object represents everything about the current 
+* Route Objects - a route object stores everything about the current 
   navigation. This includes the URL, the matched handler and anything else the
   handler (ie: your application) wants to associate with this route.
 
@@ -37,7 +37,7 @@ level view of all the pieces:
   "driver".  The included `WebHistoryRouterDriver` provides the glue
   between the router and the browser's History API.
 
-* View State Persistance - when navigating forward/back through the browser 
+* View State Restoration - when navigating through the browser 
   history there will be "view state" that needs to be captured and 
   restored.  The main example of this is saving and restoring the current 
   scroll position.
@@ -46,24 +46,24 @@ level view of all the pieces:
 
 * External URLs - URLs in a form as seen by the browser (and the user).
 
-* URL Mapper - the object the can internalize and externalize URLs. 
+* URL Mapper - an object that internalizes and externalizes URLs. 
 
-Let's take a look at each of these concepts in a more details...
+Let's take a look at each of these concepts in a more detail...
 
 
 ## The Router
 
-The `Router` class is the main participant involved in routing.
-
-It's main responsibilities include:
+The `Router` class is the main participant in routing 
+whose responsibilities include:
 
 * Receiving URL load requests
 * Matching URLs to route handlers
 * Firing a sequence of events for each URL navigation
 * Handling clean up of cancelled navigations
 
-Almost always, there's only ever a single instance of the router 
-and by convention we usually create and configure it a file named 
+Almost always, there is only ever a single instance of the router. 
+
+The convention is to create and configure the router in a file named 
 `router.js` that exports a singleton `router` object instance:
 
 ```js
@@ -75,10 +75,9 @@ export let router = new Router( /* Create the router instance */
 );
 ```
 
-The primary interface to the router is the `register` method which
-is used to register router handlers.
+Route handlers are registered with the router using the `register` method. 
 
-The router also has several methods that can be used by your app to
+The router also has methods that can be used by your app to
 invoke navigation (`navigate`, `back`, `replace`) but these simply
 pass through to the router driver.
 
@@ -86,7 +85,7 @@ pass through to the router driver.
 
 ## Navigation Events
 
-When the Router receives a URL load request and after it has matched it
+When the router receives a URL load request and after it has matched it
 to a router handler, it proceeds through a series of steps to "leave" the 
 old route, and "enter" the new route.
 
@@ -100,9 +99,9 @@ These steps take place in two phases:
   steps that notify that the old route will be left and the new 
   route will be entered.
 
-Within each phase, the Router fires fires two kinds of events: 
+Within each phase, the Router fires two kinds of events: 
 
-  1. general events that anyone can listen for and 
+  1. broadcast events that anyone can listen for and 
   2. targeted calls to the route managers of the route being left and 
     the route being entered.
 
@@ -115,9 +114,8 @@ Firstly, Phase 1, the cancellable, async "may navigate" phase starts:
 3. Call `mayEnter` on the `to` route handler
 4. Broadcast the "`mayEnter`" event
 
-If this point is reached without the navigation being cancelled, the 
-navigation is committed, and Phase 2, the synchronous, non-cancellable 
-"will navigate" phase starts:
+If this point is reached without the navigation being cancelled, and 
+Phase 2, the synchronous, non-cancellable "will navigate" phase starts:
 
 5. Broadcast the "`didLeave`" event
 6. Call `didLeave` on the `from` route handler
@@ -128,10 +126,10 @@ navigation is committed, and Phase 2, the synchronous, non-cancellable
 <div class="tip">
 
 Note that in phase 1, the navigation might be cancelled by the event
-handlers, the route handlers or by a new load URL request being received
+handlers, the route handlers or by a second URL load request being received
 before the first one has finished.
 
-A new load request might come from the user navigating the browser history
+A second load request might come from the user navigating the browser history
 or it might come from your app initiating a navigation before the first
 one has completed.
 
@@ -143,15 +141,15 @@ one has completed.
 A route handler is an object that handles the navigation to and from 
 a particular URL pattern.  
 
-Route handlers are registered with the router and the router calls the 
-handler when a URL is loaded and needs to be matched to a particular handler.
+Route handlers are registered with the router during app startup and the router calls the 
+handlers when a URL is loaded and needs to be matched to a particular handler.
 
-When a route handler matches a URL is will usually store additional 
+When a route handler matches a URL it will usually store additional 
 information on the route object that describes the component or page
-to be displayed for that URL, along with any other information the 
-handler and/or the application might find useful.
+to be displayed for that URL along with any other information the 
+handler or the application might find useful.
 
-Route handlers have the following entry points all of which are optional:
+Route handlers have the following members, all of which are optional:
 
 ```js
 {
@@ -168,14 +166,14 @@ Route handlers have the following entry points all of which are optional:
 ```
 
 The `pattern` parameter can be either a URL pattern string, or a regular 
-expression.  If not specified, any URL will be considered.
+expression.  If not specified, all URLs are matched.  
 
-The `match` function is called for URL's with matching patterns, or all
-URLs if no pattern is specified.  It should return true to accept the URL
+When the URL matches a handler's pattern, the handler's `match` function is 
+called to confirm the match. It should return true to accept the URL
 or false to reject it.
 
 If the `match` handler returns null, this instructs the router and router
-driver to ignore the navigation event and to revert to a normal browser
+driver to ignore the navigation event and revert to a normal browser
 page load.  This can be used to redirect routes to external pages instead
 of in-page route.
 
@@ -184,11 +182,9 @@ return true for navigation to succeed.  These methods can all return a
 promise for the true/false result.
 
 The `from` argument is the route object being navigated away from (leaving). 
-On initial page load `from` will be `null`.  The `from` route object might
-be managed by this route manager or another.
+On initial page load `from` will be `null`.  
 
-To `to` argument is the route object being navigated to (entering) and will
-always be a route object managed by this route handler.
+To `to` argument is the route object being navigated to (entering). 
 
 The `cancelEnter` and `cancelLeave` functions are called if a navigation
 was cancelled after a previous notification of `mayEnter` or `mayLeave` 
@@ -196,20 +192,21 @@ respectively.
 
 The `order` parameter controls the order in which this route handler
 is matched and can be used to resolve conflicts where two handlers would
-otherwise match the same URL.  It's usually used to invoke a `Not Found`
-route handler if all other route handlers fail to match.
+otherwise both match a URL.  It's usually used to configure a `Not Found`
+route handler to be matched after all other handlers ignored a URL. 
 
 
 
 ## Route Objects
 
-A route object is an object that stores everything about a particular 
-navigation event.  
+A route object is an object that stores everything related to a particular 
+URL load.  
 
-Route objects are never re-used - they last from the start of the 
-navigation event that created it, until the URL is navigated away from
-and then discarded.  ie: navigating "back" doesn't use the same route
-object instance as before.
+Route objects are never re-used and only last from the start of the 
+URL load that created it, until the URL is navigated away from.  
+
+ie: navigating "back" doesn't use the same route
+object instance as beforea new object is created every time. 
 
 Route objects are initially created by the Router with the following
 properties:
@@ -247,7 +244,7 @@ to the route object.
 eg: 
 
 * Route managers will typically create a page component and store it on the route
-  object to be picked up elsewhere to be loaded into the document.
+  object to be picked up elsewhere in the app to be loaded into the document.
 
 * Other event handlers may also attach additional information to the route object.
 
@@ -260,32 +257,33 @@ eg:
 
 The router driver connects the router to its hosting environment.
 
-Most typically this the browser and built-in `WebHistoryRouterDriver` class works
+Most typically this is the browser and built-in `WebHistoryRouterDriver` class works
 with the browser's History API to handle all browser navigation.
 
 The `WebHistoryRouterDriver` also listens for clicks on anchor `<a>` elements, 
-inspects the `href` attribute and if it looks like an in-page link instructs
+inspects the `href` attribute and if it looks like an in-page link, instructs
 the Router to initiate a URL load for the href.
 
 Currently the `WebHistoryRouteDriver` is the only available driver, but in the 
-future this may be expanded to cover the Navigation API.  A server side
-router driver will also be developed for use in server-side rendering scenarios.
+future this may be expanded with a similar driver for interfacing with the 
+Navigation API.  A server side
+router driver will also be developed for use in server-side rendering scenarios. .
 
 
 
-## View State Persistence
+## View State Restoration
 
-View state persistence is the process of maintaining any otherwise transient
+View state restoration is the process of maintaining any otherwise transient
 view state information when navigating through the session history.
 
 The most common kind of view state to be persisted is the current scroll position
-and the built in ViewStatePersistence object can handle this automatically.
+and the built in ViewStateRestoration object can handle this automatically.
 
 The built-in component normally just saves the document scroll position but it
 can be customized:
 
-* By adding `captureViewState()` and `restoreViewState(viewState)` methods to 
-  the route handler view state persistence can be customized on a per-route handler 
+* By adding `captureViewState()` and `restoreViewState(viewState)` functions to 
+  the route handler, the view state restoration can be customized on a per-route handler 
   basis.
 
 * By adding `captureViewState()` and `restoreViewState(viewState)` methods to the 
@@ -312,7 +310,7 @@ The default `internalize` and `externalize` methods just return a copy of the
 the URL.
 
 If you set the router's `urlMapper` property to any object with `internalize`
-and `externalize` methods and the Router will instead forward these calls
+and `externalize` methods the Router will instead these calls
 to that object.
 
 CodeOnly includes a UrlMapper object for a couple of common use cases...
@@ -337,9 +335,9 @@ router.urlMapper = new UrlMapper({
 ```
 
 Now any URL's received from the browser will have the `/myapp` prefix removed
-and URL's generated by your app will have the `/myapp` prefix added.
+and URL's generated by your app will have the `/myapp` prefix prepended.
 
-In otherwords, an external URL of `/myapp/about` would appear to you application
+In otherwords, an external URL of `/myapp/about` would appear to your application
 (and the router) as `/about`.
 
 The `UrlMapper` can also be used for hashed URL paths.  This can be used when 
@@ -355,7 +353,7 @@ router.urlMapper = new UrlMapper({
 Now, an internal URL of `/about` would be externalized to `/#/about` (and vice-versa)
 
 Note: when creating `<a>` links in your application, you should use the external
-URL not the internal one.  This can be easily done by calling the Router's 
+URL not the internal one.  This can bepool done by calling the Router's 
 externalize method:
 
 ```js
