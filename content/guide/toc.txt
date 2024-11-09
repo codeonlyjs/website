@@ -41,4 +41,4 @@ observableArray
 
 stylish
 bundle-free
-cli
+cogent
