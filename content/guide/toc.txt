@@ -24,6 +24,7 @@ templateDebugDirectives
 # Router
 
 routerBasics
+routerDetails
 routerLifeCycle
 routerViewState
 routerTips

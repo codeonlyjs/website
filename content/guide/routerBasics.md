@@ -5,7 +5,7 @@ projectTitle: CodeOnly
 ---
 # Router Basics
 
-CodeOnly include s simple but flexible router for use in single page apps.
+CodeOnly includes simple but flexible router for use in single page apps.
 
 <div class="tip">
 
@@ -19,7 +19,7 @@ URLs to navigate within your app.
 
 ## Features
 
-The router supports the following features:
+The CodeOnly router supports the following features:
 
 * Centralized or distributed route configuration
 * Use URL patterns or regular expressions to match routes
@@ -27,8 +27,7 @@ The router supports the following features:
 * Async events and hooks
 * Navigation cancellation (aka "Navigation Guards")
 * Uses the browser's History API
-* Supports normal URLs (may require minimal server support) or
-  hash based URLs
+* Ordinary and hashed URL paths
 * View state persistence (eg: scroll position)
 * URL base prefix and other URL mapping
 * Supports pre and post navigation async data loads
@@ -37,7 +36,7 @@ The router supports the following features:
 
 ## Quick Overview
 
-The get an idea for how the router works, lets start with a simple example.
+The get an idea for how the router works, let's start with a simple example.
 
 Central to routing is the Router object itself.  
 
@@ -53,6 +52,10 @@ import { Router } from "@codeonlyjs/core";
 export let router = new Router( /* Create the router instance */
     new WebHistoryRouterDriver() /* We'll cover this later */
 );
+
+// Setup view state restoration
+new ViewStateRestoration(router); /* Save and restore the scroll position between pages */
+
 ```
 
 Next, we register "router handlers" with the router.  
@@ -109,40 +112,36 @@ To sum up:
    to the route object to re-configure what's shown on-screen
 
 
-## Terms and Concepts
 
-When working with the router, there's a few terms and concepts you should be
-familiar with. We'll cover all these in detail, but it's good to have a high
-level view of all the pieces:
+## View State Restoration
 
-* The Router - the central manager of routing.  The router it handles load 
-  requests, matches them to route handlers and dispatches events that provide 
-  hooks into the navigation process.
+When navigating back and forward through the browser history there is 
+usually some "view state" that needs to be captured and restored.  
 
-* Route Handlers - objects registered with the router that can match a URL
-  and populate a route object with information associated with the route.
+The main example of this is saving and restoring the current 
+scroll position - nobody want's to hit the back button and then have
+to scroll to get back to where the were before.
 
-* Route Objects - a route object represents everything about the current 
-  navigation. This includes the URL, the matched handler and anything else the
-  handler (ie: your application) want's to associate with this route.
+The router supports capturing any view state you need, but often the 
+scroll position is enough so we've included a component can do this
+automatically.
 
-* Navigation Events - on each navigation the router goes through a sequence
-  of events to fully resolve and handle the URL being loaded.  As it does so 
-  it fires events to the source and target route handlers and to other listeners.
+All you need to do is create an instance of it and pass is the router
+object.
 
-* Router Driver - the router itself interacts with the browser through a 
-  "driver".  The included `WebHistoryRouterDriver` provides the glue
-  between the router and the browser's History API.
+```js
+new ViewStateRestoration(router);
+```
 
-* View State Persistance - when navigating forward/back through the browser 
-  history there will be "view state" that needs to be captured and 
-  restored.  The main example of this is saving and restoring the current 
-  scroll position.
 
-* Internal URLs - URLs in the form as understood by your application.
+## Next Steps
 
-* External URLs - URLs in the form as shown in the browser address bar.
+For many single page apps, what's been described above is enough. 
 
-* URL Mapper - the process of converting internal to external URLs and vice
-  versa.  Often internal and external URLs are the same, but URL mapping
-  can be used for for URL base prefixes and for hash based navigation.
+Also, the CodeOnly single page project generator will automatically 
+configure all this for you.
+
+For more complex setups though,  let's dig into [the details](routerDetails)...
+
+
+
