@@ -28,6 +28,8 @@ routerDetails
 routerLifeCycle
 routerViewState
 routerTips
+routerApi
+
 
 
 # Utilities

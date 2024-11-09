@@ -1,7 +1,5 @@
 ---
 title: "The Content ($) Property"
-subtitle: "A simple, lightweight, code-only front-end Web framework."
-projectTitle: CodeOnly
 ---
 # The Content `$` Property
 

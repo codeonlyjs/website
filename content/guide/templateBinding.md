@@ -1,7 +1,5 @@
 ---
 title: "Binding (bind)"
-subtitle: "A simple, lightweight, code-only front-end Web framework."
-projectTitle: CodeOnly
 ---
 # Binding (bind)
 

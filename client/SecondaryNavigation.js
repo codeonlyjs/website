@@ -37,14 +37,34 @@ export class SecondaryNavigation extends Component
             },
             {
                 type: "ul",
+                class: "h1",
                 $: {
                     foreach: c => c.inPageLinks,
                     type: "li",
-                    $: {
-                        type: "a",
-                        attr_href: i => `#${i.id}`,
-                        text: i => i.text,
-                    }
+                    $: [
+                        {
+                            type: "a",
+                            attr_href: i => `#${i.id}`,
+                            text: i => i.text,
+                        },
+                        {
+                            if: i => i.subHeadings,
+                            type: "ul",
+                            class: "h2",
+                            $: {
+                                foreach: i => i.subHeadings,
+                                type: "li",
+                                $: [
+                                    {
+                                        type: "a",
+                                        attr_href: i => `#${i.id}`,
+                                        text: i => i.text,
+                                    },
+                                ]
+                            }
+                        }
+
+                    ]
                 }
             }
         ]
@@ -56,13 +76,24 @@ Style.declare(`
 {
     padding: 0rem 1rem 1rem 1rem;
 
-    ul
+    ul.h1
     {
         font-size: 0.8rem;
         li
         {
             padding-top: 0.5rem;
             line-height: 1.2rem;
+        }
+    }
+
+    ul.h2
+    {
+        font-size: 0.8rem;
+        li
+        {
+            padding-left: 1rem;
+            padding-top: 0.2rem;
+            line-height: 1rem;
         }
     }
 }

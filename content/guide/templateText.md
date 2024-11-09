@@ -1,7 +1,5 @@
 ---
 title: "Text and Comments"
-subtitle: "A simple, lightweight, code-only front-end Web framework."
-projectTitle: CodeOnly
 ---
 # Text and Comments
 

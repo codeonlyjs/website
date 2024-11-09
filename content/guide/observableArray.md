@@ -1,7 +1,5 @@
 ---
 title: "ObservableArray Class"
-subtitle: "A simple, lightweight, code-only front-end Web framework."
-projectTitle: CodeOnly
 ---
 # ObservableArray Class
 

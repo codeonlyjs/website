@@ -1,7 +1,5 @@
 ---
 title: "nextFrame Function"
-subtitle: "A simple, lightweight, code-only front-end Web framework."
-projectTitle: CodeOnly
 ---
 # nextFrame Function
 

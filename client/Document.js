@@ -96,12 +96,16 @@ export class Document
         let walker = this.ast.walker();
         let ev;
         let currentHeading = null;
+        let currentH2 = null;
         let headingText = "";
         this.headings = [];
+        this.allHeadings = [];
         let codeBlocks = [];
         while (ev = walker.next())
         {
-            if (ev.entering && ev.node.type === 'heading' && ev.node.level == 2)
+            if (ev.entering && ev.node.type === 'heading' && 
+                (ev.node.level == 2 || ev.node.level == 3) )
+
             {
                 currentHeading = ev.node;
             }
@@ -116,11 +120,23 @@ export class Document
                 let id = convertHeadingTextToId(headingText);
                 if (id.length > 0)
                 {
-                    this.headings.push({
+                    let heading = {
                         node: ev.node,
                         text: headingText,
                         id,
-                    });
+                    };
+                    this.allHeadings.push(heading);
+                    if (ev.node.level == 2)
+                    {
+                        this.headings.push(currentH2 = heading);
+                    }
+                    else
+                    {
+                        if (!currentH2.subHeadings)
+                            currentH2.subHeadings = [];
+                        currentH2.subHeadings.push(heading);
+                        heading.id = `${currentH2.id}-${heading.id}`;
+                    }
                     currentHeading = false;
                 }
                 headingText = "";
@@ -134,7 +150,7 @@ export class Document
         }
 
         // Insert the # links
-        for (let h of this.headings)
+        for (let h of this.allHeadings)
         {
             let n = new commonmark.Node("html_inline", h.node.sourcepos);
             n.literal = `<a class="hlink" href="#${h.id}">#</a>`;
@@ -186,9 +202,9 @@ export class Document
         renderer.attrs = (node) =>
         {
             let att = oldAttrs.call(renderer, ...arguments);
-            if (node.type == "heading" && node.level == 2)
+            if (node.type == "heading" && (node.level == 2 || node.level == 3))
             {
-                let heading = this.headings.find(x => x.node == node);
+                let heading = this.allHeadings.find(x => x.node == node);
                 if (heading)
                 {
                     att.push(["id", heading.id]);

@@ -113,7 +113,8 @@ Style.declare(`
         margin-bottom: 50px;
     }
 
-    h2::before
+    h2::before,
+    h3::before
     {
         content: " ";
         display: block;
@@ -129,6 +130,7 @@ Style.declare(`
         transition: opacity .2s;
     }
 
+    h3:hover,
     h2:hover
     {
         a.hlink
