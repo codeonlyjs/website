@@ -5,7 +5,7 @@ projectTitle: CodeOnly
 ---
 # Router Basics
 
-CodeOnly includes simple but flexible router for use in single page apps.
+CodeOnly includes simple but flexible router for use with single page apps.
 
 <div class="tip">
 
@@ -62,7 +62,7 @@ new ViewStateRestoration(router); /* Save and restore the scroll position betwee
 Next, we register "route handlers" with the router. A handler is an 
 object that matches URLs to pages in your app.
 
-This example sets up a router handler for an `/about` page url.
+This example sets up a route handler for the URL `/about`.
 
 ```js
 import { router} from "./router.js"; /* This is the router object from above */
@@ -76,8 +76,8 @@ router.register({ /* Register this route handler with the router */
 });
 ```
 
-Finally, we need to listen to the router for navigation events and
-update what's shown for the new URL.  
+Finally, the app listens to the router for navigation events and
+updates what's shown for the new URL.  
 
 Usually this is done by receiving a page component (eg: the 
 `AboutPageComponent` from above) and loading it into an [embed-slot](templateEmbedSlots)
@@ -105,10 +105,10 @@ object and use it however suits your app.
 To sum up:
 
 1. Create a router object
-2. Register route handlers to match URLs and to create page components for 
-   the URL's content and store them on the route object
+2. Register route handlers that match URLs and create page components for 
+   the URL and store them on the route object
 3. Register an event listener for navigation events and use information 
-   stored on the route object to re-configure what's shown on-screen
+   stored on the route object to re-configure what's shown
 
 
 
@@ -119,7 +119,7 @@ that the router can work with.  But, there's nothing special to do here.
 
 Just create the anchor elements (eg: `<a href="/about">`) as per normal 
 and the router will automatically detect clicks on in-app links and
-invoke the router load the page.
+invoke the router to load the page.
 
 ```js
 {
@@ -136,11 +136,11 @@ When stepping backward and forward through the browser history there is
 usually some "view state" that needs to be captured and restored.  
 
 The main example of this is saving and restoring the current 
-scroll position - nobody want's to hit the back button and then have
+scroll position - nobody wants to hit the back button and then have
 to scroll to get back to where the were before.
 
 The router supports capturing any view state you need, but often the 
-scroll position is enough so we've included a component can do this
+scroll position is enough so we've included a component that can do this
 automatically.
 
 All you need to do is create an instance of it and pass it the router
@@ -153,7 +153,7 @@ new ViewStateRestoration(router);
 
 ## Next Steps
 
-For many single page apps, what's been described above is enough and if
+For many single page apps, what's been described above will cover most requirements.  If
 you use the CodeOnly project generator to create a single-page app it
 will setup all this for you automatically.
 
