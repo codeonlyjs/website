@@ -5,288 +5,144 @@ projectTitle: CodeOnly
 ---
 # Router Basics
 
+CodeOnly include s simple but flexible router for use in single page apps.
+
 <div class="tip">
 
-TODO: This documentation is mostly out of date and needs to be updated.
+Not sure what a router is?
+
+In single page apps, page navigation is handled by the application itself - 
+not by the browser. A router provides a way to use browser displayed
+URLs to navigate within your app.
 
 </div>
 
+## Features
 
-CodeOnly includes a simple, but flexible URL router designed for use
-in single-page apps.
+The router supports the following features:
 
-The router requires the History API and provides normal web-history
-style routing (not hash based routing).
+* Centralized or distributed route configuration
+* Use URL patterns or regular expressions to match routes
+* Fine grained URL matching via a callback
+* Async events and hooks
+* Navigation cancellation (aka "Navigation Guards")
+* Uses the browser's History API
+* Supports normal URLs (may require minimal server support) or
+  hash based URLs
+* View state persistence (eg: scroll position)
+* URL base prefix and other URL mapping
+* Supports pre and post navigation async data loads
 
-## Router Class and Singleton Instance
 
-The router functionality is implemented by the `Router` class:
+
+## Quick Overview
+
+The get an idea for how the router works, lets start with a simple example.
+
+Central to routing is the Router object itself.  
+
+We recommend a using file named `router.js` that exports a singleton router
+instance:
+
+router.js:
 
 ```js
 import { Router } from "@codeonlyjs/core";
 
-// Create router
-let router = new Router();
-
-// Use router...
+// Create the router
+export let router = new Router( /* Create the router instance */
+    new WebHistoryRouterDriver() /* We'll cover this later */
+);
 ```
 
-However since you only ever need one instance, there is a built-in
-singleton instance available as `router`.
+Next, we register "router handlers" with the router.  
+
+A route handler is an object that matches URLs to pages in your app.
+
+This example sets up a router handler for an `/about` page url.
 
 ```js
-import { router } from "@codeonlyjs/core";
+import { router} from "./router.js"; /* This is the router object from above */
 
-// Use router...
-```
-
-## Router Framework
-
-Routing involves the following participants:
-
-* Router - the router itself responsible for handling browser navigation events 
-  and mapping them to routes.
-* Route handlers - objects registered with the router to provide URL
-  matching and handling.
-* Route instances - an object that represents a matched URL and includes
-  information like the URL, the associated handler, state and any other data the 
-  handler wishes to associate with the route.
-* Router listener - listens to navigation events from the Router and updates
-  the DOM with the newly navigated to route.
-
-
-## Registering Route Handlers
-
-Route handlers are registered using the Router's `register` function which expects
-an object with properties that control the route handler's behaviour:
-
-```js
-router.register({
-    // The URL pattern this route handler matches
-    pattern: "/about",
-
-    // A handler called if pattern matches
-    match: (route) => {
-
-        // Create component for this object
-        route.page = new AboutPageComponent();
-
-        // Return true to confirm match of this route
-        return true;
+router.register({ /* Register this route handler with the router */
+    pattern: "/about", /* This is the URL we handle */
+    match: (to) => { /* After the pattern matches, the match function is called */
+        to.page = new AboutPageComponent(); /* Create a component to display for this page */
+        return true; /* Return true to accept the match */
     }
 });
 ```
 
-The following properties are supported:  All are optional except
-for the `match` method.
+Finally, we need to listen to the router for navigation events and
+update what's shown for the new URL.  
 
-* `pattern` - an optional `RegExp` or string specifying a URL pattern for this
-    route handler to match against.  If not specified, the `match` function will
-    be called for all URLs.
-
-    If the pattern is a string, it's converted to a RegExp using the [`urlPattern`](utilities#urlpattern-function)
-    function.
-
-* `match(route)` - a callback that is invoked once the pattern has been matched (or always
-    if pattern is not specified).  
-  
-    `route` will be a partially constructed route object
-    with the `url`, `originalUrl`, `match`, `viewState` and `state` parameters set.
-
-    The `match` function can reject the match by returning `false`, or accept it by
-    returning `true`.  When matching, a route handler will typically set additional properties on the route (eg: the page component instance to show).
-
-    If the match function returns `null`, router navigation is canceled and the navigation
-    passed back to the browser to do page load navigation.
-
-* `leave(route)` - a callback invoked when navigating away from any route matched
-    by this handler.
-
-* `order` - an optional numeric value indicating the order this route handler
-    should be matched in comparison to others.  Defaults to `0` if not specified.
-
-* `captureViewState` - a function that returns a JSON serializable object representing
-    the current view state (eg: scroll position).  See below for more information
-    about view state restoration.
-
-* `restoreViewState` - a function that restores a previously captured view state.
-
-
-## Registering Navigation Listeners
-
-Once a route has been matched, it's up to your application to do something with
-that matched route by listening to the "navigate" event.
+Usually this is done by receiving a page component (eg: the 
+`AboutPageComponent` from above) and loading it into an [embed-slot](templateEmbedSlots)
+designated for showing router page content.
 
 ```js
-router.addEventListener("navigate", () => {
+router.addEventListener("didEnter", (from, to) => { /* Notifies that navigation happened */
 
-    // Load navigated page into router slot
-    if (router.current.page)
-        this.routerSlot.content = router.current.page;
+    // Load page into our embed slot
+    this.routerContentSlot.content = to.page;  /* Load the page component from above into a slot */
 
 });
 ```
 
+<div class="tip">
 
-## The Router Object
+Note that the router itself knows nothing about components, templates, 
+or embed slots.
 
-The `router` class instance supports the following methods and properties:
+Instead you attach the information and objects your app needs to the route 
+object (the `to` object in the above callbacks) and use it however suits 
+your app.
 
-* `current` - the route object of the currently matched URL
-* `navigate` - starts forward navigation to a new in-app page
-* `back` - starts backward navigation to the previous page, or if there is
-    no previous page to the home page.
-* `register` - registers a route handler
-* `prefix` - a path prefix if the application is mounted in a sub-path (set this
-    before calling the `start` method)
-* `start` - starts the router, connecting to window and history events and
-    performing the initial page navigation for the starting URL.
+</div>
 
+To sum up:
 
-## The Route Object
-
-Once a URL is matched to a route handler, a `route` object is created
-representing the current route with the following properties:
-
-* `url` - the matched url
-* `originalUrl` - the original full URL before the prefix was stripped
-* `match` - the result of running the pattern RegExp against the URL
-* `handler` - the route handler that matched the URL
-* `state` - any previously saved history state
-* `viewState` - any previously captured view state information
-
-The route handler can attach any additional information to the route
-object as required.  Although not required, typically, by convention
-a route handler will set a `.page` property to the component that
-implements the route's view.
-
-In the above examples, note how the `/about` route handler creates an 
-`AboutPageComponent` instance and stores it in the route's `page` property.
-This component instance is then picked up by the `navigate` listener 
-elsewhere in the app and loaded into an `EmbedSlot`.
+1. Create a router object
+2. Register route handlers to match URLs, create page components for the URL's 
+   content and attach them to the route object
+3. Register an event listener for navigation events and use information attached
+   to the route object to re-configure what's shown on-screen
 
 
+## Terms and Concepts
 
-## Creating Links to Routes
+When working with the router, there's a few terms and concepts you should be
+familiar with. We'll cover all these in detail, but it's good to have a high
+level view of all the pieces:
 
-The router listens for any clicks on anchor elements with a `href` that
-starts with a `/` and, if set, matches the `router.prefix`.
+* The Router - the central manager of routing.  The router it handles load 
+  requests, matches them to route handlers and dispatches events that provide 
+  hooks into the navigation process.
 
-All other clicks on links will be ignored by the router and normal
-page load navigation will take place.
+* Route Handlers - objects registered with the router that can match a URL
+  and populate a route object with information associated with the route.
 
+* Route Objects - a route object represents everything about the current 
+  navigation. This includes the URL, the matched handler and anything else the
+  handler (ie: your application) want's to associate with this route.
 
+* Navigation Events - on each navigation the router goes through a sequence
+  of events to fully resolve and handle the URL being loaded.  As it does so 
+  it fires events to the source and target route handlers and to other listeners.
 
-## Reverting to Browser Navigation
+* Router Driver - the router itself interacts with the browser through a 
+  "driver".  The included `WebHistoryRouterDriver` provides the glue
+  between the router and the browser's History API.
 
-If you have links that look like in-app links but are actually out-of-page 
-links, you can force page load navigation by returning `null` from a route
-handler's `match` function.
+* View State Persistance - when navigating forward/back through the browser 
+  history there will be "view state" that needs to be captured and 
+  restored.  The main example of this is saving and restoring the current 
+  scroll position.
 
-eg: suppose `/admin` should leave the single page app and load a separate
-page.
+* Internal URLs - URLs in the form as understood by your application.
 
-```js
-router.register({
-    pattern: "/admin"
-    match: (r) => null,         // null means cancel router and pass to browser.
-});
-```
+* External URLs - URLs in the form as shown in the browser address bar.
 
-
-
-## Typical Setup
-
-The following shows a typical setup for using the router.
-
-Firstly, create a component for each of your pages and register a 
-route handler for it.  
-
-If your page requests async data, set its `loading` property before 
-returning from the `match` function to prevent the router from 
-trying to restore the scroll position until the page data is loaded.
-(See below for more about view state restoration)
-
-```js
-import { Component, router } from `codeonly`
-
-// A component for the product page
-class ProductPage extends Component
-{
-    constructor(product_id)
-    {
-        this.product_id = product_id;
-        this.load();
-    }
-
-    async load()
-    {
-        // Set loading flag to prevent scroll position
-        // restoration until initial load is complete
-        this.loading = true;
-        let data = await api.getProduct(this.product_id);
-        this.loading = false;
-    }
-
-    // etc...
-}
-
-// Register route handler
-router.register({
-    pattern: "/product/:productId",
-    match: (route) => {
-
-        // Create new product page
-        route.page = new ProductPage(route.match.groups.productId);
-
-        // Indicate we've matched this route
-        return true;
-
-    },
-});
-
-```
-
-Next, listen for the "navigate" event and load the created page into
-the main content area of your app.  Also, call the router's `start` method to hook up event handlers and
-do the initial page navigation.
-
-```js
-import { Component, router } from `codeonly`
-
-// Main application instance mounted to DOM
-class Application extends Component
-{
-    constructor()
-    {
-        // Listen for navigate event
-        router.addEventListener("navigate", () => {
-
-            // Load navigated page into router embed slot
-            if (router.current.page != null)
-                this.routerSlot.content = router.current.page;
-
-        });
-
-        // Start the router (connect to window and history 
-        // navigation events, do initial page navigation).
-        router.start();
-    }
-
-
-    static template = {
-        type: "main",
-        $: [
-            { 
-                // Router pages will be loaded here
-                type: "embed-slot", 
-                bind: "routerSlot",
-            },
-        ]
-    };
-}
-
-```
-
-That's it for simple page navigation.
-
+* URL Mapper - the process of converting internal to external URLs and vice
+  versa.  Often internal and external URLs are the same, but URL mapping
+  can be used for for URL base prefixes and for hash based navigation.
