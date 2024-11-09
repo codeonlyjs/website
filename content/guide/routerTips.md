@@ -124,3 +124,24 @@ function doesn't have anywhere to go back to.  The router detects this
 case and instead navigates to the home page - as indicated by the 
 `router.prefix` if set, otherwise `/`.
 
+
+## Out of App Links
+
+This works fine for most links, except when you have links that look like
+internal page links, but in-fact require external page load.
+
+For example, suppose you needed to create a link an admin page at
+`/admin` - but the admin page is implemented separately to your main
+app and needs a normal external page load, not an in-app page load.
+
+For these cases provide a route handler that returns `null` from its 
+`match` function and the router will do an external page load.
+
+```js
+router.register({
+    pattern: "/admin", 
+    match: () => null
+});
+```
+
+

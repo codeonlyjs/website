@@ -36,9 +36,10 @@ The CodeOnly router supports the following features:
 
 ## Quick Overview
 
-The get an idea for how the router works, let's start with a simple example.
+To get an idea for how the router works, let's start with a simple example.
 
-Central to routing is the Router object itself.  
+Central to routing is the Router object itself which needs to be created
+and configured by your application.
 
 We recommend a using file named `router.js` that exports a singleton router
 instance:
@@ -58,9 +59,8 @@ new ViewStateRestoration(router); /* Save and restore the scroll position betwee
 
 ```
 
-Next, we register "router handlers" with the router.  
-
-A route handler is an object that matches URLs to pages in your app.
+Next, we register "route handlers" with the router. A handler is an 
+object that matches URLs to pages in your app.
 
 This example sets up a router handler for an `/about` page url.
 
@@ -98,24 +98,41 @@ Note that the router itself knows nothing about components, templates,
 or embed slots.
 
 Instead you attach the information and objects your app needs to the route 
-object (the `to` object in the above callbacks) and use it however suits 
-your app.
+object and use it however suits your app.
 
 </div>
 
 To sum up:
 
 1. Create a router object
-2. Register route handlers to match URLs, create page components for the URL's 
-   content and attach them to the route object
-3. Register an event listener for navigation events and use information attached
-   to the route object to re-configure what's shown on-screen
+2. Register route handlers to match URLs and to create page components for 
+   the URL's content and store them on the route object
+3. Register an event listener for navigation events and use information 
+   stored on the route object to re-configure what's shown on-screen
 
+
+
+## Creating Links to Routes
+
+Of course there's not much point having a router without links to URLs
+that the router can work with.  But, there's nothing special to do here.
+
+Just create the anchor elements (eg: `<a href="/about">`) as per normal 
+and the router will automatically detect clicks on in-app links and
+invoke the router load the page.
+
+```js
+{
+    type: "a",
+    attr_href: "/about",
+    text: "About this Site",
+}
+```
 
 
 ## View State Restoration
 
-When navigating back and forward through the browser history there is 
+When stepping backward and forward through the browser history there is 
 usually some "view state" that needs to be captured and restored.  
 
 The main example of this is saving and restoring the current 
@@ -126,7 +143,7 @@ The router supports capturing any view state you need, but often the
 scroll position is enough so we've included a component can do this
 automatically.
 
-All you need to do is create an instance of it and pass is the router
+All you need to do is create an instance of it and pass it the router
 object.
 
 ```js
@@ -136,12 +153,11 @@ new ViewStateRestoration(router);
 
 ## Next Steps
 
-For many single page apps, what's been described above is enough. 
+For many single page apps, what's been described above is enough and if
+you use the CodeOnly project generator to create a single-page app it
+will setup all this for you automatically.
 
-Also, the CodeOnly single page project generator will automatically 
-configure all this for you.
-
-For more complex setups though,  let's dig into [the details](routerDetails)...
+For more complex setups though, let's dig into [the details](routerDetails)...
 
 
 

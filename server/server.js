@@ -30,6 +30,10 @@ app.use("/", express.static(path.join(__dirname, "public")));
 // API routes
 app.use("/api", apiRoutes);
 
+app.use((req, res, next) => {
+    next();
+});
+
 // Logout
 app.get("/logout", (req, res, next) => {
     sessionLogout(res);

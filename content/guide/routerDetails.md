@@ -17,7 +17,7 @@ familiar with. We'll cover all these in detail, but it's good to have a high
 level view of all the pieces:
 
 * The Router - the central controller for route operations.  The router 
-  receives URL load requests, matches them to route handlers and dispatches 
+  receives URL load requests, matches them to route handlers and fires 
   events that provide hooks into the navigation process.
 
 * Navigation Events - on each navigation the router goes through a sequence
@@ -25,12 +25,13 @@ level view of all the pieces:
   it fires events to the source and target route handlers and to other 
   listeners.
 
-* Route Handlers - objects registered with the router that can match a URL
-  and populate a route object with information associated with the route.
+* Route Handlers - these are objects the your application registers with the 
+  router. They're responsible for matching to recognized URL's and populating
+  the route object with information about the page to be shown..
 
 * Route Objects - a route object represents everything about the current 
   navigation. This includes the URL, the matched handler and anything else the
-  handler (ie: your application) want's to associate with this route.
+  handler (ie: your application) wants to associate with this route.
 
 * Router Driver - the router itself interacts with the browser through a 
   "driver".  The included `WebHistoryRouterDriver` provides the glue
@@ -43,29 +44,27 @@ level view of all the pieces:
 
 * Internal URLs - URLs in a form understood by your application.
 
-* External URLs - URLs in a form as shown in the browser address bar.
+* External URLs - URLs in a form as seen by the browser (and the user).
 
-* URL Mapper - the process of converting internal to external URLs and vice
-  versa.  Often internal and external URLs are the same, but URL mapping
-  can be used for for URL base prefixes and for hash based navigation.
+* URL Mapper - the object the can internalize and externalize URLs. 
 
 Let's take a look at each of these concepts in a more details...
 
 
 ## The Router
 
-The `Router` class is the main participant responsible for routing.
+The `Router` class is the main participant involved in routing.
 
 It's main responsibilities include:
 
 * Receiving URL load requests
 * Matching URLs to route handlers
-* Firing a sequence of events for every navigation event
+* Firing a sequence of events for each URL navigation
 * Handling clean up of cancelled navigations
 
 Almost always, there's only ever a single instance of the router 
-and by convention we usually configuring it a file named `router.js`
-that exports the singleton `router` object instance:
+and by convention we usually create and configure it a file named 
+`router.js` that exports a singleton `router` object instance:
 
 ```js
 import { Router } from "@codeonlyjs/core";
@@ -87,12 +86,13 @@ pass through to the router driver.
 
 ## Navigation Events
 
-When the Router receives a URL load request, it proceeds through a 
-sequence of steps to "leave" the old route, and "enter" the new route.
+When the Router receives a URL load request and after it has matched it
+to a router handler, it proceeds through a series of steps to "leave" the 
+old route, and "enter" the new route.
 
-These steps are in two phases:
+These steps take place in two phases:
 
-* The "may navigate" phase - an series of events where route
+* The "may navigate" phase - a series of events where route
   handlers and event listeners can perform async operations and
   optionally cancel the navigation.
 
@@ -100,11 +100,13 @@ These steps are in two phases:
   steps that notify that the old route will be left and the new 
   route will be entered.
 
-Within each phase, the Router both fires general events that anyone
-can listen for and targeted calls to the route managers of the route
-being left and the route being entered.
+Within each phase, the Router fires fires two kinds of events: 
 
-The full set of steps is as follows:
+  1. general events that anyone can listen for and 
+  2. targeted calls to the route managers of the route being left and 
+    the route being entered.
+
+The full sequence of events is as follows:
 
 Firstly, Phase 1, the cancellable, async "may navigate" phase starts:
 
@@ -353,7 +355,23 @@ router.urlMapper = new UrlMapper({
 Now, an internal URL of `/about` would be externalized to `/#/about` (and vice-versa)
 
 Note: when creating `<a>` links in your application, you should use the external
-URL not the internal one.
+URL not the internal one.  This can be easily done by calling the Router's 
+externalize method:
 
+```js
+{
+    type: "a",
+    attr_href: router.externalize("/about"),
+    text: "About this Site",
+}
+```
 
+<div class="tip">
 
+In the above example, we're not using a dynamic callback
+for the `attr_href` attribute because it's not a dynamic 
+value.  You just need to make sure the router is configured
+and the UrlMapper connected before the template is parsed
+by the JavaScript module loader.
+
+</div>

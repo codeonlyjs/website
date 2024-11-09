@@ -160,7 +160,7 @@ To create a CodeOnly Single Page App project:
    "MyNewProject" with the name of your project):
 
     ```
-    npx codeonlyjs/cli new spa MyNewProject
+    npx codeonlyjs/cogent new spa MyNewProject
     ```
 
 This will create a new directory containing everything required for a
@@ -219,7 +219,7 @@ To generate a full stack project:
    "MyNewProject" with the name of your project):
 
     ```
-    npx codeonlyjs/cli new fullstack MyNewProject
+    npx codeonlyjs/cogent new fullstack MyNewProject
     ```
 
 This will create a new directory containing the new project files.
