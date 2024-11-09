@@ -2,18 +2,25 @@ export let featureBoxes = [
     {
         title: "Tool Free",
         body: `No transpiling, packaging or bundling to slow things down. 
-               Debug, edit and save your code in the browser <em>exactly</em> 
+               Debug your code in the browser <em>exactly</em> 
                as you wrote it.`
     },
+    {
+      title: "Build Anything",
+      body: `Tiny web widgets, single page apps or full-stack setups. 
+             All in plain, clean and modern ES6 JavaScript.`
+    },
+    /*
     {
         title: "Non-Reactive",
         body: `Non-reactive and non-intrusive. No wrapper functions or proxies.
                Everything is kept as close to pure JavaScript as possible.`
     },
+    */
     {
         title: "Fast and Small",
-        body: `DOM templates are JIT compiled, minimal DOM updates and we've 
-               tuned it to run <em>fast!</em><br>&lt; 14kB gzipped.`
+        body: `DOM templates are JIT compiled and produce minimal DOM updates and we've 
+               tuned it to run <em>fast!</em>.  ~14kB gzipped.`
     },
 ];
 

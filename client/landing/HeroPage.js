@@ -27,7 +27,7 @@ export class HeroPage extends Component
             },
             {
                 type: "h2",
-                text: "The Web framework for coders.",
+                text: "The front-end Web framework for coders.",
             },
             {
                 type: "div",

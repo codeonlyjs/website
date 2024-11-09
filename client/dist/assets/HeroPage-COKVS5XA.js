@@ -90,10 +90,10 @@ var mt=Object.defineProperty;var Qe=o=>{throw TypeError(o)};var gt=(o,e,t)=>e in
 }
 
 `);let kt=[{title:"Tool Free",body:`No transpiling, packaging or bundling to slow things down. 
-               Debug, edit and save your code in the browser <em>exactly</em> 
-               as you wrote it.`},{title:"Non-Reactive",body:`Non-reactive and non-intrusive. No wrapper functions or proxies.
-               Everything is kept as close to pure JavaScript as possible.`},{title:"Fast and Small",body:`DOM templates are JIT compiled, minimal DOM updates and we've 
-               tuned it to run <em>fast!</em><br>&lt; 14kB gzipped.`}],qt=`### Logic, Templates and Styles...
+               Debug your code in the browser <em>exactly</em> 
+               as you wrote it.`},{title:"Build Anything",body:`Tiny web widgets, single page apps or full-stack setups. 
+             All in plain, clean and modern ES6 JavaScript.`},{title:"Fast and Small",body:`DOM templates are JIT compiled and produce minimal DOM updates and we've 
+               tuned it to run <em>fast!</em>.  ~14kB gzipped.`}],qt=`### Logic, Templates and Styles...
 
 ...all in self contained .js files.
 
@@ -140,7 +140,7 @@ Style.declare( /* CSS styles (with \`.counter\` as scoping class) */
 
 [Read the Guide](/guide/)
 
-`;class Ft extends De{onMount(){stylish.addEventListener("darkModeChanged",this.invalidate),document.documentElement.classList.add("home-colors")}onUnmount(){stylish.removeEventListener("darkModeChanged",this.invalidate),document.documentElement.classList.remove("home-colors")}}A(Ft,"template",{type:"main",class:"hero",$:[{type:"img",id:"hero",attr_src:e=>`/hero-${stylish.darkMode?"dark":"light"}.svg`},{type:"h2",text:"The Web framework for coders."},{type:"div",class:"row",$:kt.map(e=>Bt(e))}]});function Bt(o){return{type:"div",class:"box",$:[Re.h(3,o.title),Re.p(Re.raw(o.body))]}}tt.declare(`
+`;class Ft extends De{onMount(){stylish.addEventListener("darkModeChanged",this.invalidate),document.documentElement.classList.add("home-colors")}onUnmount(){stylish.removeEventListener("darkModeChanged",this.invalidate),document.documentElement.classList.remove("home-colors")}}A(Ft,"template",{type:"main",class:"hero",$:[{type:"img",id:"hero",attr_src:e=>`/hero-${stylish.darkMode?"dark":"light"}.svg`},{type:"h2",text:"The front-end Web framework for coders."},{type:"div",class:"row",$:kt.map(e=>Bt(e))}]});function Bt(o){return{type:"div",class:"box",$:[Re.h(3,o.title),Re.p(Re.raw(o.body))]}}tt.declare(`
 main.hero
 {
     text-align: center;
