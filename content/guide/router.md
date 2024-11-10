@@ -83,7 +83,7 @@ Registers route handlers with the router.
 
 ### revoke(predicate)
 
-Revokes route handlers that don't match a predicate.
+Revokes route handlers that match a predicate.
 
 * `predicate(handler)` - callback that will be passed each currently registered
 handler.  Return true to revoke the handler, false to keep it.
