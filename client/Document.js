@@ -103,29 +103,37 @@ export class Document
         let codeBlocks = [];
         while (ev = walker.next())
         {
+            // Entering a h2 or h3?
             if (ev.entering && ev.node.type === 'heading' && 
                 (ev.node.level == 2 || ev.node.level == 3) )
-
             {
                 currentHeading = ev.node;
             }
 
+            // Capture heading text
             if (currentHeading != null && ev.node.type === 'text')
             {
                 headingText += ev.node.literal;
             }
 
+            // Exiting heading?
             if (!ev.entering && ev.node == currentHeading)
             {
+                // Convert heading text to an id and build a 
+                // heirarchy of headings/sub-headings for
+                // the side panel
                 let id = convertHeadingTextToId(headingText);
                 if (id.length > 0)
                 {
+                    // Create a heading
                     let heading = {
                         node: ev.node,
                         text: headingText,
                         id,
                     };
                     this.allHeadings.push(heading);
+
+                    // Construct heirarchy
                     if (ev.node.level == 2)
                     {
                         this.headings.push(currentH2 = heading);
@@ -139,17 +147,20 @@ export class Document
                     }
                     currentHeading = false;
                 }
+
+                // Reset for next heading
                 headingText = "";
                 currentHeading = null;
             }
 
+            // Remember code blocks - we'll highlight them later
             if (ev.entering && ev.node.type == 'code_block')
             {
                 codeBlocks.push(ev.node);
             }
         }
 
-        // Insert the # links
+        // Insert the "#" links on all id headings
         for (let h of this.allHeadings)
         {
             let n = new commonmark.Node("html_inline", h.node.sourcepos);
@@ -164,21 +175,57 @@ export class Document
             // Only javascript blocks
             if (cb.info != 'js' && cb.info != 'html' && cb.info != 'css')
                 continue;
+            
+            // Get the code
             let code = cb.literal;
+
+            // Strip off the demo marker if present
             let isDemo = code.startsWith("// demo");
             if (isDemo)
                 code = code.substring(7).trimStart();
+
+            // Pull out Style.declare() blocks
+            let cssBlocks = [];
+            code = code.replace(/Style\.declare\(`([^`]*)`\)/g, (m, css) => {
+                cssBlocks.push(css);
+                return `Style.declare("-- style block ${cssBlocks.length} --")`
+            });
+
+            // Highlight the code
             let html = hljs.highlight(code, { 
                 language: cb.info, 
                 ignoreIllegals: true
             });
-            html.value = html.value.replace(/<span class="hljs-comment">\/\* i: ([\s\S]*?)\*\/<\/span>/g, `<span class="note"><span class="inner">$1</span></span>`);
+
+            // Highlight nested CSS blocks
+            for (let i=0; i<cssBlocks.length; i++)
+            {
+                let css = hljs.highlight(cssBlocks[i], {
+                    language: 'css', 
+                    ignoreIllegals: true
+                });
+
+                let declare = `\`${css.value}\``;
+
+                html.value = html.value.replace(`&quot;-- style block ${i+1} --&quot;`, declare);
+            }
+
+            // Convert info-tip comments
+            html.value = html.value.replace(
+                /<span class="hljs-comment">\/\* i: ([\s\S]*?)\*\/<\/span>/g, 
+                `<span class="note"><span class="inner">$1</span></span>`
+            );
+
+            // Wrap code block
             let wrapper_html = `<pre><code class="hljs language-${html.language}">${html.value}</code></pre>\n`;
 
+            // If it's a demo
             if (isDemo)
-            {
+            {  
+                // Remove C style comments
                 code = code.replace(/\s\/\*.*\*\//g, "");
 
+                // Insert thte temo block
                 let id = `demo-${this.demos.length}`
                 this.demos.push({ id, code });
                 wrapper_html += `
@@ -191,12 +238,14 @@ export class Document
 `;
             }
 
+            // Update markdown AST with the new raw HTML block
             let html_block = new commonmark.Node("html_block", cb.sourcepos);
             html_block.literal = wrapper_html;
             cb.insertBefore(html_block);
             cb.unlink();
         }
 
+        // Render final HTML
         let renderer = new commonmark.HtmlRenderer();
         let oldAttrs = renderer.attrs;
         renderer.attrs = (node) =>
@@ -212,7 +261,6 @@ export class Document
             }
             return att;
         }
-
         this.html = renderer.render(this.ast);
     }
 }
