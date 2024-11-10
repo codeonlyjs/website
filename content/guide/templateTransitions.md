@@ -6,7 +6,7 @@ title: "Transitions"
 CodeOnly provides support for CSS transitions when the following 
 actions occur:
 
-* Insert and removing content with `if` directives
+* Inserting and removing content with `if` directives
 * Showing and hiding elements with the `display` directive
 * Adding or removing a class with boolean `class_` directives
 * Changing an items `key`
@@ -36,7 +36,7 @@ the in-state to the out-state is it said to be leaving.
 ## Declaring Transition Conditions
 
 To declare that a setting should trigger transitions, wrap the callback 
-that determines the entered/left state with the `transition`
+that determines the in/out state with the `transition`
 function:
 
 ```js
@@ -297,20 +297,25 @@ When a transition is triggered by a key change:
 * the old instance of the element is transitioned out
 
 This can be used to create transitions between values.  In the 
-above example you could create a cross fade effect between the
-counter value as it changes, or you could slide the old value
+above example you could create a cross fade effect as the
+counter value changes, or you could slide the old value
 out and the new value in etc...
 
+<div class="tip">
+  
+The `key` property is not to be confused with the item keys
+used by `foreach` directices. 
 
+</div>
 
 ## Transition Options
 
 Transitions have various options that control
  transition behaviour.  
 
-Set these options by passong an object to the transition function. 
+Set these options by passing an object to the transition function. 
 
-The original value callback can be specifies with the `value` key:
+The value callback can be specified with the `value` key:
 
 The following is equivalent to `transition(c => c.showThisDiv)`.
 
@@ -329,7 +334,7 @@ values and objects.  Each successive argument is merged
 over thr previous ones:
 
 * a function argument is merged as the value property
-* a string argument is merges as the name property
+* a string argument is merged as the name property
 * an object is merged using Object.assign. 
 
 
@@ -369,7 +374,7 @@ transitions run one after the other.
 ]
 ```
 
-The mode propery can be a stting or a callback returning a string. 
+The mode propery can be a string or a callback returning a string. 
 
 ## Setting a CSS Class Name Prefix
 
@@ -445,7 +450,7 @@ TransitionCss.defaultClassNames = {
 
 ## JavaScript Notifications
 
-To receive notifications of when a transition starts, ends or is 
+To receive notifications when a transition starts, ends or is 
 cancelled, set callbacks on the options object:
 
 * `on_start` - notifies a transition has started
@@ -494,12 +499,12 @@ and passed the following parameters:
 
 <div class="tip">
 
-The Component object is available as the `context.model` property.
+The owning Component instance is available as the `context.model` property.
 
 </div>
 
-The object constructed by the constructor is expected to have the 
-following members, all required:
+The object returned by the constructor is expected to have the 
+following members, all of which are required:
 
 ### enterNodes(nodes)
 
@@ -509,7 +514,7 @@ all passed nodes.
 
 ### leaveNodes(nodes)
 
-Same as `enterNodes` except it passes the nodes that are leaving.
+Same as `enterNodes` except it receives the nodes that are leaving.
 
 ### onWillEnter(callback)
 
@@ -535,10 +540,9 @@ be lost.
 
 Instructs the transition to start.  
 
-Once `start` has been called
-the transition must call the `onWillEnter` and `onDidLeave` supplied
-callbacks - either at some point in the future when the transition has
-finished naturally, or in response to the `finish` method being called.
+Once `start` has been called the `onWillEnter` and `onDidLeave` supplied
+callbacks must be called - either at some point in the future as the transition
+runs, or in response to the `finish` method being called.
 
 Further, `onWillEnter` and `onDidLeave` must be called
 exactly once each. 
