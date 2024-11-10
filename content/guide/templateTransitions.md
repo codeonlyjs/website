@@ -3,40 +3,40 @@ title: "Transitions"
 ---
 # Transitions
 
-CodeOnly provides support for CSS transitions on various 
-operations in templates:
+CodeOnly provides support for CSS transitions when the following 
+actions occur:
 
 * Insert and removing content with `if` directives
 * Showing and hiding elements with the `display` directive
-* Adding or removing a called with boolean `class_` directives
-* Changing the `key` on an item
+* Adding or removing a class with boolean `class_` directives
+* Changing an items `key`
 
-Transitions are supported by adding CSS classes to the element(s) 
+Transitions are controlled by adding CSS classes to the element(s) 
 affected by the operation before the operation and removing those
 classes when all pending animations have completed.
 
 ## In/Out States
 
 All transitions currently supported by CodeOnly are considered
-to be in either an in-state or an out-state". 
+to be in either an in-state or an out-state. 
 
-* For `if` directives, an included item is the in-state,
-  and an exluded item is in the out-state.
-* For `display` directives, a shown item is in the in-state, a hidden
+* `if` directives - the active branch has the in-state and all other branches
+  are in the out-state.
+* `display` directive - a shown item is in the in-state, a hidden
   item is in the out-state.
-* For boolean `class_` directives, a true condition is the in-state 
+* `class_` directives - a true condition is the in-state 
   and a false condition is the out-state.
 
 When the state of an element switches from the out-state to the 
-in-state it is said to be "entering" and when an item switches from 
+in-state it is said to be "entering".  When an item switches from 
 the in-state to the out-state is it said to be leaving.
 
 
 
 ## Declaring Transition Conditions
 
-To declare that a setting should be transitioned, wrap the callback
-function that determines the entered/left state with the `transition`
+To declare that a setting should trigger transitions, wrap the callback 
+that determines the entered/left state with the `transition`
 function:
 
 ```js
@@ -56,6 +56,14 @@ class MyComponent extends Component
     }
 }
 ```
+
+<div class="tip">
+
+For if blocks the transition wrapper must be on the first
+if branch if there are else or elseif branches. 
+
+</div>
+
 
 The same format is used for the `display` directive:
 
@@ -107,11 +115,11 @@ Looking at this from the perspective of an entering element:
 
 1. Before the element is switched to the entered state, the `tx-active`,
    `tx-entering`, `tx-enter-start` and `tx-out` classes are added.
-2. The element is "entered" - ie: added to the DOM, shown etc...
+2. The element is "entered" - ie: the DOM is mutated.
 3. One frame later the `tx-enter-start` and `tx-out` classes are removed
    and the `tx-enter-end` and `tx-in` classes are added
 4. The elements and all their child elements are monitored for animations 
-   and transitions and once all have finished all the transition classes
+   and transitions and once all have finished the transition classes
    are removed (ie: `tx-active`, `tx-entering`, `tx-enter-end` and `tx-in`).
 
 The inverse happens for a leaving element:
@@ -123,8 +131,9 @@ The inverse happens for a leaving element:
 4. The elements and all their child elements are monitored for animations 
    and transitions and once all have finished all the transition classes
    are removed (ie: `tx-active`, `tx-leaving`, `tx-leave-end` and `tx-out`).
+5. The element is left ie: the DOM is mutated. 
 
-There's a lot to grasp here, and one way to better understand these classes
+There's a lot to grasp here.  One way to better understand these classes
 is to consider symmetric vs asymmetric transitions.
 
 
@@ -139,8 +148,8 @@ A fade in/out transition is symmetric:
 * on entering it starts with opacity 0 and transitions to opacity 1
 * on leaving it starts at opacity 1 and transitions to opacity 0
 
-A slide in/out transition is symmetric if it slides in one direction and
-slides out the opposite direction.
+A slide in/out transition is symmetric if it slides in in one direction and
+slides out in the opposite direction.
 
 A slide in/out transition that slides in from one side of the screen and 
 out the other would not be symmetric because the start and end positions
@@ -159,7 +168,8 @@ For symmetric transitions the following classes can be used
 * `tx-out` - the out state of the transition
 * `tx-in` - the in state of the transition (rarely used)
 
-A fade in/out transition can be configured like this:
+A fade in/out transition can be configured with just two CSS
+declarations:
 
 ```
 .scoping-selector-for-you-element
@@ -178,13 +188,13 @@ A fade in/out transition can be configured like this:
 }
 ```
 
-This example doesn't specify the `tx-in` class because the default opacity
+There's no need to use the `tx-in` class because the default opacity
 of an element is 1 and doesn't need to be explicitly set.
 
 <div class="tip">
 
 We recommend specifying the `transition` properties on the `tx-active` class
-instead of on the non-qualified element selector as it helps avoid conflicts
+instead of the non-qualified element selector as it helps avoid conflicts
 with other transition settings.
 
 </div>
@@ -207,7 +217,7 @@ and these when leaving:
 * `tx-leave-start` - start to leave from
 * `tx-leave-end` - start to leave to
 
-Suppose you wanted to transition that entered by sliding in from below
+Suppose you wanted an animation that entered by sliding in from below
 and left by fading out:
 
 ```
@@ -268,7 +278,7 @@ eg: for a slide in from the bottom, slide out to the top with fading
 
 ## Key Triggered Transitions
 
-The other way a transition can be triggered is by setting a `key`
+Another way to trigger transitions is by setting a `key`
 property on an element:
 
 ```js
@@ -279,12 +289,12 @@ property on an element:
 }
 ```
 
-In this case the transition is triggered when the key changes.
+In this case the transition triggers when the key changes.
 
 When a transition is triggered by a key change:
 
 * a new instance of the element is created and transitioned in
-* the old instance of the elemtn is transitioned out
+* the old instance of the element is transitioned out
 
 This can be used to create transitions between values.  In the 
 above example you could create a cross fade effect between the
@@ -295,11 +305,12 @@ out and the new value in etc...
 
 ## Transition Options
 
-Transitions have various options that can be set to control the
-the transition behaviour.  
+Transitions have various options that control
+ transition behaviour.  
 
-To set these options, pass an object to the transition function 
-with the condition callback specified as the `value` key:
+Set these options by passong an object to the transition function. 
+
+The original value callback can be specifies with the `value` key:
 
 The following is equivalent to `transition(c => c.showThisDiv)`.
 
@@ -313,20 +324,29 @@ The following is equivalent to `transition(c => c.showThisDiv)`.
 }
 ```
 
+Alternatively you can specify options as a series of
+values and objects.  Each successive argument is merged 
+over thr previous ones:
+
+* a function argument is merged as the value property
+* a string argument is merges as the name property
+* an object is merged using Object.assign. 
+
+
+
 
 ## Transition Modes
 
-By default when a transition enters one set of elements and
-leaves another, both the enter and leave transitions run
+By default when a transition has both entering and leaving elements, 
+both the enter and leave transitions run
 concurrently.
 
-For example, on an `if`/`else` block with a fade transition the
-old branch active branch of the `if` block will be faded out at 
+For example, consider an `if`/`else` block with a fade transition. The
+old active branch will be faded out at 
 the same time the new active branch is faded in.
 
-The `mode` option on a `transition` can be used to change this
-so the enter transition runs first and completes before the 
-leave transition starts... or vice versa.
+The `mode` option on a `transition` can be used have the two
+transitions run one after the other. 
 
 * "enter-leave" - run the enter transition then the leave
 * "leave-enter" - run the leave transition then the enter
@@ -349,14 +369,12 @@ leave transition starts... or vice versa.
 ]
 ```
 
-
+The mode propery can be a stting or a callback returning a string. 
 
 ## Setting a CSS Class Name Prefix
 
-There are two ways to customize the CSS class names used in transitions.
-
-By default transitions have a prefix name of "tx-" (as shown in all the
-class names above).  By setting the transition's `name` option the prefix
+By default transitions have a prefix name of "tx-" (as shown in all the 
+above examples).  By setting the transition's `name` option the prefix
 can be changed:
 
 ```js
@@ -372,30 +390,31 @@ can be changed:
 Now the transition will use class names `fade-active`, `fade-out`, 
 `fade-in` etc...
 
-
+The name propery can be a string or a callback returning a string. 
 
 ## Customizing CSS Class names
 
-For even more control over class names you can specify them precisely
-by setting the class names on the transition options:
+For even more control over class names you can explicitly specify them 
+by setting the classNames property in the transition options:
 
 ```js
 {
     type: "div",
     display: transition({
         value: c => c.showThisDiv,
-        "entering": "my-enter",
-        "enter-start": "my-enter-start",
-        "enter-end": "my-enter-end",
-        "leaving": "my-leaving",
-        "leave-start": "my-leave-start",
-        "leave-end": "*my-leave-end",
+        classNames: {
+            "entering": "my-enter",
+            "enter-start": "my-enter-start",
+            "enter-end": "my-enter-end",
+            "leaving": "my-leaving",
+            "leave-start": "my-leave-start",
+            "leave-end": "*my-leave-end",
+        },
     })
 },
 ```
 
-
-The default values are:
+Any classes not specified will revert to the defaults:
 
 ```js
 {
@@ -408,7 +427,7 @@ The default values are:
 }
 ```
 
-Note that "`*`" is a place-holder for the transition's name property 
+Note that "`*`" will be replaced by the transition's name property 
 (or "`tx`" if not set) and multiple class names can be specified by 
 separating them with semi-colons.
 
@@ -427,7 +446,7 @@ TransitionCss.defaultClassNames = {
 ## JavaScript Notifications
 
 To receive notifications of when a transition starts, ends or is 
-cancelled, set the function callbacks on the options object:
+cancelled, set callbacks on the options object:
 
 * `on_start` - notifies a transition has started
 * `on_finish` - notifies a transition has finished
@@ -459,15 +478,15 @@ current transition has completed.
 ## Custom Transitions
 
 Everything described above applies to CodeOnly's built-in 
-`TransitionCss` transition.
+`TransitionCss` transition handler. 
 
-You can however built your own transitions that use JavaScript
-or other animation techniques for transitions.
+You can however built your own transition handlers that use JavaScript
+or other animation techniques and libraries for animations.
 
 If the transition options has a `type` property it is used as a
-constructor create a custom transition handler.
+constructor to create a custom transition handler.
 
-The handler is constructed using the JavaScript `new` operator
+The handler is constructed using the `new` operator
 and passed the following parameters:
 
 * `options` - the options object passed to the `transition` function.
@@ -485,8 +504,8 @@ following members, all required:
 ### enterNodes(nodes)
 
 A function that receives an array of nodes being entered.  May be
-called multiple times so the transition object should keep track
-of all passed nodes.
+called multiple times so the transition object should accumulate 
+all passed nodes.
 
 ### leaveNodes(nodes)
 
@@ -497,16 +516,14 @@ Same as `enterNodes` except it passes the nodes that are leaving.
 Receives a function that the custom transition must call when the enter
 phase of the transition is about to start.
 
-The template engine will typically use this callback to add entering
-nodes into the DOM.
+This callback is used to mutate the DOM for the entering state. 
 
 ### onDidLeave(callback)
 
 Receives a function that the custom transition must call after the leave
 phase of the transition has completed.
 
-The template engine will typically use this callback to remove the
-leaving nodes from the DOM.
+This callback is used to mutate the DOM for the leaving state. 
 
 Important: the `onWillEnter` callback must always be called before
 the `onDidLeave`.  This is because usually the entering nodes will
@@ -516,10 +533,16 @@ be lost.
 
 ### start()
 
-Instructs the transition to start.  Once `start` has been called
-the transition must call the `onWillEnter` and `onWillLeave` supplied
+Instructs the transition to start.  
+
+Once `start` has been called
+the transition must call the `onWillEnter` and `onDidLeave` supplied
 callbacks - either at some point in the future when the transition has
 finished naturally, or in response to the `finish` method being called.
+
+Further, `onWillEnter` and `onDidLeave` must be called
+exactly once each. 
+
 
 ### finish()
 
