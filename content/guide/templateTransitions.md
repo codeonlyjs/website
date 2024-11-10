@@ -487,22 +487,22 @@ This can be useful in complex scenarios with many transitions animations where d
 The `duration` is specified in milliseconds and can be:
 
 * A single value used for both the entering and leaving phase of the transition
-* An array of two values, where [0] the duration for the entering phase and [1] for the leaving.
+* An array of two values, where [0] is the duration of the entering phase and [1] of the leaving.
 * A callback that returns one of the above.
 
 
 ### subtree
 
-By default when watching for a transitions to complete, the
+By default when watching for a transition to complete, the
 entire sub-tree of the contained elements are monitored for animations.
 
 If a transition only affects the immediate child elements contained within
 it, the `subtree` property can be set to `false` to only monitor those elements.
 
-This can be used in situations where animated elements either 
+This can be used in situations where:
 
-* have a very deep sub-tree that might be expensive to monitor, or 
-* have other unrelated transitions and animations that might confuse 
+* elements have a very deep sub-tree that might be expensive to monitor, or 
+* helements ave other unrelated transitions and animations that might confuse 
   the end of transition detection.
 
 
