@@ -1,34 +1,40 @@
 ---
-title: "Utility Functions"
+title: "Utilities"
 ---
-# Utility Functions
+# Utilities
 
-Various utility functions.
 
-## deepEqual Function
+## Html Class
 
-Deeply compares two objects, returning true if the same.
+The `Html` class provides utilities functions for use in templates:
 
-```js
-export function deepEqual(a, b)
-```
+### h(level, text)
 
-## htmlEncode Function
+Helper for generating HTML heading tags.
 
-HTML encodes a string.
+### p(text)
 
-```js
-export function htmlEncode(str)
-```
+Helper for generating HTML `<p>` tags
 
-## urlPattern Function
+### a(href, text)
 
-The `urlPattern` function can be used to convert an URL matching pattern to a 
-regular expression.
+Helper for generating HTML `<a>` tags
 
-```js
-export function urlPattern(pattern)
-```
+### raw(text)
+
+Marks a string as "raw" so that it won't be escaped when added to the DOM.
+
+
+### encode(text)
+
+HTML encodes a string
+
+
+## Functions
+
+### urlPattern(pattern)
+
+Converts a URL pattern to a regular expression string.
 
 eg: 
 
@@ -39,10 +45,11 @@ let match = "/foo/bar".match(rx);
 if (match)
 {
     let id = match.groups.id;
+    assert.equal(id, "bar");
 }
 ```
 
-For more examples, see the [unit tests](https://github.com/toptensoftware/codeonly/blob/main/test/urlPattern.js).
+For more examples, see the [unit tests](https://github.com/codeonlyjs/core/blob/main/test/urlPattern.js).
 
 
 

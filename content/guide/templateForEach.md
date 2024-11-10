@@ -1,7 +1,7 @@
 ---
-title: "ForEach Blocks"
+title: "ForEach Directive"
 ---
-# ForEach Blocks
+# ForEach Directive
 
 Nodes in a template can be repeated using the `foreach` directive.
 
@@ -48,7 +48,7 @@ The `itemContext` is an object with the following properties:
 
 ## Dynamic Collections
 
-The above example shows using a `foreach` block with a static 
+The above example shows using a `foreach` directive with a static 
 array of items. 
 
 More typically a dynamic collection is used:
@@ -67,10 +67,10 @@ last update will be reflected in the DOM.
 
 
 
-## Additional ForEach Block Properties
+## Additional ForEach Properties
 
-Usually when working with `foreach` blocks you'll need to specify some
-additional settings to control exactly how the `foreach` block works.
+Usually when working with `foreach` directives you'll need to specify some
+additional settings to control exactly how the `foreach` directive works.
 
 To specify anything more than just the array collection, use an 
 object as the value of the `foreach` key.
@@ -90,7 +90,7 @@ See the sections below for more about these settings.
 
 ## Item Keys
 
-By default, when a `foreach` block is updated it simply re-uses the previous DOM 
+By default, when a `foreach` directive updates it simply re-uses the previous DOM 
 nodes in the same order and updates each with the new item at that position, 
 adding and removing elements at the end of the list match the item count.
 
@@ -98,7 +98,7 @@ This works well for small lists and is easy to use, but for larger lists
 can impact performance because one insert or delete near the start of the list
 means the DOM tree for every subsequent item will need a full update.
 
-To improve this, you can provide a callback to the `foreach` block that supplies
+To improve this, you can provide a callback to the `foreach` directive that supplies
 an item "key" for each item.
 
 For example, suppose we're displaying a list of items with a `name` and `id`
@@ -106,7 +106,7 @@ property:
 
 ```js
 {
-    foreach: { /* i:  This describes the "foreach" block */
+    foreach: { /* i:  foreach directive */
         items: c => items, /* i:  This provides items */
         itemKey: i => i.id, /* i:  This provides item keys for items */
     },
@@ -116,7 +116,7 @@ property:
 }
 ```
 
-Now when the `foreach` block is updated it will re-use the DOM tree from
+Now when the `foreach` updates it will re-use the DOM tree from
 previous items with the same item key for new items with the same item key
 which can dramatically improve the performance as the rest of the item update
 is more likely to become a no-op.
@@ -170,60 +170,3 @@ list of items is empty.
 ```
 
 
-## Use with ObservableArrays
-
-Normally the `foreach` component runs a diff algorithm to work out what needs 
-to be updated in the DOM.  This works well and is very efficient, but
-an alternative appreach is to use CodeOnly's [`ObservableArray`](observableArray).
-
-When the items collection provided to a `foreach` block is an `ObservableArray`,
-the `foreach` block adds a listener and automatically and immediately updates the
-DOM when changes are made.
-
-```js
-import { Component, ObservableArray } from "@codeonlyjs/core";
-
-export class MyComponent extends Component
-{
-    #items = new ObservableArray();
-
-    get items()
-    {
-        return this.#items;
-    }
-
-    someMethod()
-    {
-        this.#items.push(   /* i:  This will trigger the foreach block to update */
-            { text: "new item 1" },
-            { text: "new item 2" },
-        );
-    }
-
-    static template = {
-        type: "section"
-        $: {
-            foreach: c => c.items, 
-            type: "div",
-            text: i => i.text,
-        }
-    }
-}
-```
-
-Note the following when using an `ObservableArray`:
-
-* the `foreach.itemKey` can still be provided and will still help 
-  in matching previous items to new items. (see notes below)
-* the `foreach.condition` callback isn't supported
-* changes to array are reflected in the DOM immediately and not
-  delayed through the `invalidate` mechanism.
-* returning a different observable array instance will reload
-  the entire list (destroy + recreate the DOM) and start
-  monitoring the new observable array.
-
-
-
-## Update Semantics
-
-TODO!

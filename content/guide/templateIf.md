@@ -1,7 +1,7 @@
 ---
-title: "If Blocks"
+title: "If Directive"
 ---
-# If Blocks
+# If Directive
 
 A template node (and all it's children) can be conditionally included or excluded using
 the `if`, `elseif` and `else` directive properties.
@@ -9,7 +9,7 @@ the `if`, `elseif` and `else` directive properties.
 (Note: while the `display` attribute just hides an element, `if` completely excludes it)
 
 
-## The if Directive
+## The `if` Directive
 
 The `if` directive can be used to dynamically include or exclude an items:
 
@@ -27,7 +27,7 @@ The `if` directive can be used to dynamically include or exclude an items:
 }
 ```
 
-## The else Directive
+## The `else` Directive
 
 To declare alternative nodes if the `if` condition is false, on the 
 node immediately after the node with the `if` directive, add an `else`
@@ -54,9 +54,9 @@ For `else` directives, the value is ignored.
 ```
 
 
-## The elseif Directive
+## The `elseif` Directive
 
-You can also include one or more `elseif` blocks after the `if` nodes.
+You can also include one or more `elseif` directives after the `if` nodes.
 
 ```js
 {
@@ -90,7 +90,7 @@ in the containing child node array.
 
 
 
-## Static If Directives
+## Static Conditions
 
 Although not commonly used, an `if` directive can be hard coded as `true` or `false`.  
 
@@ -128,7 +128,7 @@ part of the template will be included or note.
 
 ## Update Semantics
 
-When a template's DOM tree is updated any conditional blocks are re-evaluated by calling
+When a template's DOM tree is updated any conditional directives are re-evaluated by calling
 their condition callbacks.  This is done in order from the first `if` directive through 
 any `elseif` directives and to the last `else` directive (if present).
 
@@ -147,7 +147,7 @@ updated so any dynamic callback properties in that branch are also reflected in 
 
 ## CSS Transitions
 
-Condition blocks can be used in conjunction with CodeOnly CSS transitions to provide 
-animation effects when the active branch changes.
+Condition directives can be used in conjunction with CodeOnly CSS transitions 
+to produce animation effects when the active branch changes.
 
-See [CSS Transitions](templateTransitions) for more on this.
+See [Transitions](templateTransitions) for more on this.

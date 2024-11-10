@@ -111,7 +111,7 @@ export class Document
             }
 
             // Capture heading text
-            if (currentHeading != null && ev.node.type === 'text')
+            if (currentHeading != null && (ev.node.type === 'text' || ev.node.type === 'code'))
             {
                 headingText += ev.node.literal;
             }

@@ -110,11 +110,6 @@ In this discussion, the following terms are used:
 When updating the set of items, the template operates uses one of three
 strategies for updates:
 
-* If the `foreach` block uses an `ObservableArray` for the set of items
-    the list will be updated directly in response to items being added and
-    removed from the observable array.  ie: No changes are made to the set 
-    of DOM elements during `update`.
-
 * If the `foreach` block has a `itemKey` property:
 
     * items with the same key in both the old and new list will re-use the

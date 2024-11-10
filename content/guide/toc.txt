@@ -33,12 +33,9 @@ router
 
 # Utilities
 
-html
 utilities
-nextFrame
-observableArray
 
-# Miscellaneous
+# Related
 
 stylish
 bundle-free
