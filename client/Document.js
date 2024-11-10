@@ -130,7 +130,7 @@ export class Document
                     {
                         this.headings.push(currentH2 = heading);
                     }
-                    else
+                    else if (currentH2)
                     {
                         if (!currentH2.subHeadings)
                             currentH2.subHeadings = [];

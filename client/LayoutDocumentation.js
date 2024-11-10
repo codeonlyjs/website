@@ -146,6 +146,12 @@ Style.declare(`
     bottom: 0;
     width: var(--side-panel-width);
     margin-right: var(--main-indent);
+
+    overflow: auto;
+    &::-webkit-scrollbar {
+        width: 0px;
+        background: transparent; /* make scrollbar transparent */
+    }
 }
 
 
