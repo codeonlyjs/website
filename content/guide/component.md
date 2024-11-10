@@ -3,9 +3,9 @@ title: "API"
 ---
 # Component API
 
+## Component Class
 
-
-## domTreeConstructor (static)
+### domTreeConstructor (static)
 
 Returns a function to construct the DOM tree for this component.
 
@@ -18,7 +18,7 @@ to get the constructor function for the component's template.
 
 
 
-## create()
+### create()
 
 Creates the DOM tree for this component.
 
@@ -26,13 +26,13 @@ Redundant if already called
 
 
 
-## created()
+### created
 
 Returns `true` if the components `domTree` has been created.
 
 
 
-## destroy()
+### destroy()
 
 Destroys the underlying DOM tree elements effectively  removing 
 all event handlers and releasing all DOM element references.
@@ -43,20 +43,20 @@ re-mounting the component.
 
 
 
-## domTree
+### domTree
 
 Returns the instantiated DOM tree of the component, creating
 it if necessary.
 
 
 
-## getCompiledTemplate() (static)
+### getCompiledTemplate() (static)
 
 Gets the compiled template for this component class
 
 
 
-## invalidate()
+### invalidate()
 
 Marks the component as needing a DOM update.
 
@@ -69,7 +69,7 @@ so it can be passed directly to functions to add/remove event listeners.
 
 
 
-## async load(callback)
+### async load(callback)
 
 Performs and async data load:
 
@@ -92,7 +92,7 @@ Returns:
 
 
 
-## loadError
+### loadError
 
 Returns any exceptions thrown during the `load()` call.
 
@@ -100,25 +100,25 @@ Setting this property also invalidates the component.
 
 
 
-## loading
+### loading
 
 A read-only property that returns true during a call to `load()`.
 
 
 
-## loading (event)
+### loading (event)
 
 Raised when the `load()` method is called.
 
 
 
-## loaded (event)
+### loaded (event)
 
 Raised when the `load()` method is about to exit.
 
 
 
-## mount(elementOrSelector)
+### mount(elementOrSelector)
 
 Mounts the component into a specified DOM element.
 
@@ -131,13 +131,13 @@ The `mount()` method should only be used to mount top-level elements.  Mounting
 of components in other components should be left to the framework.
 
 
-## mounted
+### mounted
 
 Returns true if the component is currently mounted.
 
 
 
-## onMount()
+### onMount()
 
 Override this method to be notified when the component has been mounted.
 
@@ -146,7 +146,7 @@ resources.  In particular you should use this method when adding event listeners
 to external objects otherwise the component may be kept alive by dangling 
 references to the component held by event sources.
 
-## onProvideDomTreeConstructor() (static)
+### onProvideDomTreeConstructor() (static)
 
 Compiles the component's template as returned by [`onProvideTemplate()`](#onprovidetemplate-static).
 
@@ -158,7 +158,7 @@ Override this function to provide a custom DOM tree constructor.
 
 
 
-## onProvideTemplate() (static)
+### onProvideTemplate() (static)
 
 Provides the template declaration for this component by returning `this.template`
 
@@ -171,13 +171,13 @@ Override this method to provide a custom template.  See
 
 
 
-## onUnmount()
+### onUnmount()
 
 Override this method to be notified when the component has been unmounted.
 
 
 
-## template (static)
+### template (static)
 
 The template declaration object for this component.
 
@@ -187,7 +187,7 @@ Nearly every component should override this property.
 
 
 
-## update()
+### update()
 
 Immediately updates the DOM elements of this component and
 marks the component as not invalid.
@@ -201,13 +201,13 @@ so it can be passed directly to functions to add/remove event listeners.
 
 
 
-## unmount()
+### unmount()
 
 Unmounts a previously mounted component.
 
 
 
-## validate()
+### validate()
 
 Updates the component's DOM, if it's marked as invalid by 
 a previous call to `invalidate()`.

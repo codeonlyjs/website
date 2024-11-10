@@ -224,7 +224,7 @@ function convertHeadingTextToId(text)
 
     // Remove async prefix
     text = text.replace(/^async /, "");
-
+    
     // Remove method parameters
     text = text.replace(/\b\(.*?\)/g, "");
 

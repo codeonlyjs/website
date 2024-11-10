@@ -36,6 +36,8 @@ The CodeOnly router supports the following features:
 
 To get an idea for how the router works, let's start with a simple example.
 
+### Create the Router
+
 Central to routing is the Router object itself which needs to be created
 and configured by your application.
 
@@ -57,6 +59,8 @@ new ViewStateRestoration(router); /* Save and restore the scroll position betwee
 
 ```
 
+### Register Route Handlers
+
 Next, we register "route handlers" with the router. A handler is an 
 object that matches URLs to pages in your app.
 
@@ -73,6 +77,18 @@ router.register({ /* Register this route handler with the router */
     }
 });
 ```
+
+Note that for this to work, the code that registers the route handler must 
+be run - which usually just means adding an import to the page's JavaScript
+file from your app's main component:
+
+```js
+// Add this to you main component's .js file
+import "AboutPageComponent.js";
+```
+
+
+### Show the Route's Page
 
 Finally, the app listens to the router for navigation events and
 updates what's shown for the new URL.  
@@ -100,6 +116,26 @@ object and use it however suits your app.
 
 </div>
 
+### Start the Router
+
+Finally, the router needs to be started.  This tells the router to connect its 
+event listeners to the DOM and History API and to perform the initial page load 
+navigation.
+
+This should be done after all route handlers have been registered and usually
+the main component of your application has been mounted.
+
+```js
+// Mount main component
+new Main().mount("main");
+
+// Start the router
+router.start();
+```
+
+
+### Summary
+
 To sum up:
 
 1. Create a router object
@@ -107,6 +143,7 @@ To sum up:
    the URL and store them on the route object
 3. Register an event listener for navigation events and use information 
    stored on the route object to re-configure what's shown
+4. Start the router.
 
 
 

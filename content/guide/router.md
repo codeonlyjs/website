@@ -4,7 +4,7 @@ title: "API"
 # Router API
 
 
-## Router
+## Router Class
 
 ### constructor(driver, handlers)
 
@@ -90,7 +90,7 @@ handler.  Return true to revoke the handler, false to keep it.
 
 
 
-## Route Handler
+## Route Handler Object
 
 Route handlers are plain JavaScript objects (ie: they're not a class) with
 the follow properties, all of which are options.
@@ -213,8 +213,14 @@ The route handler that is associated with this route object.
 
 Before a route is matched to a handler, this property is `undefined`.
 
+### viewState
 
-## ViewStateRestoration
+If you're using the `ViewStateRestoration` component it will
+attach any previously saved view state to the route object in its
+`"mayEnter"` handler.
+
+
+## ViewStateRestoration Class
 
 The `ViewStateRestoration` class implements this default view
 state restoration features of the Router.
@@ -244,7 +250,7 @@ When restoring view state, the following methods are tried:
 The `restoreViewState(state)` function will be passed a copy of the
 view state object as previously returned from `captureViewState()`
 
-## WebHistoryRouterDriver
+## WebHistoryRouterDriver Class
 
 The `WebHistoryRouterDriver` provides the connection between the
 Router and the browser's History API and DOM.
@@ -300,7 +306,7 @@ the current route object with the new URL information.
 
 
 
-## UrlMapper
+## UrlMapper Class
 
 The `UrlMapper` class provides methods to internalize and external URLs
 performing two commong functions:
