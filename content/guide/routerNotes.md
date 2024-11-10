@@ -148,3 +148,36 @@ router.register({
 
 ## Centralized Routing Table
 
+All the examples in this documentation show "distributed" route
+registration where the route handlers live with the page that 
+handles the route.
+
+For most sites this is the preferred approach as it keeps
+everything to do with a single page in one place.
+
+However if you have particularly complex routing requirements you
+might find it easier to use a centralized approach where all the 
+routes are declared in one central routing table. 
+
+All this requires is moving all the `router.register` calls into 
+a single file.  And since the `register()` method accepts an 
+array of route handlers all the routes can be registered in a
+single call:
+
+```js
+router.register([
+    {
+        pattern: "/",
+        // etc...
+    },
+    {
+        pattern: "/about",
+        // etc...
+    },
+    {
+        pattern: "/admin",
+        // etc...
+    },
+    // etc...
+
+])
