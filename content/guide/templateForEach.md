@@ -15,7 +15,7 @@ to be repeated for each item in the array.
 {
     foreach: [ "Apples", "Pears", "Bananas" ]
     type: "div",
-    test: i => i, /* `i` is the item from the array */
+    test: i => i, /* i:  `i` is the item from the array */
 }
 ```
 
@@ -56,7 +56,7 @@ More typically a dynamic collection is used:
 
 ```js
 {
-    foreach: c => c.items, /* A callback for items */
+    foreach: c => c.items, /* i:  A callback for items */
     type: "div",
     test: i => i,
 }
@@ -106,13 +106,13 @@ property:
 
 ```js
 {
-    foreach: { /* This describes the "foreach" block */
-        items: c => items, /* This provides items */
-        itemKey: i => i.id, /* This provides item keys for items */
+    foreach: { /* i:  This describes the "foreach" block */
+        items: c => items, /* i:  This provides items */
+        itemKey: i => i.id, /* i:  This provides item keys for items */
     },
 
-    type: "div", /* The rest is repeated for each item */
-    text: i => i.name, /* `i` is the list item */
+    type: "div", /* i:  The rest is repeated for each item */
+    text: i => i.name, /* i:  `i` is the list item */
 }
 ```
 
@@ -159,7 +159,7 @@ list of items is empty.
 {
     foreach: {
         items: c => items,
-        empty: { /* This will be displayed if there are no items */
+        empty: { /* i:  This will be displayed if there are no items */
             type: "div",
             $: "Nothing to see here",
         }
@@ -194,7 +194,7 @@ export class MyComponent extends Component
 
     someMethod()
     {
-        this.#items.push(   /* This will trigger the foreach block to update */
+        this.#items.push(   /* i:  This will trigger the foreach block to update */
             { text: "new item 1" },
             { text: "new item 2" },
         );

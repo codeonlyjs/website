@@ -68,8 +68,8 @@ The convention is to create and configure the router in a file named
 import { Router } from "@codeonlyjs/core";
 
 // Create the router
-export let router = new Router( /* Create the router instance */
-    new WebHistoryRouterDriver() /* See below */
+export let router = new Router( /* i:  Create the router instance */
+    new WebHistoryRouterDriver() /* i:  See below */
 );
 ```
 

@@ -8,7 +8,7 @@ The `nextFrame` function invokes a callback on the next update cycle.
 ```js
 import { nextFrame} from "@codeonlyjs/core";
 
-nextFrame(() => { /* do something */ });
+nextFrame(() => { /* i:  do something */ });
 ```
 
 `nextFrame` is implemented using the standard browser `requestAnimationFrame` function.

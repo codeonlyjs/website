@@ -45,7 +45,7 @@ For `else` directives, the value is ignored.
             $: "Error: ...",
         },
         {
-            else: true,     /* Value ignored */
+            else: true,     /* i:  Value ignored */
             type: "p",
             $: "All is well!",
         }
@@ -100,7 +100,7 @@ This can be handy for including or excluding content based on conditions like bu
 // Template
 {
     type: "pre",
-    if: isDevelopmentMode(), /* Static `if`, because there's no callback */
+    if: isDevelopmentMode(), /* i:  Static `if`, because there's no callback */
     $: {
         type: "code",
         $: c => JSON.stringify(c.returnedData)

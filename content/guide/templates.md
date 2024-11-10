@@ -22,7 +22,7 @@ A CodeOnly component declares its template as a static member of the component c
 ```js
 class MyComponent extends Component
 {
-    static template = {}; /* The template must be declared static */
+    static template = {}; /* i:  The template must be declared static */
 }
 ```
 
@@ -57,21 +57,21 @@ here is a template that declares nodes of various kinds:
 
 ```js
 {
-    type: "div",  /* "type" as a string => HTML Element */
+    type: "div",  /* i:  "type" as a string => HTML Element */
 
-    $: [ /* $ means an array child nodes */
+    $: [ /* i:  $ means an array child nodes */
 
-        "Hello World", /* plain string => text node */
+        "Hello World", /* i:  plain string => text node */
 
-        Html.raw("<span>Hello</span>"), /* Html.raw => raw HTML text*/
+        Html.raw("<span>Hello</span>"), /* i:  Html.raw => raw HTML text*/
 
         {
-            type: "div", /* A child HTML element */
+            type: "div", /* i:  A child HTML element */
             text: "Hello World",
         },
 
         {
-            type: MyComponent, /* Class name => component reference*/
+            type: MyComponent, /* i:  Class name => component reference*/
             prop1: "Apples",
             prop2: "Pears",
         },
@@ -130,7 +130,7 @@ If a node has only a single child node, there's no need for the array syntax:
 ```js
 {
     type: "header",
-    $: { /* only a single child node, so no need for an array here */
+    $: { /* i:  only a single child node, so no need for an array here */
         type: "div",
         text: "apples",
     },
@@ -146,7 +146,7 @@ instead of a static value:
 ```js
 {
     type: "div",
-    text: c => c.divText()  /* Call a function to get the text */
+    text: c => c.divText()  /* i:  Call a function to get the text */
 }
 ```
 

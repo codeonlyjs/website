@@ -162,7 +162,7 @@ export class Document
         for (let cb of codeBlocks)
         {
             // Only javascript blocks
-            if (cb.info != 'js' && cb.info != 'html')
+            if (cb.info != 'js' && cb.info != 'html' && cb.info != 'css')
                 continue;
             let code = cb.literal;
             let isDemo = code.startsWith("// demo");
@@ -172,7 +172,7 @@ export class Document
                 language: cb.info, 
                 ignoreIllegals: true
             });
-            html.value = html.value.replace(/<span class="hljs-comment">\/\*([\s\S]*?)\*\/<\/span>/g, `<span class="note"><span class="inner">$1</span></span>`);
+            html.value = html.value.replace(/<span class="hljs-comment">\/\* i: ([\s\S]*?)\*\/<\/span>/g, `<span class="note"><span class="inner">$1</span></span>`);
             let wrapper_html = `<pre><code class="hljs language-${html.language}">${html.value}</code></pre>\n`;
 
             if (isDemo)

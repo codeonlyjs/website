@@ -39,34 +39,34 @@ Hovering over the info icons in sample code shows further explanatory notes.
 
 ```js
 // demo
-class Main extends Component /* Components extend the `Component` class */
+class Main extends Component /* i:  Components extend the `Component` class */
 {
-  count = 0; /* Class fields and functions are available to the template */
+  count = 0; /* i:  Class fields and functions are available to the template */
 
-  onClick() /* Button click event handler */
+  onClick() /* i:  Button click event handler */
   { 
     this.count++; 
-    this.invalidate(); /* Marks the component as needing DOM update */
+    this.invalidate(); /* i:  Marks the component as needing DOM update */
   }
 
-  static template = { /* This is the component's DOM template */
-    type: "div", /* Root element type */
-    class: "counter", /* Scoping CSS class */
-    $: [ /* Child nodes array */
+  static template = { /* i:  This is the component's DOM template */
+    type: "div", /* i:  Root element type */
+    class: "counter", /* i:  Scoping CSS class */
+    $: [ /* i:  Child nodes array */
       {
         type: "button",
         text: `Click Me`,
-        on_click: c => c.onClick(), /* `c` is the component instance */
+        on_click: c => c.onClick(), /* i:  `c` is the component instance */
       },
       {
         type: "span",
-        text: c => `Count: ${c.count}`, /* Callback for dynamic content */
+        text: c => `Count: ${c.count}`, /* i:  Callback for dynamic content */
       }
     ]
   }
 }
 
-Style.declare( /* CSS styles (with `.counter` as scoping class) */
+Style.declare( /* i:  CSS styles (with `.counter` as scoping class) */
 `
 .counter
 {

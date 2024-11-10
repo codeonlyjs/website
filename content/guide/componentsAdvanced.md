@@ -106,7 +106,7 @@ but could be used to host other component like objects:
 
 ```js
 {
-    type: MyCLObjectConstructor, /* Pparameterless constructor of a custom CLObject*/
+    type: MyCLObjectConstructor, /* i:  Pparameterless constructor of a custom CLObject*/
 }
 ```
 

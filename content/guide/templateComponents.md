@@ -40,18 +40,18 @@ Note the component is referenced by it's JavaScript class, not a string of its n
 </div>
 
 ```js
-import { MyButton } from "./MyButton.js"; /* Don't forget to import the component */
+import { MyButton } from "./MyButton.js"; /* i:  Don't forget to import the component */
 
 {
     type: "div",
     $: [
         { 
-            type: MyButton, /* Use a class name to create a component */
-            title: "Button 1" /* Other settings will be set as properties on the component */
+            type: MyButton, /* i:  Use a class name to create a component */
+            title: "Button 1" /* i:  Other settings will be set as properties on the component */
         },
         { 
-            type: MyButton, /* Create multiple instances if needed*/
-            title: "Button 2", /* with different properties */
+            type: MyButton, /* i:  Create multiple instances if needed*/
+            title: "Button 2", /* i:  with different properties */
         },
     ]
 }

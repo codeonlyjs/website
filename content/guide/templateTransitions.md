@@ -36,8 +36,7 @@ the in-state to the out-state is it said to be leaving.
 ## Declaring Transition Conditions
 
 To declare that a setting should trigger transitions, wrap the callback 
-that determines the in/out state with the `transition`
-function:
+that determines the in/out state with the `transition` directive:
 
 ```js
 import { transition } from "@codeonlyjs/core";
@@ -59,8 +58,10 @@ class MyComponent extends Component
 
 <div class="tip">
 
-For if blocks the transition wrapper must be on the first
-if branch if there are else or elseif branches. 
+For `if` blocks with `elseif` or `else` conditions, the `transition` 
+directive must be on the first `if` condition.
+
+ie: you can't declare different transitions for different branches.
 
 </div>
 
@@ -81,199 +82,9 @@ and for boolean classes:
 }
 ```
 
-The `transition` function indicates that when the condition changes
+The `transition` directive declares that when the condition changes
 certain CSS classes should be added to the entering and leaving
 DOM elements.
-
-
-## Transition CSS Classes
-
-<div class="tip">
-
-The following describes the default CSS classes used in transitions.
-See below for information on how to customize the class names
-
-</div>
-
-When an element is being transitioned, the following classes are 
-applied:
-
-* `tx-active` - the element is actively entering or leaving
-* `tx-entering` - the element is actively entering
-* `tx-enter-start` - set for one frame when an element starts entering
-* `tx-enter-end` - set for the rest of the frames until the transition ends
-* `tx-leaving` - the element is actively leaving
-* `tx-leave-start` - set for one frame when an element starts leaving
-* `tx-leave-end` - set for the rest of the frames until the transition ends
-* `tx-out` - same as `tx-enter-start` for entering elements and `tx-leave-end`
-  for leaving elements
-* `tx-in` - same as `tx-enter-end` for entering elements and `tx-leave-start`
-  for leaving elements
-
-
-Looking at this from the perspective of an entering element:
-
-1. Before the element is switched to the entered state, the `tx-active`,
-   `tx-entering`, `tx-enter-start` and `tx-out` classes are added.
-2. The element is "entered" - ie: the DOM is mutated.
-3. One frame later the `tx-enter-start` and `tx-out` classes are removed
-   and the `tx-enter-end` and `tx-in` classes are added
-4. The elements and all their child elements are monitored for animations 
-   and transitions and once all have finished the transition classes
-   are removed (ie: `tx-active`, `tx-entering`, `tx-enter-end` and `tx-in`).
-
-The inverse happens for a leaving element:
-
-1. The `tx-active`, `tx-leaving`, `tx-leave-start` and `tx-in` classes are
-   added.
-3. One frame later the `tx-leave-start` and `tx-in` classes are removed
-   and the `tx-leave-end` and `tx-out` classes are added
-4. The elements and all their child elements are monitored for animations 
-   and transitions and once all have finished all the transition classes
-   are removed (ie: `tx-active`, `tx-leaving`, `tx-leave-end` and `tx-out`).
-5. The element is left ie: the DOM is mutated. 
-
-There's a lot to grasp here.  One way to better understand these classes
-is to consider symmetric vs asymmetric transitions.
-
-
-
-## Symmetric vs Asymmetric Transitions
-
-A symmetric transition is one where the leave transition is the exact inverse
-of the enter transition.
-
-A fade in/out transition is symmetric:
-
-* on entering it starts with opacity 0 and transitions to opacity 1
-* on leaving it starts at opacity 1 and transitions to opacity 0
-
-A slide in/out transition is symmetric if it slides in in one direction and
-slides out in the opposite direction.
-
-A slide in/out transition that slides in from one side of the screen and 
-out the other would not be symmetric because the start and end positions
-are different.  It's an asymmetric transition.
-
-The classes used in transitions are designed to be easy to use for both cases
-but more concise for symmetric transitions.
-
-
-
-## CSS Classes for Symmetric Transitions
-
-For symmetric transitions the following classes can be used
-
-* `tx-active` - transitioning in or out
-* `tx-out` - the out state of the transition
-* `tx-in` - the in state of the transition (rarely used)
-
-A fade in/out transition can be configured with just two CSS
-declarations:
-
-```
-.scoping-selector-for-you-element
-{
-    .tx-active
-    {
-        /* While active class is set CSS transition property
-           for opacity */
-        transition: opacity 1s;
-    }
-    .tx-out
-    {
-        /* In the out state, the opacity is zero */
-        opacity: 0;
-    }
-}
-```
-
-There's no need to use the `tx-in` class because the default opacity
-of an element is 1 and doesn't need to be explicitly set.
-
-<div class="tip">
-
-We recommend specifying the `transition` properties on the `tx-active` class
-instead of the non-qualified element selector as it helps avoid conflicts
-with other transition settings.
-
-</div>
-
-
-
-
-## CSS Classes for Asymmetric Transitions
-
-For asymmetric transitions use the following classes for the enter
-side of the transition:
-
-* `tx-entering` - element is entering
-* `tx-enter-start` - state to enter from
-* `tx-enter-end` - state to enter to
-
-and these when leaving:
-
-* `tx-leaving` - element is leaving
-* `tx-leave-start` - start to leave from
-* `tx-leave-end` - start to leave to
-
-Suppose you wanted an animation that entered by sliding in from below
-and left by fading out:
-
-```
-.scoping-selector-for-you-element
-{
-    /* This controls the entering transition - transform*/
-    .tx-entering
-    {
-        transition: transform 1s;
-    }
-    .tx-enter-start
-    {
-        transform: translateY(30);
-    }
-
-    /* This controls the leaving transition - opacity */
-    .tx-leaving
-    {
-        transition: opacity 0.5s;
-    }
-    .tx-leave-end
-    {
-        opacity: 0;
-    }
-}
-```
-
-Of course you can combine things too.  
-
-eg: for a slide in from the bottom, slide out to the top with fading
-
-```
-.scoping-selector-for-you-element
-{
-    .tx-active
-    {
-        /* This applies to both enter and leave */
-        transition: transform 1s, opacity 1s;
-    }
-    .tx-out
-    {
-        /* This is the out-state of both enter and leave */
-        opacity: 0;
-    }
-    .tx-enter-start
-    {
-        /* This is out-state for entering */
-        transform: translateY(30);
-    }
-    .tx-leave-end
-    {
-        /* This is out-state for leaving */
-        transform: translateY(-30);
-    }
-}
-```
 
 
 ## Key Triggered Transitions
@@ -308,6 +119,196 @@ used by `foreach` directices.
 
 </div>
 
+## Transition CSS Classes
+
+When an element is being transitioned, the following classes are 
+applied:
+
+* `tx-active` - the element is actively entering or leaving
+* `tx-entering` - the element is actively entering
+* `tx-enter-start` - set for one frame when an element starts entering
+* `tx-enter-end` - set for the rest of the frames until the transition ends
+* `tx-leaving` - the element is actively leaving
+* `tx-leave-start` - set for one frame when an element starts leaving
+* `tx-leave-end` - set for the rest of the frames until the transition ends
+* `tx-out` - same as `tx-enter-start` for entering elements and `tx-leave-end`
+  for leaving elements
+* `tx-in` - same as `tx-enter-end` for entering elements and `tx-leave-start`
+  for leaving elements
+
+
+<div class="tip">
+
+The above describes the default CSS class names - see below for 
+information on how to customize them.
+
+</div>
+
+Looking at this from the perspective of an entering element:
+
+1. Before the element is switched to the entered state, the `tx-active`,
+   `tx-entering`, `tx-enter-start` and `tx-out` classes are added.
+2. The element is "entered" - ie: the DOM is mutated.
+3. One frame later the `tx-enter-start` and `tx-out` classes are removed
+   and the `tx-enter-end` and `tx-in` classes are added
+4. The elements and all their child elements are monitored for animations 
+   and transitions and once all have finished the transition classes
+   are removed (ie: `tx-active`, `tx-entering`, `tx-enter-end` and `tx-in`).
+
+The inverse happens for a leaving element:
+
+1. The `tx-active`, `tx-leaving`, `tx-leave-start` and `tx-in` classes are
+   added.
+3. One frame later the `tx-leave-start` and `tx-in` classes are removed
+   and the `tx-leave-end` and `tx-out` classes are added
+4. The elements and all their child elements are monitored for animations 
+   and transitions and once all have finished all the transition classes
+   are removed (ie: `tx-active`, `tx-leaving`, `tx-leave-end` and `tx-out`).
+5. The element is left ie: the DOM is mutated. 
+
+There's a lot to grasp here.  One way to better understand these classes
+is to consider symmetric vs asymmetric transitions.
+
+
+
+### Symmetric vs Asymmetric
+
+A symmetric transition is one where the leave transition is the exact inverse
+of the enter transition.
+
+A fade in/out transition is symmetric:
+
+* on entering it starts with opacity 0 and transitions to opacity 1
+* on leaving it starts at opacity 1 and transitions to opacity 0
+
+A slide in/out transition is symmetric if it slides in in one direction and
+slides out in the opposite direction.
+
+A slide in/out transition that slides in from one side of the screen and 
+out the other would not be symmetric because the start and end positions
+are different.  It's an asymmetric transition.
+
+The classes used in transitions are designed to be easy to use for both cases
+but more concise for symmetric transitions.
+
+
+
+### Symmetric Class Names
+
+For symmetric transitions the following classes can be used
+
+* `tx-active` - transitioning in or out
+* `tx-out` - the out state of the transition
+* `tx-in` - the in state of the transition (rarely used)
+
+A fade in/out transition can be configured with just two CSS
+declarations:
+
+```css
+.scoping-selector-for-you-element
+{
+    .tx-active
+    {
+        /* While active class is set CSS transition property
+           for opacity */
+        transition: opacity 1s;
+    }
+    .tx-out
+    {
+        /* In the out state, the opacity is zero */
+        opacity: 0;
+    }
+}
+```
+
+There's no need to use the `tx-in` class because the default opacity
+of an element is 1 and doesn't need to be explicitly set.
+
+<div class="tip">
+
+We recommend specifying the `transition` properties on the `tx-active` class
+instead of the non-qualified element selector as it helps avoid conflicts
+with other transition settings.
+
+</div>
+
+
+
+
+### Asymmetric Class Names
+
+For asymmetric transitions use the following classes for the enter
+side of the transition:
+
+* `tx-entering` - element is entering
+* `tx-enter-start` - state to enter from
+* `tx-enter-end` - state to enter to
+
+and these when leaving:
+
+* `tx-leaving` - element is leaving
+* `tx-leave-start` - start to leave from
+* `tx-leave-end` - start to leave to
+
+Suppose you wanted an animation that entered by sliding in from below
+and left by fading out:
+
+```css
+.scoping-selector-for-you-element
+{
+    /* This controls the entering transition - transform*/
+    .tx-entering
+    {
+        transition: transform 1s;
+    }
+    .tx-enter-start
+    {
+        transform: translateY(30);
+    }
+
+    /* This controls the leaving transition - opacity */
+    .tx-leaving
+    {
+        transition: opacity 0.5s;
+    }
+    .tx-leave-end
+    {
+        opacity: 0;
+    }
+}
+```
+
+Of course you can combine things too.  
+
+eg: for a slide in from the bottom, slide out to the top with fading
+
+```css
+.scoping-selector-for-you-element
+{
+    .tx-active
+    {
+        /* This applies to both enter and leave */
+        transition: transform 1s, opacity 1s;
+    }
+    .tx-out
+    {
+        /* This is the out-state of both enter and leave */
+        opacity: 0;
+    }
+    .tx-enter-start
+    {
+        /* This is out-state for entering */
+        transform: translateY(30);
+    }
+    .tx-leave-end
+    {
+        /* This is out-state for leaving */
+        transform: translateY(-30);
+    }
+}
+```
+
+
 ## Transition Options
 
 Transitions have various options that control
@@ -333,14 +334,37 @@ Alternatively you can specify options as a series of
 values and objects.  Each successive argument is merged 
 over thr previous ones:
 
-* a function argument is merged as the value property
-* a string argument is merged as the name property
-* an object is merged using Object.assign. 
+* a function argument is merged as the `value` property
+* a string argument is merged as the `name` property
+* an object is merged using `Object.assign`. 
 
+eg:
 
+```js
+transition(c => c.show, "transition", 
+    { 
+        // other options
+        mode: "enter-leave"
+    },
+    {
+        // more options
+        on_finish: c => c.onFinish(),
+    }
+)
+```
 
+Is the equivalent of
 
-## Transition Modes
+```js
+transition({
+    value: c => c.show,
+    name: "transition",
+    mode: "enter-leave",
+    on_finish: c => c.onFinish()
+});
+```
+
+### mode
 
 By default when a transition has both entering and leaving elements, 
 both the enter and leave transitions run
@@ -376,7 +400,7 @@ transitions run one after the other.
 
 The mode propery can be a string or a callback returning a string. 
 
-## Setting a CSS Class Name Prefix
+### name
 
 By default transitions have a prefix name of "tx-" (as shown in all the 
 above examples).  By setting the transition's `name` option the prefix
@@ -397,7 +421,7 @@ Now the transition will use class names `fade-active`, `fade-out`,
 
 The name propery can be a string or a callback returning a string. 
 
-## Customizing CSS Class names
+### classNames
 
 For even more control over class names you can explicitly specify them 
 by setting the classNames property in the transition options:
@@ -436,6 +460,9 @@ Note that "`*`" will be replaced by the transition's name property
 (or "`tx`" if not set) and multiple class names can be specified by 
 separating them with semi-colons.
 
+The `classNames` propery can be a object map of class names or a 
+callback that returns one. 
+
 To change the default class names globally, change the `defaultClassNames`
 property of the `TransitionCss` function:
 
@@ -447,8 +474,40 @@ TransitionCss.defaultClassNames = {
 }
 ```
 
+The supplied object must include class name entries for all classes.
 
-## JavaScript Notifications
+
+### duration
+
+The `duration` option lets you specify an explicit duration of a transition
+instead of watching for the element's animations to complete.  
+
+This can be useful in complex scenarios with many transitions animations where determining the correct end condition might be ambiguous.
+
+The `duration` is specified in milliseconds and can be:
+
+* A single value used for both the entering and leaving phase of the transition
+* An array of two values, where [0] the duration for the entering phase and [1] for the leaving.
+* A callback that returns one of the above.
+
+
+### subtree
+
+By default when watching for a transitions to complete, the
+entire sub-tree of the contained elements are monitored for animations.
+
+If a transition only affects the immediate child elements contained within
+it, the `subtree` property can be set to `false` to only monitor those elements.
+
+This can be used in situations where animated elements either 
+
+* have a very deep sub-tree that might be expensive to monitor, or 
+* have other unrelated transitions and animations that might confuse 
+  the end of transition detection.
+
+
+
+## Notifications
 
 To receive notifications when a transition starts, ends or is 
 cancelled, set callbacks on the options object:

@@ -18,9 +18,9 @@ Embed slots are declared in a template using the special type name "`embed-slot`
 
 ```js
 {
-    type: "div", /* A <div> element... */
+    type: "div", /* i:  A <div> element... */
     $: {
-        type: "embed-slot", /* ...with a contained embed-slot */
+        type: "embed-slot", /* i:  ...with a contained embed-slot */
     }
 }
 ```
@@ -47,7 +47,7 @@ Or, by binding to the embed slot to your component:
     type: "div",
     $: {
         type: "embed-slot",
-        bind: "pageSlot"        /* Bind the embed slot to the component */
+        bind: "pageSlot"        /* i:  Bind the embed slot to the component */
     }
 }
 ```
@@ -155,13 +155,13 @@ export class MyLink extends Component
         attr_href: c => c.href,
         on_click: c => c.on_click(ev),
         $: {
-            type: "embed-slot", /* Special name "embed-slot" */
-            bind: "content", /* Make this slot available as a component property */
-            placeholder: c => c.title, /* Revert to text if no slot content */
+            type: "embed-slot", /* i:  Special name "embed-slot" */
+            bind: "content", /* i:  Make this slot available as a component property */
+            placeholder: c => c.title, /* i:  Revert to text if no slot content */
         }
     }
 
-    static slots = [ "content" ]; /* Slot names need to be declared */
+    static slots = [ "content" ]; /* i:  Slot names need to be declared */
 }
 ```
 
@@ -182,7 +182,7 @@ We can now use this like so:
 {
     type: MyLink, 
     href: "/", 
-    content: [ /* This image and "Home" text are used as the link content */
+    content: [ /* i:  This image and "Home" text are used as the link content */
         {
             type: "img",
             attr_src: "home_button.png",

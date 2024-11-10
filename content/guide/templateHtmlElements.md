@@ -21,7 +21,7 @@ string for the `type` property of the node:
 
 ```js
 {
-    type: "div", /* A string value for the type makes this an HTML element */
+    type: "div", /* i:  A string value for the type makes this an HTML element */
 }
 ```
 
@@ -130,7 +130,7 @@ The child nodes are declared as an array:
 ```js
 {
     type: "div",
-    $: [ /* Array of child nodes */
+    $: [ /* i:  Array of child nodes */
         { type: "div", text: "child 1" },
         { type: "div", text: "child 2" },
         { type: "div", text: "child 3" },
@@ -143,7 +143,7 @@ If there is only a single child the array container is not required:
 ```js
 {
     type: "div",
-    $: { /* single child node */
+    $: { /* i:  single child node */
         type: "div", text: "child" 
     },
 }
@@ -193,7 +193,7 @@ To set class names that contain hyphens, use camelCase:
 ```js
 { 
     type: "div",
-    class_isSelected: true, /* class="is-selected" */
+    class_isSelected: true, /* i:  class="is-selected" */
 }
 ```
 
@@ -202,7 +202,7 @@ or, a string property key:
 ```js
 { 
     type: "div",
-    'class_is-selected': true, /* class="is-selected" */
+    'class_is-selected': true, /* i:  class="is-selected" */
 }
 ```
 
@@ -259,7 +259,7 @@ To set style names that contain hyphens, use camelCase:
 ```js
 { 
     type: "div",
-    style_textAlign: "center", /* <div style="text-align: center" > */
+    style_textAlign: "center", /* i:  <div style="text-align: center" > */
 }
 ```
 
@@ -269,7 +269,7 @@ or, use a string property key:
 // <div style="text-align: center" >
 { 
     type: "div",
-    'style_text-align': "center", /* <div style="text-align: center" > */
+    'style_text-align': "center", /* i:  <div style="text-align: center" > */
 }
 ```
 

@@ -11,7 +11,7 @@ To declare a text node in a template, use a plain JavaScript string.
 {
     type: "div",
     $: [
-        "Hello & Goodbye World", /* text child node*/
+        "Hello & Goodbye World", /* i:  text child node*/
     ]   
 }
 ```
@@ -37,7 +37,7 @@ import { Html } from 'codeonly.js';
 {
     type: "div",
     $: [
-        Html.raw("Hello &amp; Goodbye World", /* HTML text child node*/
+        Html.raw("Hello &amp; Goodbye World", /* i:  HTML text child node*/
     ]   
 }
 ```

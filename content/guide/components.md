@@ -85,7 +85,7 @@ field named `template` on the component class.
 ```js
 export class MyComponent extends Component
 {
-    static template = {  /* This component's template */
+    static template = {  /* i:  This component's template */
         type: "div",
         text: "This is My Component",        
     }
@@ -123,12 +123,12 @@ export class MyComponent extends Component
     set title(value)
     {
         this.#title = value;
-        this.invalidate();  /* Update the DOM */ 
+        this.invalidate();  /* i:  Update the DOM */ 
     }
 
     static template = {
         type: "div",
-        text: c => c.title, /* Callback for dynamic content */
+        text: c => c.title, /* i:  Callback for dynamic content */
     }
 }
 ```
@@ -250,19 +250,19 @@ import { ContentArea } from "./ContentArea.js";
 export class Main extends Component
 {
     static template = [
-        Header, /* If no other settings, just use class name */
+        Header, /* i:  If no other settings, just use class name */
         {
             type: "div",
             $: [
                 {
-                    type: SidePanel, /* Component class */
-                    title: "Table of Contents", /* A component property */
-                    on_click: c => /* A event from the component */
+                    type: SidePanel, /* i:  Component class */
+                    title: "Table of Contents", /* i:  A component property */
+                    on_click: c => /* i:  A event from the component */
                         c.onSidePanelClick() 
                 },
                 {
-                    type: ContentArea, /* Component class */
-                    document: "readme.md", /* A Component property */
+                    type: ContentArea, /* i:  Component class */
+                    document: "readme.md", /* i:  A Component property */
                 }
             ]
         }
@@ -290,19 +290,19 @@ it can raise (aka "fire" or "dispatch") it's own events.
 eg: a custom button component raising a "click" event.
 
 ```js
-class MyButton extends Component  /* Component extends EventTarget */
+class MyButton extends Component  /* i:  Component extends EventTarget */
 {
     onClick()
     {
         // Raise event
         let ev = new Event("click");
-        ev.target = this;   /* Attach any other event properties here */
+        ev.target = this;   /* i:  Attach any other event properties here */
         this.dispatchEvent(ev);
     }
 
     static template = {
         type: "button",
-        on_click: c => c.onClick(), /* Original event from the internal button */
+        on_click: c => c.onClick(), /* i:  Original event from the internal button */
     }
 }
 ```

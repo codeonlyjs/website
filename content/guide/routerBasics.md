@@ -50,12 +50,12 @@ router.js:
 import { Router } from "@codeonlyjs/core";
 
 // Create the router
-export let router = new Router( /* Create the router instance */
-    new WebHistoryRouterDriver() /* We'll cover this later */
+export let router = new Router( /* i:  Create the router instance */
+    new WebHistoryRouterDriver() /* i:  We'll cover this later */
 );
 
 // Setup view state restoration
-new ViewStateRestoration(router); /* Save and restore the scroll position between pages */
+new ViewStateRestoration(router); /* i:  Save and restore the scroll position between pages */
 
 ```
 
@@ -67,13 +67,13 @@ object that matches URLs to pages in your app.
 This example sets up a route handler for the URL `/about`.
 
 ```js
-import { router} from "./router.js"; /* This is the router object from above */
+import { router} from "./router.js"; /* i:  This is the router object from above */
 
-router.register({ /* Register this route handler with the router */
-    pattern: "/about", /* This is the URL we handle */
-    match: (to) => { /* After the pattern matches, the match function is called */
-        to.page = new AboutPageComponent(); /* Create a component to display for this page */
-        return true; /* Return true to accept the match */
+router.register({ /* i:  Register this route handler with the router */
+    pattern: "/about", /* i:  This is the URL we handle */
+    match: (to) => { /* i:  After the pattern matches, the match function is called */
+        to.page = new AboutPageComponent(); /* i:  Create a component to display for this page */
+        return true; /* i:  Return true to accept the match */
     }
 });
 ```
@@ -98,10 +98,10 @@ Usually this is done by receiving a page component (eg: the
 designated for showing router page content.
 
 ```js
-router.addEventListener("didEnter", (from, to) => { /* Notifies that navigation happened */
+router.addEventListener("didEnter", (from, to) => { /* i:  Notifies that navigation happened */
 
     // Load page into our embed slot
-    this.routerContentSlot.content = to.page;  /* Load the page component from above into a slot */
+    this.routerContentSlot.content = to.page;  /* i:  Load the page component from above into a slot */
 
 });
 ```
