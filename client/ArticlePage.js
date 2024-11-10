@@ -256,7 +256,7 @@ router.register({
         }
         catch
         {
-            to.page = new NotFoundPage();
+            to.page = new NotFoundPage(to.url);
         }
         return true;
     },
