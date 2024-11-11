@@ -25,9 +25,9 @@ export class ArticlePage extends Component
         this.invalidate();
     }
 
-    get inPageLinks()
+    get structure()
     {
-        return this.document.headings;
+        return this.document.structure;
     }
 
     get layout()
@@ -63,7 +63,7 @@ export class ArticlePage extends Component
 Style.declare(`
 .article
 {
-    padding: 10px 30px;
+    padding: 10px 30px 100px 10px;
     margin: 0;
     margin-top: var(--align-content);
 

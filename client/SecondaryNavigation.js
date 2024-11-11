@@ -1,4 +1,4 @@
-import { Component, Style, Html } from "@codeonlyjs/core";
+import { Component, Style, DocumentScrollPosition } from "@codeonlyjs/core";
 
 
 // The main header
@@ -9,14 +9,16 @@ export class SecondaryNavigation extends Component
         super();
     }
 
-    #inPageLinks;
-    get inPageLinks()
+    #structure;
+    get structure()
     {
-        return this.#inPageLinks;
+        return this.#structure;
     }
-    set inPageLinks(value)
+    set structure(value)
     {
-        this.#inPageLinks = value;
+        this.#structure = value;
+        this.#headingCoords = null;
+        this.#highlightId = null;
         this.invalidate();
     }
     
@@ -25,6 +27,82 @@ export class SecondaryNavigation extends Component
         this.dispatchEvent(new Event("hidePopupNav"));
     }
 
+    #headingCoords = null;
+    #oldHeight;
+    #highlightId;
+
+    onMount()
+    {
+        this.listen(document, "scroll", () => {
+            this.positionHighlight();
+        });
+    }
+
+    onUnmount()
+    {
+    }
+
+
+    positionHighlight()
+    {
+        // If the document scroll height changed, discard the old
+        // heading coords and recalculate
+        if (!this.#oldHeight || this.#oldHeight != document.body.scrollHeight)
+        {
+            this.#oldHeight = document.body.scrollHeight;
+            this.#headingCoords = null;
+        }
+
+        // Calculate heading coords
+        let scrollPos = DocumentScrollPosition.get().top;
+        if (this.#headingCoords == null)
+        {
+            this.#headingCoords = this.#structure.allHeadings.map(x => {
+                let el = document.getElementById(x.id);
+                let bounds = el.getBoundingClientRect();
+                return {
+                    id: x.id,
+                    top: bounds.top + scrollPos,
+                }
+            });
+        }
+
+        // Find the first heading that's visible
+        let highlightId = "";
+        if (scrollPos > 20)
+        {
+            let vh = window.innerHeight || 0;
+            scrollPos += + vh / 2 - 200;
+            for (let hc of this.#headingCoords)
+            {
+                if (hc.top > scrollPos)
+                    break;
+                highlightId = hc.id;
+            }
+        }
+
+        // Quit if correct item already highlighted
+        if (highlightId == this.#highlightId)
+            return;
+        this.#highlightId = highlightId;
+        
+        // Find the item
+        let link = this.domTree.rootNode.querySelector(`a[href='#${highlightId}']`);
+        if (link)
+        {
+            let rThis = this.domTree.rootNode.getBoundingClientRect();
+            let r = link.getBoundingClientRect();
+            this.highlight.style.top = r.top - rThis.top - 2;
+            this.highlight.style.height = r.height + 4;
+            link.scrollIntoViewIfNeeded?.(false);
+        }
+    }
+
+    update()
+    {
+        super.update();
+        this.positionHighlight();
+    }
 
     static template = {
         type: "nav",
@@ -32,14 +110,24 @@ export class SecondaryNavigation extends Component
         on_click: c => c.hidePopupNav(),
         $: [
             {
-                if: c => c.inPageLinks?.length > 0,
-                $: Html.h(6, "On This Page"),
+                type: "div",
+                class: "highlight",
+                bind: "highlight",
+            },
+            {
+                if: c => c.structure?.headings?.length > 0,
+                $: {
+                    type: "a",
+                    class: "title",
+                    attr_href: "#",
+                    text: c => c.structure.title ?? "On This Page",
+                }
             },
             {
                 type: "ul",
                 class: "h1",
                 $: {
-                    foreach: c => c.inPageLinks,
+                    foreach: c => c.structure?.headings,
                     type: "li",
                     $: [
                         {
@@ -74,7 +162,25 @@ export class SecondaryNavigation extends Component
 Style.declare(`
 #secondary-nav
 {
-    padding: 0rem 1rem 1rem 1rem;
+    padding: 1rem;
+
+    div.highlight
+    {
+        background-color: var(--accent-color);
+        position: absolute;
+        width: 2px;
+        left: 7px;
+        top: 45px;
+        height: 31px;
+        border-radius:1px;
+        transition: top 0.5s cubic-bezier(0,1,.5,1) , height 0.5s cubic-bezier(0,1,.5,1);
+    }
+
+    a.title
+    {
+        display: block;
+        margin-top: 1.6rem;
+    }
 
     ul.h1
     {

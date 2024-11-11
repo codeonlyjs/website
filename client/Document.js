@@ -98,16 +98,20 @@ export class Document
         let currentHeading = null;
         let currentH2 = null;
         let headingText = "";
-        this.headings = [];
-        this.allHeadings = [];
+        this.structure = {
+            headings: [],
+            allHeadings: []
+        };
         let codeBlocks = [];
         while (ev = walker.next())
         {
             // Entering a h2 or h3?
-            if (ev.entering && ev.node.type === 'heading' && 
-                (ev.node.level == 2 || ev.node.level == 3) )
+            if (ev.entering && ev.node.type === 'heading')
             {
-                currentHeading = ev.node;
+                if (ev.node.level == 1 || ev.node.level == 2 || ev.node.level == 3)
+                {
+                    currentHeading = ev.node;
+                }
             }
 
             // Capture heading text
@@ -119,6 +123,14 @@ export class Document
             // Exiting heading?
             if (!ev.entering && ev.node == currentHeading)
             {
+                if (ev.node.level == 1)
+                {
+                    this.structure.title = headingText;
+                    headingText = "";
+                    currentHeading = null;
+                    continue;
+                }
+
                 // Convert heading text to an id and build a 
                 // heirarchy of headings/sub-headings for
                 // the side panel
@@ -131,12 +143,12 @@ export class Document
                         text: headingText,
                         id,
                     };
-                    this.allHeadings.push(heading);
+                    this.structure.allHeadings.push(heading);
 
                     // Construct heirarchy
                     if (ev.node.level == 2)
                     {
-                        this.headings.push(currentH2 = heading);
+                        this.structure.headings.push(currentH2 = heading);
                     }
                     else if (currentH2)
                     {
@@ -161,7 +173,7 @@ export class Document
         }
 
         // Insert the "#" links on all id headings
-        for (let h of this.allHeadings)
+        for (let h of this.structure.allHeadings)
         {
             let n = new commonmark.Node("html_inline", h.node.sourcepos);
             n.literal = `<a class="hlink" href="#${h.id}">#</a>`;
@@ -253,7 +265,7 @@ export class Document
             let att = oldAttrs.call(renderer, ...arguments);
             if (node.type == "heading" && (node.level == 2 || node.level == 3))
             {
-                let heading = this.allHeadings.find(x => x.node == node);
+                let heading = this.structure.allHeadings.find(x => x.node == node);
                 if (heading)
                 {
                     att.push(["id", heading.id]);

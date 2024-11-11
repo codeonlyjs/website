@@ -81,7 +81,7 @@ export class LayoutDocumentation extends Component
                         class_active: transition(c => c.activePanel == "secondary"),
                         $: {
                             type: SecondaryNavigation,
-                            inPageLinks: c => c.page?.inPageLinks,
+                            structure: c => c.page?.structure,
                             on_hidePopupNav: c => c.hidePanel(),
                         }
                     }
@@ -213,10 +213,6 @@ Style.declare(`
     }
     #div-rhs
     {
-        h6
-        {
-            margin-top: 0;
-        }
     }
     #div-center
     {
