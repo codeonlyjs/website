@@ -5,6 +5,52 @@ title: "API"
 
 ## Component Class
 
+### cleanup(callback)
+
+Registers a cleanup callback function to be called when the component is
+unmounted.
+
+The component must be mounted when this method is called or an `Error` is
+thrown.  Usually this method should be called from `onMount()`
+
+The `cleanup` function provides a simple way to manage external resources
+used while the component is mounted:
+
+eg:
+
+```js
+onMount()
+{
+    // Add the event listener
+    document.addEventListener("scroll", scrollHandler);
+
+    // Register for cleanup when unmounted
+    this.cleanup(() => 
+        document.removeEventListener("scroll", scrollHandler)
+    );
+
+    // Event handler
+    function scrollHandler(ev)
+    {
+    }
+}
+```
+
+<div class="tip">
+
+The above example demonstrates adding and removing an event listener, but this
+can be even more easily achieved with the `listen` method.
+
+</div>
+
+<div class="tip">
+
+Releasing resources may not be required for components that last the entire
+lifetime of a single page application.  eg: a header bar component that's 
+mounted at app startup and never removed may not need any resource clean up.
+
+</div>
+
 ### domTreeConstructor (static)
 
 Returns a function to construct the DOM tree for this component.
@@ -67,6 +113,26 @@ so it can be passed directly to functions to add/remove event listeners.
 
 </div>
 
+### listen(target, event, handler)
+
+Adds an event listener to an object that's automatically removed when
+this component is unmounted.
+
+The component must be mounted when this method is called or an `Error` is
+thrown.  Usually this method should be called from `onMount()`
+
+```js
+onMount()
+{
+    // addEventListener - will be automatically removed when
+    // the component is unmounted
+    this.listen(document, "scroll", (ev) => {
+
+        // Handle event
+
+    });
+}
+```
 
 
 ### async load(callback)
@@ -174,6 +240,32 @@ Override this method to provide a custom template.  See
 ### onUnmount()
 
 Override this method to be notified when the component has been unmounted.
+
+
+### setInterval()
+
+Sets an interval handler using `window.setInterval()` that's automatically 
+cleared when the component is unmounted.
+
+This method passes all arguments directly to `window.setInterval()`
+
+Returns the `intervalId`.
+
+The component must be mounted when this method is called or an `Error` is
+thrown.  Usually this method should be called from `onMount()`
+
+```js
+onMount()
+{
+    // addEventListener - will be automatically cleared when
+    // the component is unmounted
+    this.setInterval(() => {
+
+        // poll something?
+
+    }, 1000);
+}
+```
 
 
 
