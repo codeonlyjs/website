@@ -9,6 +9,7 @@ elements when the following actions occur:
 * Inserting and removing content with `if` directives
 * Showing and hiding elements with the `display` directive
 * Adding or removing a class with boolean `class_` directives
+* Changing the content of an embed slot
 * Changing an items `key`
 
 ## In/Out States
@@ -114,6 +115,23 @@ The `key` property is not to be confused with the item keys
 used by `foreach` directices. 
 
 </div>
+
+
+## Embed Slot Transitions
+
+Transitions on embed slots are declared by placing the `transition`
+directive on the content property.
+
+```js
+{
+    type: "embed-slot",
+    content: transition(c => c.content),
+}
+```
+
+The transition will trigger when the content value changes.
+
+
 
 ## Transition CSS Classes
 

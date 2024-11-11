@@ -213,3 +213,10 @@ Note the following:
   could have used `$: [...]` instead of `content: [...]`.
 
 
+
+## CSS Transitions
+
+Embed slots can be used in conjunction with CodeOnly CSS transitions 
+to produce animation effects when the content changes.
+
+See [Transitions](templateTransitions) for more on this.
