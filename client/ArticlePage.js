@@ -63,7 +63,7 @@ export class ArticlePage extends Component
 Style.declare(`
 .article
 {
-    padding: 10px 30px 100px 10px;
+    padding: 10px 30px 100px 30px;
     margin: 0;
     margin-top: var(--align-content);
 

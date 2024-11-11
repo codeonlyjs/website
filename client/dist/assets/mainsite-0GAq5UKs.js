@@ -561,7 +561,7 @@ return new Main();`,r=new Function("Component","Style",o);s.main=r(D,n),s.main.m
 `);class X1 extends D{constructor(e){super(),this.url=e}}q(X1,"template",{type:"div",class:"center",$:[{type:"h1",class:"danger",text:"Page not found! 😟"},{type:"p",text:e=>`The page ${e.url} doesn't exist!`},{type:"p",$:{type:"a",attr_href:"/",text:"Return Home"}}]});P.register({match:t=>(t.page=new X1(t.url),!0),order:1e3});var u1;class J1 extends D{constructor(n){super();w(this,u1);m(this,u1,n)}get document(){return u(this,u1)}set document(n){m(this,u1,n),this.invalidate()}get structure(){return this.document.structure}get layout(){var n,s;switch((s=(n=this.document)==null?void 0:n.frontmatter)==null?void 0:s.layout){case"bare":return Xt;default:return Zt}}onMount(){rt(()=>{this.document.mountDemos()})}onUnmount(){this.document.unmountDemos()}}u1=new WeakMap,q(J1,"template",{type:"div",class:"article",$:n=>{var s;return ne.raw(((s=n.document)==null?void 0:s.html)??"")}});$.declare(`
 .article
 {
-    padding: 10px 30px 100px 10px;
+    padding: 10px 30px 100px 30px;
     margin: 0;
     margin-top: var(--align-content);
 
