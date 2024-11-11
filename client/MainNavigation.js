@@ -1,4 +1,5 @@
 import { Component, Style, Html } from "@codeonlyjs/core";
+import { router } from "./router.js";
 
 // The main header
 export class MainNavigation extends Component
@@ -6,6 +7,9 @@ export class MainNavigation extends Component
     constructor()
     {
         super();
+        router.addEventListener("didEnter", (from, to) => {
+            this.invalidate();
+        });
     }
 
     #tocPath;
@@ -52,11 +56,15 @@ export class MainNavigation extends Component
                     {
                         type: "ul",
                         $: {
-                            foreach: i => i.pages,
+                            foreach: {
+                                items: i => i.pages,
+                                itemKey: i => i.url,
+                            },
                             type: "li",
                             $: {
                                 type: "a",
                                 attr_href: j => j.url,
+                                class_selected: j => `/guide/${j.url == "." ? "" : j.url}` == window.location.pathname,
                                 text: j => j.title,
                             }
                         }
@@ -89,6 +97,11 @@ Style.declare(`
             padding-top: 0.5rem;
             line-height: 1.2rem;
         }
+    }
+
+    a.selected
+    {
+        color: var(--accent-color);
     }
 
 }

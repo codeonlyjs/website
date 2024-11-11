@@ -10,7 +10,7 @@ get started will depend on what you're trying to achieve.
 
 <a class="box" href="#codeonly-lab">
 
-### CodeOnly Lab
+#### CodeOnly Lab
 
 Learn the basics by running simple experiments right here in your browser.
 
@@ -18,7 +18,7 @@ Learn the basics by running simple experiments right here in your browser.
 
 <a class="box" href="#cdn-packages">
 
-### CDN Packages
+#### CDN Packages
 
 The easiest way to add CodeOnly to a project, no server required.
 
@@ -26,7 +26,7 @@ The easiest way to add CodeOnly to a project, no server required.
 
 <a class="box" href="#npm-package">
 
-### NPM Package
+#### NPM Package
 
 For use with popular build and bundling tools like
 Vite, Rollup, Webpack etc...
@@ -37,7 +37,7 @@ Vite, Rollup, Webpack etc...
 
 <a class="box" href="#spa-project">
 
-### SPA Project
+#### SPA Project
 
 Generate a single page app for use with
 simple file server or full server.
@@ -46,7 +46,7 @@ simple file server or full server.
 
 <a class="box" href="#full-stack-project">
 
-### Full-Stack Project
+#### Full-Stack Project
 
 A full-stack single page app. Client SPA, server, 
 live reload and Docker ready.

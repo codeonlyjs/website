@@ -44,6 +44,10 @@ export async function convert_toc(filename)
             // Ignore
         }
 
+        if (filename == "index")
+            filename = ".";
+        if (filename.endsWith("/index"))
+            filename = filename.substring(filename.length - 5) + '.';
 
         section.pages.push({
             url: filename,

@@ -206,7 +206,7 @@ Style.declare(`
             background-color: rgb(from var(--accent-color) r g b / 10%);
         }
 
-        h3
+        h4
         {
             margin: 0;
             font-size: 0.9rem;
