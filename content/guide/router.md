@@ -311,9 +311,26 @@ from an initial page load  URL).
 
 ### replace(url)
 
-Replaces the current URL shown in the browser (and the history) and updates
-the current route object with the new URL information.
+This function updates the saved state of the route and optionally updates
+the current page URL.
 
+If a url is specified, it replaces the current URL shown in the browser 
+(and the history) and updates the current route object with the new URL information.
+
+Regardless of whether a URL is specified, this method also saves
+the `Router.current.state` to the history making it available if this
+page is returned to.
+
+<div class="tip">
+
+You should never replace the `Router.current.state` object as it 
+has settings that are used internally to maintain the current history
+position.
+
+If you need to save additional state information we recommend storing it
+in a sub-object of the state object, eg: `Router.current.state.myState`.
+
+</div>
 
 
 ## UrlMapper Class
