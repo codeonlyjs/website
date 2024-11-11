@@ -328,7 +328,7 @@ For example, suppose you wanted your single page app to appear in a sub-path
 
 ```js
 router.urlMapper = new UrlMapper({
-    base: "/myapp"
+    base: "/myapp/"
 });
 ```
 

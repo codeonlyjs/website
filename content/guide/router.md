@@ -37,7 +37,12 @@ Internalizes a URL.
 If the `urlMapper` property has been set this method delegates to the 
 mapper, otherwise a copy of the passed URL is returned.
 
-* url - the URL to be internalized (must be a URL object, not a string)
+* url - the URL to be internalized (may be a URL object or a string)
+
+Returns the internalized URL.  
+
+* If the `url` parameter is a URL object a URL object is returnd.  
+* If the `url` parameter is a string, a string is returned.
 
 ### externalize(url)
 
@@ -46,7 +51,12 @@ Externalizes a URL.
 If the `urlMapper` property has been set this method delegates to the 
 mapper, otherwise a copy of the passed URL is returned.
 
-* url - the URL to be externalized (must be a URL object, not a string)
+* url - the URL to be externalized (may be a URL object or a string)
+
+Returns the externalized URL.
+
+* If the `url` parameter is a URL object a URL object is returnd.  
+* If the `url` parameter is a string, a string is returned.
 
 ### current
 
@@ -321,6 +331,8 @@ Constructs a new `UrlMapper` object.
 * `options` - an object with settings controlling how URLs are mapped
     - `base` - a URL prefix for external URLs
     - `hash` - if true URLs will be externalized as hash URL paths.
+
+If specified, the `base` option must start and end with a slash "'/'".
 
 ### internalize(url)
 
