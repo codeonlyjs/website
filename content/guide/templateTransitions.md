@@ -3,17 +3,13 @@ title: "Transitions"
 ---
 # Transitions
 
-CodeOnly provides support for CSS transitions when the following 
-actions occur:
+CodeOnly can initiate CSS transitions by applying classes on DOM 
+elements when the following actions occur:
 
 * Inserting and removing content with `if` directives
 * Showing and hiding elements with the `display` directive
 * Adding or removing a class with boolean `class_` directives
 * Changing an items `key`
-
-Transitions are controlled by adding CSS classes to the element(s) 
-affected by the operation before the operation and removing those
-classes when all pending animations have completed.
 
 ## In/Out States
 
