@@ -3,6 +3,7 @@ import { MobileBar } from "./MobileBar.js";
 import { MainNavigation } from "./MainNavigation.js";
 import { SecondaryNavigation } from "./SecondaryNavigation.js";
 import { router } from "./router.js";
+import { navigationContext } from "./NavigationContext.js";
 
 // Main application
 export class LayoutDocumentation extends Component
@@ -16,7 +17,7 @@ export class LayoutDocumentation extends Component
 
     loadRoute(route)
     {
-        this.url = route.url;
+        navigationContext.setDocUrl(route.url);
         this.page = route.page;
         this.invalidate();
     }
@@ -64,7 +65,6 @@ export class LayoutDocumentation extends Component
                         class_active: transition(c => c.activePanel == "primary"),
                         $: {
                             type: MainNavigation,
-                            url: c => c.url,
                         }
                     },
                     {

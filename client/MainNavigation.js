@@ -1,5 +1,6 @@
 import { Component, Style, Html } from "@codeonlyjs/core";
 import { router } from "./router.js";
+import { navigationContext } from "./NavigationContext.js";
 
 // The main header
 export class MainNavigation extends Component
@@ -7,39 +8,12 @@ export class MainNavigation extends Component
     constructor()
     {
         super();
-        router.addEventListener("didEnter", (from, to) => {
-            this.invalidate();
-        });
     }
 
-    #tocPath;
-    set url(value)
+    onMount()
     {
-        let newTocPath = new URL("toc", value).pathname;
-        if (newTocPath == this.#tocPath)
-            return;
-        this.#tocPath = newTocPath;
-        this.load();
-    }
-
-    load()
-    {
-        super.load(async () => {
-            this.error = false;
-            try 
-            {
-                const response = await fetch(`/content${this.#tocPath}`);
-                if (!response.ok)
-                    throw new Error(`Response status: ${response.status} - ${response.statusText}`);
-        
-                this.toc = await response.json();
-            } 
-            catch (error) 
-            {
-                this.error = true;
-                console.error(error.message);
-            }
-        });
+        this.listen(navigationContext, "changed", this.invalidate);
+        this.listen(navigationContext, "ready", this.invalidate);
     }
 
     static template = {
@@ -47,7 +21,7 @@ export class MainNavigation extends Component
         id: "nav-main",
         $: [
             {
-                foreach: x => x.toc,
+                foreach: () => navigationContext.toc,
                 $: [
                     {
                         type: "h5",

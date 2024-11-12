@@ -4,6 +4,7 @@ import { Document } from "./Document.js";
 import { LayoutDocumentation } from "./LayoutDocumentation.js";
 import { LayoutBare } from "./LayoutBare.js";
 import { NotFoundPage } from "./NotFoundPage.js";
+import { NextPreviousNavigation } from "./NextPreviousNavigation.js";
 
 // The main header
 export class ArticlePage extends Component
@@ -53,11 +54,18 @@ export class ArticlePage extends Component
         this.document.unmountDemos();
     }
 
-    static template = {
-        type: "div",
-        class: "article",
-        $: c => Html.raw(c.document?.html ?? "")
-    }
+    static template = [
+        {
+            type: "div",
+            class: "article",
+            $: [
+                c => Html.raw(c.document?.html ?? ""),
+                {
+                    type: NextPreviousNavigation,        
+                },
+            ]
+        },
+    ]
 }
 
 Style.declare(`
