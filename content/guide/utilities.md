@@ -24,6 +24,21 @@ Helper for generating HTML `<a>` tags
 
 Marks a string as "raw" so that it won't be escaped when added to the DOM.
 
+If passed a function, wraps the passed function in a function that
+marks the return value of the inner function as HTML.
+
+ie: do this:
+
+```js
+{
+    type: "div",
+    $: Html.raw(c => c.htmlContent),
+}
+```
+
+not this: `c => Html.raw(c.htmlContent)`.
+
+
 
 ### encode(text)
 

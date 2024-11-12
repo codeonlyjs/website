@@ -37,7 +37,7 @@ import { Html } from 'codeonly.js';
 {
     type: "div",
     $: [
-        Html.raw("Hello &amp; Goodbye World", /* i:  HTML text child node*/
+        Html.raw("Hello &amp; Goodbye World"), /* i:  HTML text child node*/
     ]   
 }
 ```
@@ -49,6 +49,22 @@ Be careful using the `Html.raw` method especially with untrusted data as it will
 be written directly to the DOM as is - malicious scripts included.
 
 </div>
+
+To use `Html.raw` with callbacks, put the entire callback inside the call to 
+`Html.raw`:
+
+
+```js
+import { Html } from 'codeonly.js';
+
+{
+    type: "div",
+    $: Html.raw(c => c.htmlContent),
+}
+```
+
+ie: don't do this: `c => Html.raw(c.htmlContent)`
+
 
 ## Text Property
 

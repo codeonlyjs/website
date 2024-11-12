@@ -1,4 +1,4 @@
-import { Component, Style } from "@codeonlyjs/core";
+import { Component, Style, Html } from "@codeonlyjs/core";
 import { navigationContext } from "./NavigationContext.js";
 
 export class NextPreviousNavigation extends Component
