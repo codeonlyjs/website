@@ -122,7 +122,7 @@ class LabPage extends Component
                         on_input: c => c.onCodeChange(),
                     },
                     {
-                        _: "div",
+                        type: "div",
                         class: "error",
                         display: c => !!c.error && c.showErrors,
                         text: c => c.error,

@@ -38,7 +38,7 @@ Hovering over the info icons in sample code shows further explanatory notes.
 </div>
 
 ```js
-// demo
+// code lab demo
 class Main extends Component /* i:  Components extend the `Component` class */
 {
   count = 0; /* i:  Class fields and functions are available to the template */
@@ -60,7 +60,7 @@ class Main extends Component /* i:  Components extend the `Component` class */
       },
       {
         type: "span",
-        text: c => `Count: ${c.count}`, /* i:  Callback for dynamic content */
+        text: c => ` Count: ${c.count}`, /* i:  Callback for dynamic content */
       }
     ]
   }

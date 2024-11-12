@@ -188,6 +188,23 @@ Style.declare(`
         }
     }
 
+    div.snip
+    {
+        font-family: var(--font-family);
+        font-size: 0.8rem;
+        text-align: center;
+        color: var(--gridline-color);
+
+        span.hline
+        {
+            display: inline-block;
+            margin: 0 8px;
+            border-bottom: 1px solid var(--gridline-color);
+            width: 30%;
+            transform: translateY(-8px);
+        }
+    }
+
     .box-container
     {
         display: flex;

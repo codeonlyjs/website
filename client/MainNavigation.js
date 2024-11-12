@@ -17,7 +17,7 @@ export class MainNavigation extends Component
     }
 
     static template = {
-        _: "nav",
+        type: "nav",
         id: "nav-main",
         $: [
             {

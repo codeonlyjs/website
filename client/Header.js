@@ -17,11 +17,11 @@ export class Header extends Component
     loggedIn = false;
 
     static template = {
-        _: "header",
+        type: "header",
         id: "header",
         $: [
             {
-                _: "a",
+                type: "a",
                 class: "title",
                 attr_href: "/",
                 $: [
@@ -38,7 +38,7 @@ export class Header extends Component
                 ]
             },
             {
-                _: "div",
+                type: "div",
                 class: "buttons",
                 $: [
                     {

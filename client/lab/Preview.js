@@ -31,10 +31,10 @@ export class Preview extends Component
     }
 
     static template = {
-        _: "div",
+        type: "div",
         id: "preview",
         $: {
-            _: "embed-slot",
+            type: "embed-slot",
             content: c => c.createIframe(),
         }
     }

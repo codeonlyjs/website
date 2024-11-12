@@ -4,7 +4,7 @@ import { Component, Style } from "@codeonlyjs/core";
 export class MobileBar extends Component
 {
     static template = {
-        _: "header",
+        type: "header",
         id: "mobile-bar",
         $: [
             {

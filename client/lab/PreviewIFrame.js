@@ -72,7 +72,7 @@ export class PreviewIFrame extends Component
     }
 
     static template = {
-        _: "iframe",
+        type: "iframe",
         attr_srcdoc: c => c.srcdoc,
     }
 }

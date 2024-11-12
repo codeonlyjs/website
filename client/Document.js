@@ -4,6 +4,7 @@ import { openLabWithCode } from "./lab/LabPage.js";
 import { htmlIcon } from "./Icon.js";
 import * as commonmark from "commonmark";
 
+
 export class Document
 {
     constructor()
@@ -192,15 +193,31 @@ export class Document
             let code = cb.literal;
 
             // Strip off the demo marker if present
-            let isDemo = code.startsWith("// demo");
-            if (isDemo)
-                code = code.substring(7).trimStart();
+            let dir = code.match(/^\/\/(?:\s*\b(?:demo|code|lab)\b)+\n/);
+            let isDemo = dir?.[0].indexOf("demo") >= 0;
+            let isCode = dir?.[0].indexOf("code") >= 0;
+            let isLab = dir?.[0].indexOf("lab") >= 0;
+            if (dir)
+            {
+                code = code.substring(dir[0].length);
+            }
+            else
+            {
+                isCode = true;
+            }
+
+            let originalCode = code;
 
             // Pull out Style.declare() blocks
             let cssBlocks = [];
             code = code.replace(/Style\.declare\(`([^`]*)`\)/g, (m, css) => {
                 cssBlocks.push(css);
                 return `Style.declare("-- style block ${cssBlocks.length} --")`
+            });
+
+            // Pull out snipped sections
+            code = code.replace(/(?:^|(?<=\n))\/\/ ---\n[\s\S]*?\/\/ ---\n/g, (m, code) => {
+                return `/* -- snip -- */`;
             });
 
             // Highlight the code
@@ -228,26 +245,55 @@ export class Document
                 `<span class="note"><span class="inner">$1</span></span>`
             );
 
+            // Convert snipped blocks comments
+            html.value = html.value.replace(
+                /<span class="hljs-comment">\/\* -- snip -- \*\/<\/span>/g, 
+                `<div class="snip" title="Some code omitted for clarity."><span class="hline"></span>${htmlIcon("scissors", 16)}<span class="hline"></span></div>`
+            );
+
             // Wrap code block
-            let wrapper_html = `<pre><code class="hljs language-${html.language}">${html.value}</code></pre>\n`;
+            let wrapper_html = "";
+            if (isCode)
+                wrapper_html += `<pre><code class="hljs language-${html.language}">${html.value}</code></pre>\n`;
 
             // If it's a demo
-            if (isDemo)
+            if (isDemo || isLab)
             {  
                 // Remove C style comments
-                code = code.replace(/\s\/\*.*\*\//g, "");
+                originalCode = originalCode.replace(/\s\/\*.*\*\//g, "");
 
-                // Insert thte temo block
+                // Remove snip mapers
+                originalCode = originalCode.replace(/(?:^|(?<=\n))\/\/ ---\n/g, "");
+
+                // Insert thte demo block
                 let id = `demo-${this.demos.length}`
-                this.demos.push({ id, code });
-                wrapper_html += `
+                this.demos.push({ id, code: originalCode });
+                if (isLab)
+                {
+                    wrapper_html += `
 <div class="demo-header">
-    <span>Result:</span>
+    <span>${isDemo ? "Demo:" : ""}</span>
     <a id="edit-${id}" class="edit-demo-link vcenter" href="#">${htmlIcon("science", 22)}<span> Edit</span></a>
 </div>
+`
+                }
+
+                if (isDemo)
+                {
+                    if (!isLab)
+                    {
+                        wrapper_html += `
+<div class="demo-header">
+    <span>${isDemo ? "Demo:" : ""}</span>
+</div>
+`
+                    }
+
+                    wrapper_html += `
 <div id="${id}" class="demo">
 </div>
 `;
+                }
             }
 
             // Update markdown AST with the new raw HTML block
