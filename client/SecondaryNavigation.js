@@ -20,6 +20,7 @@ export class SecondaryNavigation extends Component
         this.#headingCoords = null;
         this.#highlightId = null;
         this.invalidate();
+        this.positionHighlight();
     }
     
     hidePopupNav()
@@ -45,6 +46,9 @@ export class SecondaryNavigation extends Component
 
     positionHighlight()
     {
+        if (!this.#structure)
+            return;
+
         // If the document scroll height changed, discard the old
         // heading coords and recalculate
         if (!this.#oldHeight || this.#oldHeight != document.body.scrollHeight)

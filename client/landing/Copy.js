@@ -30,7 +30,7 @@ export let homeDemo = `### Logic, Templates and Styles...
 ...all in self contained .js files.
 
 \`\`\`js
-// demo
+// demo code lab
 class Main extends Component /* i: Components extend the \`Component\` class */
 {
   count = 0; /* i: Class fields and functions are available to the template */
@@ -62,6 +62,7 @@ Style.declare( /* i: CSS styles (with \`.counter\` as scoping class) */
 \`
 .counter
 {
+  text-align: center;
   button
   {
     margin-right: 10px

@@ -1,8 +1,8 @@
 import { Component, Style, Html } from "@codeonlyjs/core";
 import { HeroPage } from "./landing/HeroPage.js";
 import { homeDemo } from "./landing/Copy.js";
-import { ArticlePage } from "./ArticlePage.js";
 import { Document } from "./Document.js";
+import { DocumentView } from "./DocumentView.js";
 
 // Main 
 export class HomePage extends Component
@@ -27,7 +27,7 @@ export class HomePage extends Component
             type: "div",
             class: "homeDemo",
             $: {
-                type: ArticlePage,
+                type: DocumentView,
                 document: c => c.document,
             }
         }

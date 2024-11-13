@@ -48,10 +48,13 @@ export class Document
             d.main = closure(Component, fakeStyle);
             d.main.mount(document.getElementById(d.id));
 
-            document.getElementById(`edit-${d.id}`).addEventListener("click", (ev) => {
-                openLabWithCode(d.code);
-                ev.preventDefault();
-            });
+            if (d.isLab)
+            {
+                document.getElementById(`edit-${d.id}`).addEventListener("click", (ev) => {
+                    openLabWithCode(d.code);
+                    ev.preventDefault();
+                });
+            }
         }
 
         this.elStyles = document.createElement("style");
@@ -267,12 +270,12 @@ export class Document
 
                 // Insert thte demo block
                 let id = `demo-${this.demos.length}`
-                this.demos.push({ id, code: originalCode });
+                this.demos.push({ id, code: originalCode, isLab });
                 if (isLab)
                 {
                     wrapper_html += `
 <div class="demo-header">
-    <span>${isDemo ? "Demo:" : ""}</span>
+    <span></span>
     <a id="edit-${id}" class="edit-demo-link vcenter" href="#">${htmlIcon("science", 22)}<span> Edit</span></a>
 </div>
 `
@@ -284,7 +287,7 @@ export class Document
                     {
                         wrapper_html += `
 <div class="demo-header">
-    <span>${isDemo ? "Demo:" : ""}</span>
+    <span></span>
 </div>
 `
                     }

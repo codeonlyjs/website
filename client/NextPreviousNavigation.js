@@ -66,8 +66,8 @@ Style.declare(`
 {
     border-top: 1px solid var(--gridline-color);
     padding-top: 15px;
-    margin-top: 30px;
     display: flex;
+    margin: 0 30px 80px 30px;
     justify-content: space-between;
     a
     {
