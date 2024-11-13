@@ -69,11 +69,10 @@ class Main extends Component /* i:  Components extend the `Component` class */
 Style.declare(` /* i:  CSS styles (with '.counter' as scoping class) */
 .counter
 {
-  text-align: center;
-  button
-  {
-    margin-right: 10px
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 `); 
 ```
