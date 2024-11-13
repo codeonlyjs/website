@@ -1,5 +1,5 @@
 import { $, Component, Style, Html } from "@codeonlyjs/core";
-import { homeDemo, featureBoxes, featureBullets, codeOnlyBullets, reactivityBullets } from "./Copy.js";
+import { homeDemo, featureBoxes, featureBullets, codeOnlyBullets, reactivityBullets, learnBullets } from "./Copy.js";
 import { Document } from "../Document.js";
 import { DocumentView } from "../DocumentView.js";
 import { makeIcon } from "../Icon.js";
@@ -45,7 +45,7 @@ export class HeroPage extends Component
 
             $.div.class("heading-graphic")(makeIcon("codeonly", 50)),
             $.h2.text("What is Code Only Development?"),
-            $.p.text("An approach to front-end development where everything is written in clean, modern JavaScript"),
+            $.p.text("An approach to front-end development where everything is written in clean, modern JavaScript."),
             codeOnlyBullets.map(x => ({
                 type: "span.featureBullet",
                 text: x
@@ -53,7 +53,7 @@ export class HeroPage extends Component
 
             $.div.class("heading-graphic")(makeIcon("box", 50)),
             $.h2.text("What's in the Box?"),
-            $.p.text("Everything you need to build simple widgets or complete full-stack single page apps."),
+            $.p.text("Everything you need to build simple widgets or fully functional single page apps."),
             featureBullets.map(x => ({
                 type: "span.featureBullet",
                 text: x
@@ -66,6 +66,15 @@ export class HeroPage extends Component
                 type: "span.featureBullet",
                 text: x
             })),
+
+            $.div.class("heading-graphic")(makeIcon("school", 50)),
+            $.h2.text("Easy to Learn"),
+            $.p.text("Learn the most important topics in just one afternoon, get started in no time..."),
+            learnBullets.map(x => ({
+                type: "span.featureBullet",
+                text: x
+            })),
+
 
 
 

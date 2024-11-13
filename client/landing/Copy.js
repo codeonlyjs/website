@@ -92,3 +92,10 @@ export let reactivityBullets = [
   "Easy to Debug",
   "Fast",
 ]
+
+export let learnBullets = [
+  "\"The Lab\" for Experiments", 
+  "Project Generator",
+  "Awesome Documentation",
+  "Lots of Samples",
+]
