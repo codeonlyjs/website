@@ -16,6 +16,7 @@ templateIf
 templateForEach
 templateEmbedSlots
 templateContentProperty
+templateFluent
 templateTransitions
 templateUpdateSemantics
 templateInternals

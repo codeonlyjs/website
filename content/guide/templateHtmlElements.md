@@ -16,8 +16,8 @@ learning this section well.
 
 ## Tag Name
 
-An HTML element is declared in a template by specifying the tag name as a 
-string for the `type` property of the node:
+An HTML element is declared by specifying its tag name as the `type` property 
+of the node:
 
 ```js
 {
@@ -28,58 +28,87 @@ string for the `type` property of the node:
 Note: unlike most other properties, the `type` property can *not* be a dynamic
 callback function.
 
+
+
 ## Attributes
 
-The attributes of a HTML element are declared using property names prefixed with 
-`attr_`:
+The attributes of a HTML element are declared using the other properties of
+the template node
+
+```js
+// <img src="/content/logo.svg" >
+{
+    type: "img",
+    src: "/content/logo.svg",
+}
+```
+
+Attribute declared this way can be dynamic, but providing a callback:
 
 ```js
 {
     type: "img",
-    attr_src: "/content/logo.svg",
+    src: c => c.currentPhotoUrl,
 }
 ```
 
-yields:
+If an attribute name clashes with a name that has other special meaning 
+to CodeOnly, you can use the `attr_` prefix to specify the attribute.
 
-```html
-<img src="/content/logo.svg" >
-```
-
-Attribute values can be dynamic:
+The most common example of this is setting the `type` attribute of an
+input element (although this can usually be avoided using static attributes
+as described below)
 
 ```js
+// <input type="password">
 {
-    type: "img",
-    attr_src: c => c.currentPhotoUrl,
+    type: "input",
+    attr_type: "password"
 }
 ```
 
-<div class="tip">
 
-For some common attributes there are short-cut properties the remove the need 
-for the `attr_` prefix - see below.
 
-</div>
+## Static Attributes
 
-## Id
-
-The `id` of a HTML element can be declared with the short-hand property "id":
+The static attributes of an element can be set by appending them 
+to the type field using the `name=value` syntax:
 
 ```js
+// <input type="password">
 {
-    type: "header",
-    id: "main-header",
+    type: "input type=password"
 }
 ```
 
-yields:
+Use single or double quotes for attribute values with spaces:
 
-```html
-<header id="main-header"></header>
+```js
+// <input type="password">
+{
+    type: "div title='this is a div'"
+}
 ```
 
-The `id` property can be a dynamic callback, but this is rarely used.
+The `id` and `class` attributes can also be set using a short-hand 
+notation similar to CSS query selectors:
+
+```js
+// <div id="#my-div" class="class1 class2">
+{
+    type: "div#my-div.class1.class2",
+}
+```
+
+Unlike CSS query selectors where spaces are significant, here they're
+not so spaces are allowed:
+
+```js
+// <div id="#my-div" class="class1 class2">
+{
+    type: "div #my-div .class1 .class2",
+}
+```
 
 
 
@@ -94,21 +123,21 @@ The inner text of an HTML element can be set with the `text` property:
 }
 ```
 
-To set raw HTML, use the `Html.raw` modifier function:
+To set raw HTML, use the `html` modifier function:
 
 ```js
-import { Html } from "@codeonlyjs/core";
+import { html } from "@codeonlyjs/core";
 
 {
     type: "p",
-    text: Html.raw('<span class="bold">Hello</span> World'),
+    text: html('<span class="bold">Hello</span> World'),
 }
 ```
 
 The text property can be a dynamic callback and it can return
-either plain or raw text.
+either plain or html text.
 
-Note, since the HTML content of an element are child nodes, an element's
+Note, since the HTML content of elements are child nodes, an element's
 text can also be specified using the `$` child node syntax:
 
 ```js
@@ -125,7 +154,7 @@ text can also be specified using the `$` child node syntax:
 The child nodes of an HTML element are declared using the `childNodes` property
 or the special `$` content property (both are equivalent).
 
-The child nodes are declared as an array:
+Child nodes are declared as an array:
 
 ```js
 {
@@ -149,27 +178,6 @@ If there is only a single child the array container is not required:
 }
 ```
 
-
-
-## CSS Classes
-
-The `class` attribute of an HTML element can be declared with the short-hand property "class":
-
-```js
-{
-    type: "div",
-    class: "my-class",
-}
-```
-
-Dynamic callbacks are supported:
-
-```js
-{
-    type: "div",
-    class: c => `my-class ${c.otherClasses}`,
-}
-```
 
 ## Boolean CSS Classes
 
@@ -216,31 +224,10 @@ See [CSS Transitions](templateTransitions) for more on this.
 
 
 
-## CSS Styles
-
-The `style` attribute of an HTML element can be declared with the short-hand property "style":
-
-```js
-{
-    type: "div",
-    style: "text-align: center",
-}
-```
-
-Dynamic callbacks are supported:
-
-```js
-{
-    type: "div",
-    style: c => `text-align: ${c.currentAlignment}`,
-}
-```
-
-
-
 ## Dynamic Named Styles
 
-Named styles dynamically set the value of a single named CSS style property.
+Named styles can be used to dynamically set the value of a single named 
+CSS style property.
 
 Declare a named styles by prefixing the name of the CSS property to set with `style_`:
 
@@ -276,7 +263,8 @@ or, use a string property key:
 
 ## Display Visibility
 
-The `display` attribute can be used to contol the visibility of an element.
+The `display` attribute can be used to dynamically set the `display`
+style property of an element.
 
 Set `display` to:
 
