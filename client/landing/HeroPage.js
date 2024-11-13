@@ -1,9 +1,21 @@
-import { Component, Style, Html } from "@codeonlyjs/core";
-import { featureBoxes } from "./Copy.js";
+import { $, Component, Style, Html } from "@codeonlyjs/core";
+import { homeDemo, featureBoxes, featureBullets, codeOnlyBullets, reactivityBullets } from "./Copy.js";
+import { Document } from "../Document.js";
+import { DocumentView } from "../DocumentView.js";
+import { makeIcon } from "../Icon.js";
+
 
 // Main 
 export class HeroPage extends Component
 {
+    constructor()
+    {
+        super();
+        this.document = new Document();
+        this.document.enableHeadingLinks = false;
+        this.document.processMarkdown(homeDemo);
+    }
+
     onMount()
     {
         stylish.addEventListener("darkModeChanged", this.invalidate);
@@ -23,32 +35,63 @@ export class HeroPage extends Component
             {
                 type: "img",
                 id: "hero",
-                attr_src: c => `/hero-${stylish.darkMode ? "dark" : "light"}.svg`,
+                src: c => `/hero-${stylish.darkMode ? "dark" : "light"}.svg`,
             },
+            $.h2.text("The front-end Web framework for coders."),
             {
-                type: "h2",
-                text: "The front-end Web framework for coders.",
+                type: "div.row",
+                $: featureBoxes.map(x => this.makeFeatureBox(x))
             },
+
+            $.div.class("heading-graphic")(makeIcon("codeonly", 50)),
+            $.h2.text("What is Code Only Development?"),
+            $.p.text("An approach to front-end development where everything is written in clean, modern JavaScript"),
+            codeOnlyBullets.map(x => ({
+                type: "span.featureBullet",
+                text: x
+            })),
+
+            $.div.class("heading-graphic")(makeIcon("box", 50)),
+            $.h2.text("What's in the Box?"),
+            $.p.text("Everything you need to build simple widgets or complete full-stack single page apps."),
+            featureBullets.map(x => ({
+                type: "span.featureBullet",
+                text: x
+            })),
+
+            $.div.class("heading-graphic")(makeIcon("nonreactive", 50)),
+            $.h2.text("Non-Reactive and Non-Intrusive"),
+            $.p.text("Reactivity is great and all, but it can be intrusive.  We've taken a different path."),
+            reactivityBullets.map(x => ({
+                type: "span.featureBullet",
+                text: x
+            })),
+
+
+
+            $.div.class("heading-graphic")(makeIcon("file", 50)),
+            $.h2.text("Self-Contained Components"),
+            $.p.text("Logic, Templates and Styles all in self contained .js files."),
             {
-                type: "div",
-                class: "row",
-                $: featureBoxes.map(x => makeFeatureBox(x))
-            },
+                type: DocumentView,
+                document: c => c.document,
+            }
         ]
     }
-}
 
-function makeFeatureBox(x)
-{
-    return {
-        type: "div",
-        class: "box",
-        $: [
-            Html.h(3, x.title),
-            Html.p(Html.raw(x.body)),
-        ]   
+    static makeFeatureBox(x)
+    {
+        return {
+            type: "div",
+            class: "box",
+            $: [
+                Html.h(3, x.title),
+                Html.p(Html.raw(x.body)),
+            ]   
+        }
     }
-}
+
+}    
 
 Style.declare(`
 main.hero
@@ -74,11 +117,23 @@ main.hero
         font-size: 1.2rem;
     }
 
+    hr
+    {
+        margin: 60px 0;
+    }
+
+    .heading-graphic
+    {
+        color: var(--accent-color);
+        margin: 80px 0 20px 0;
+    }
+
     .row
     {
         display: flex;
         gap: 10px;
         margin-top: 40px;
+        margin-bottom: 40px;
 
         .box
         {
@@ -86,7 +141,7 @@ main.hero
             border: 1px solid var(--gridline-color);
             border-radius: 7px;
             width: 33%;
-            font-size: 10pt;
+            font-size: 0.75rem;
             padding: 10px;
             color: var(--body-fore-color);
             transition: background-color 0.2s;
@@ -106,6 +161,29 @@ main.hero
         }
     }
 
+    span.featureBullet
+    {
+        font-size: 0.9rem;
+        display: inline-block;
+        white-space: nowrap;
+        &:before
+        {
+            content: "✓ ";
+            color: var(--accent-color);
+        }
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    code
+    {
+        text-align: left;
+    }
+    .document-view
+    {
+        margin: 0 auto;
+        max-width:700px;
+    }
 }
 
 @media screen and (width < 550px) 

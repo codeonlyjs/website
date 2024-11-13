@@ -10,6 +10,8 @@ export class Document
     constructor()
     {
     }
+
+    enableHeadingLinks = true;
     
     load(pathname)
     {
@@ -177,11 +179,14 @@ export class Document
         }
 
         // Insert the "#" links on all id headings
-        for (let h of this.structure.allHeadings)
+        if (this.enableHeadingLinks)
         {
-            let n = new commonmark.Node("html_inline", h.node.sourcepos);
-            n.literal = `<a class="hlink" href="#${h.id}">#</a>`;
-            h.node.prependChild(n);
+            for (let h of this.structure.allHeadings)
+            {
+                let n = new commonmark.Node("html_inline", h.node.sourcepos);
+                n.literal = `<a class="hlink" href="#${h.id}">#</a>`;
+                h.node.prependChild(n);
+            }
         }
 
         // Highlight code blocks

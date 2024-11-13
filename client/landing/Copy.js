@@ -7,8 +7,8 @@ export let featureBoxes = [
     },
     {
       title: "Build Anything",
-      body: `Tiny web widgets, single page apps or full-stack setups. 
-             All in plain, clean and modern ES6 JavaScript.`
+      body: `Embellish existing sites with tiny web widgets to build entire single page apps.  
+             (Includes SPA suitable router)`
     },
     /*
     {
@@ -19,18 +19,15 @@ export let featureBoxes = [
     */
     {
         title: "Fast and Small",
-        body: `DOM templates are JIT compiled and produce minimal DOM updates and we've 
-               tuned it to run <em>fast!</em>.  ~14kB gzipped.`
+        body: `Component templates are JIT compiled, produce minimal DOM updates and we've 
+               tuned it to run <em>fast!</em>.`
     },
 ];
 
 
-export let homeDemo = `### Logic, Templates and Styles...
-
-...all in self contained .js files.
-
+export let homeDemo = `
 \`\`\`js
-// demo code lab
+// demo code
 class Main extends Component /* i: Components extend the \`Component\` class */
 {
   count = 0; /* i: Class fields and functions are available to the template */
@@ -42,12 +39,11 @@ class Main extends Component /* i: Components extend the \`Component\` class */
   }
 
   static template = { /* i: This is the component's DOM template */
-    type: "div", /* i: Root element type */
-    class: "counter", /* i: Scoping CSS class */
+    type: "div.counter", /* i: Root element <div class="counter"> */
     $: [ /* i: Child nodes array */
       {
         type: "button",
-        text: \`Click Me\`,
+        text: "Click Me",
         on_click: c => c.onClick(), /* i: \`c\` is the component instance */
       },
       {
@@ -70,6 +66,29 @@ Style.declare( /* i: CSS styles (with \`.counter\` as scoping class) */
 \`); 
 \`\`\`
 
-[Read the Guide](/guide/)
-
 `
+
+export let codeOnlyBullets = [
+  "Javascript DOM Templates",
+  "No Markup/HTML",
+  "No transpiling",
+  "No build server",
+]
+
+
+export let featureBullets = [
+  "Components",
+  "Templating",
+  "SPA Router",
+  "Transitions",
+  "Live Reload",
+  "Code Generator"
+]
+
+export let reactivityBullets = [
+  "No Proxy Objects",
+  "No Wrappers",
+  "Non-intrusive",
+  "Easy to Debug",
+  "Fast",
+]

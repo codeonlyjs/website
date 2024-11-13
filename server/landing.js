@@ -26,6 +26,7 @@ else
         default: "landing.html",
         modules: [ 
             "@codeonlyjs/core",
+            "commonmark",
         ],
         replace: [
             { from: "./Landing/Main.js", to: "/Landing/Main.js" },
