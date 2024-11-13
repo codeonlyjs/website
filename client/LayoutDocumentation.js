@@ -41,8 +41,7 @@ export class LayoutDocumentation extends Component
     }
 
     static template = {
-        type: "div",
-        id: "layoutDocumentation",
+        type: "div#layoutDocumentation",
         $: [
             {
                 type: MobileBar,
@@ -50,34 +49,27 @@ export class LayoutDocumentation extends Component
                 on_showSecondaryPanel: c => c.showSecondaryPanel(),
             },
             {
-                type: "div",
-                id: "div-wrapper",
+                type: "div#div-wrapper",
                 $: [
                     {
-                        type: "div",
-                        id: "backdrop",
+                        type: "div#backdrop",
                         class_active: transition(c => c.activePanel != null),
                         on_click: c => c.hidePanel(),
                     },
                     {
-                        type: "div",
-                        id: "div-lhs",
+                        type: "div#div-lhs",
                         class_active: transition(c => c.activePanel == "primary"),
-                        $: {
-                            type: MainNavigation,
-                        }
+                        $: MainNavigation
                     },
                     {
-                        type: "div",
-                        id: "div-center",
+                        type: "div#div-center",
                         $: {
                             type: "embed-slot",
                             content: c => c.page,
                         },
                     },
                     {
-                        type: "div",
-                        id: "div-rhs",
+                        type: "div#div-rhs",
                         class_active: transition(c => c.activePanel == "secondary"),
                         $: {
                             type: SecondaryNavigation,

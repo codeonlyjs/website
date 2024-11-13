@@ -17,52 +17,43 @@ export class Header extends Component
     loggedIn = false;
 
     static template = {
-        type: "header",
-        id: "header",
+        type: "header#header",
         $: [
             {
-                type: "a",
-                class: "title",
-                attr_href: "/",
+                type: "a.title",
+                href: "/",
                 $: [
                     { 
-                        type: "img", 
-                        class: "hide-sm",
-                        attr_src: c => `/codeonly-logo-${stylish.darkMode ? "dark" : "light"}.svg`,
+                        type: "img.hide-sm",
+                        src: c => `/codeonly-logo-${stylish.darkMode ? "dark" : "light"}.svg`,
                     },
                     { 
-                        type: "img", 
-                        class: "hide-lg",
-                        attr_src: c => `/codeonly-icon.svg`,
+                        type: "img.hide-lg",
+                        src: c => `/codeonly-icon.svg`,
                     },
                 ]
             },
             {
-                type: "div",
-                class: "buttons",
+                type: "div.buttons",
                 $: [
                     {
                         if: c => c.loggedIn,
-                        type: "a",
-                        class: "subtle button",
-                        attr_href: "/guide/",
+                        type: "a.subtle.button",
+                        href: "/guide/",
                         text: "Docs",
                     },
                     {
                         if: c => c.loggedIn,
-                        type: "a",
-                        class: "subtle button labLink vcenter",
-                        attr_href: "/lab",
+                        type: "a.subtle.button.labLink.vcenter",
+                        href: "/lab",
                         $: [
                             makeIcon("science", 19),
                             " The Lab",
                         ]
                     },
                     {
-                        type: "input",
-                        attr_type: "checkbox",
-                        attr_checked: window.stylish.darkMode ? "checked" : undefined,
-                        class: "theme-switch",
+                        type: "input type=checkbox .theme-switch",
+                        checked: window.stylish.darkMode ? "checked" : undefined,
                         on_click: () => window.stylish.toggleTheme(),
                     },
                 ]

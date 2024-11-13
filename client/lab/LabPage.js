@@ -109,12 +109,10 @@ class LabPage extends Component
     }
 
     static template = {
-        type: "div",
-        class: "lab",
+        type: "div .lab",
         $:[
             {
-                type: "div",
-                class: "editor-container",
+                type: "div .editor-container",
                 $: [
                     {
                         type: CodeEditor,
@@ -122,16 +120,14 @@ class LabPage extends Component
                         on_input: c => c.onCodeChange(),
                     },
                     {
-                        type: "div",
-                        class: "error",
+                        type: "div .error",
                         display: c => !!c.error && c.showErrors,
                         text: c => c.error,
                     },
                 ]
             },
             {
-                type: "div",
-                class: "preview-container",
+                type: "div .preview-container",
                 $: [
                     {
                         type: Preview,
@@ -144,10 +140,7 @@ class LabPage extends Component
                                 type: "label",
                                 $: [
                                     {
-                                        type: "input",
-                                        attr_type: "checkbox",
-                                        attr_checked: "checked",
-                                        class: "switch",
+                                        type: "input .switch type=checkbox checked",
                                         on_click: (c, ev) => c.onShowErrorsChanged(ev),
                                     },
                                     "Show Errors",
@@ -160,10 +153,9 @@ class LabPage extends Component
                                 on_click: c => c.onCopyLink(),
                             },
                             { 
-                                type: "button",
-                                class: "subtle",
+                                type: "button .subtle",
                                 text: ".html",
-                                attr_title: "Download this experiment as a .html file",
+                                title: 'Download this experiment as a .html file',
                                 on_click: c => c.onDownload(),
                             },
                         ]
