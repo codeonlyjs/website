@@ -393,6 +393,12 @@ Using this approach provides a couple of benefits:
   so other interested parties (eg: server side rendering) can
   be notified when the entire page is loaded - more on this later.
 
+The `load` method also supports a second parameter `silent`.  In 
+silent mode, the callback is invoked and awaited and then the 
+component invalidated.  It can be used for silent data refreshes
+when the component also has data on view and wants to refresh
+the view without showing a spinner.
+
 
 
 ## Mounting Components

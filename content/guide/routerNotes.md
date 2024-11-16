@@ -181,3 +181,50 @@ router.register([
     // etc...
 
 ])
+```
+
+## Page Caching
+
+CodeOnly includes a page cache object that can be used to 
+re-use previosly created page objects.  This works particularly
+well with back navigation to prevent previous pages from
+having to reload data.
+
+To use the page cache first construct it, optionally passing
+the maximum number of pages to keep cached (the default is 10
+if not specified) as an options object:
+
+```js
+export let pageCache = new PageCache({
+    max: 10
+});
+```
+
+Then, instead of always constructing new page objects in your
+route handlers, you can use the cache to retrieve a previous
+instance or create a new one.
+
+```js
+router.register({
+    pattern: "/product/:productId",
+    match: (to) => {
+        to.page = pageCache.get(
+            to.url, 
+            () => new ResultsPage(route.match.groups.productId)
+        );
+    },
+});
+```
+
+The `PageCache.get` takes two parameters:
+
+* `key` - a key identifying the page to retrieve from the cache.  This
+  can be any value that can be compared with the JavaScript equality 
+  operator (`==`).  If passed a URL object, the url's path and query are 
+  concatenated to form the key.
+* `factory` - a callback to create a new page instance if the the existing
+  key can't be found in the cache.
+
+The page cache will keep up to the maximum count specified, discarding the
+least recently used pages first.
+

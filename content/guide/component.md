@@ -5,52 +5,6 @@ title: "API"
 
 ## Component Class
 
-### cleanup(callback)
-
-Registers a cleanup callback function to be called when the component is
-unmounted.
-
-The component must be mounted when this method is called or an `Error` is
-thrown.  Usually this method should be called from `onMount()`
-
-The `cleanup` function provides a simple way to manage external resources
-used while the component is mounted:
-
-eg:
-
-```js
-onMount()
-{
-    // Add the event listener
-    document.addEventListener("scroll", scrollHandler);
-
-    // Register for cleanup when unmounted
-    this.cleanup(() => 
-        document.removeEventListener("scroll", scrollHandler)
-    );
-
-    // Event handler
-    function scrollHandler(ev)
-    {
-    }
-}
-```
-
-<div class="tip">
-
-The above example demonstrates adding and removing an event listener, but this
-can be even more easily achieved with the `listen` method.
-
-</div>
-
-<div class="tip">
-
-Releasing resources may not be required for components that last the entire
-lifetime of a single page application.  eg: a header bar component that's 
-mounted at app startup and never removed may not need any resource clean up.
-
-</div>
-
 ### domTreeConstructor (static)
 
 Returns a function to construct the DOM tree for this component.
@@ -115,29 +69,52 @@ so it can be passed directly to functions to add/remove event listeners.
 
 ### listen(target, event, handler)
 
-Adds an event listener to an object that's automatically removed when
-this component is unmounted.
+Registers an event listener to be added/remove on an external object
+as this component is mounted/unmounted.
 
-The component must be mounted when this method is called or an `Error` is
-thrown.  Usually this method should be called from `onMount()`
+* The target object must support `addEventListener` and `removeEventListener`
+  methods
+* If either the `target` or `event` parameter is `null` or `undefined` the
+  call is ignored and this method doesn't nothing.
+* If the `handler` parameter is `null` or `undefined` the component's own
+  `invalidate` method is used.
+
+To remove a registered event listener, use the `unlisten` method.
+
+This example shows how to automatically register/unregister listeners
+on a target object when the component is mounted/unmounted.  Since no
+handler is passed to `listen`/`unlisten` the component's own
+`invalidate()` method will be used, effectively invalidating the
+component whenever the event is triggered.
 
 ```js
-onMount()
+class PhotoCell extends Component
 {
-    // addEventListener - will be automatically removed when
-    // the component is unmounted
-    this.listen(document, "scroll", (ev) => {
+    #photo = null;
+    set photo(value)
+    {
+        // Stop listening to the old photo object 
+        // (ignored if old photo is null)
+        this.unlisten(this.#photo, "changed");
 
-        // Handle event
+        // Store new photo
+        this.#photo = photo;
 
-    });
+        // Start listening to the new photo object
+        // (ignored if new photo is null)
+        this.listen(this.#photo, "changed");
+    }
 }
 ```
 
 
-### async load(callback)
+
+### async load(callback, silent)
 
 Performs and async data load:
+
+In non-silent mode (`silent` not specified, or falsey), the load method 
+performs the following:
 
 1. sets the `loading` property to true 
 2. clears the `loadError` property
@@ -148,9 +125,19 @@ Performs and async data load:
 7. calls the `invalidate` method again
 8. dispatches a `loaded` event
 
+In silent mode:
+
+1. calls and `await`s the supplied callback
+2. calls the `invalidate` method to mark the component for update
+
+The silent mode is useful for silent data refreshes where the UI provides
+no feedback (no spinner).  Usually `silent` would be set to `false` for initial
+data load, and `true` for subsequent data refreshes.
+
 Parameters:
 
 * `callback` - an async callback method to perform the actual data load
+* `silent` - an optional value, that when truthy causes a silent data load
 
 Returns:
 
@@ -242,32 +229,6 @@ Override this method to provide a custom template.  See
 Override this method to be notified when the component has been unmounted.
 
 
-### setInterval()
-
-Sets an interval handler using `window.setInterval()` that's automatically 
-cleared when the component is unmounted.
-
-This method passes all arguments directly to `window.setInterval()`
-
-Returns the `intervalId`.
-
-The component must be mounted when this method is called or an `Error` is
-thrown.  Usually this method should be called from `onMount()`
-
-```js
-onMount()
-{
-    // addEventListener - will be automatically cleared when
-    // the component is unmounted
-    this.setInterval(() => {
-
-        // poll something?
-
-    }, 1000);
-}
-```
-
-
 
 ### template (static)
 
@@ -277,6 +238,22 @@ The default returns an empty `{}` template.
 
 Nearly every component should override this property.
 
+
+
+### unlisten(target, event, handler)
+
+De-registeres an event listener previously registered with the `listen` method.
+
+* If either the `target` or `event` parameter is `null` or `undefined` the
+  call is ignored and this method doesn't nothing.
+* If the `handler` parameter is `null` or `undefined` the component's own
+  `invalidate` method is used.
+
+See the `listen` method for an example.
+
+### unmount()
+
+Unmounts a previously mounted component.
 
 
 ### update()
@@ -291,11 +268,6 @@ so it can be passed directly to functions to add/remove event listeners.
 
 </div>
 
-
-
-### unmount()
-
-Unmounts a previously mounted component.
 
 
 
