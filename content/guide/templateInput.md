@@ -17,14 +17,22 @@ of `userName` and as the user edits the value, the `userName` property
 will be updated.
 
 ```js
-class MyComponent extends Component
+// lab code demo
+class Main extends Component
 {
     userName = "darth-vader";
-
-    static template: {
-        type: "input type=text",
-        input: "userName"
-    }
+    static template = [
+        {
+            type: "input type=text",
+            input: "userName"
+        },
+        " ",
+        {
+            type: "button",
+            text: "Show Value",
+            on_click: c => alert(c.userName),
+        }
+    ]
 }
 ```
 
@@ -56,7 +64,8 @@ component.
 This example reflects the value of the input field converted to upper-case.
 
 ```js
-class MyComponent extends Component
+// demo code lab
+class Main extends Component
 {
     #userName = "darth-vader";
     get userName()
@@ -69,17 +78,26 @@ class MyComponent extends Component
         this.invalidate();
     }
 
-    static template: [
+    static template = [
         {
             type: "input type=text",
             input: "userName"
         },
         {
-            type: "div",
+            type: "span .output",
             text: c => c.userName.toUpperCase(),
         }
     ]
 }
+// ---
+
+Style.declare(`
+    span.output
+    {
+        padding: 10px;
+    }
+`)
+// ---
 ```
 
 
@@ -91,18 +109,40 @@ template's component.
 To target a sub-object of the component, use dotted notation:
 
 ```js
-class MyComponent extends Component
+// demo code lab
+class Main extends Component
 {
     user = {
         name: "darth-vader",
         position: "Sith Lord",
     }
 
-    static template: {
-        type: "input type=text",
-        input: "user.name"
-    }
+    static template =  [
+        {
+            type: "input type=text",
+            input: "user.name"
+        },
+        {
+            type: "input type=text",
+            input: "user.position"
+        },
+        {
+            type: "button",
+            text: "Show Values",
+            on_click: c => alert(JSON.stringify(c.user, null, 4))
+        },
+    ]
 }
+// ---
+
+Style.declare(`
+    input
+    {
+        width: 200px;
+        margin-right: 10px;
+    }
+`)
+// ---
 ```
 
 
@@ -123,67 +163,56 @@ input: {
 }
 ```
 
-### `prop`
+### `event`
 
-The name of the property on the target object to bind to/from.
+Normally, input bindings trigger in response to the HTML `input` event giving
+immediate updates when the user interacts with the input field.
 
+The `event` option lets you choose a different trigger event.  
 
-### `target`
-
-The `target` option specifies the target object of the input 
-binding.  ie: the object whose `prop` is to be used.
-
-eg: suppose you had a global `appSettings` object with a `darkMode`
-setting, you could bind a checkbox like so:
+eg: setting this to `change` will fire when the input value changes, but only
+after the user leaves the field (not every keystroke)
 
 ```js
-import { appSettings } from "./appSettings.js"
+    input: {
+        prop: 'myField',
+        event: 'change'     // Trigger `change` event instead of `input`
+    }
+```
 
-class MyComponent extends Component
+### format
+
+A callback to format a property value for display in an input field.
+
+
+eg: to display a floating point as a percentage with two decimal places:
+
+```js
+// demo lab code
+class Main extends Component
 {
-    static template: {
-        type: "input type=checkbox",
+    #percent = 1;
+    get percent()
+    {
+        return this.#percent;
+    }
+    set percent(value)
+    {
+        this.#percent = value;
+        this.invalidate();
+    }
+
+    static template = {
+        type: "input type=number",
         input: {
-            prop: "darkMode"
-            target: appSettings,
+            prop: 'percent',
+            event: 'change',
+            parse: v => parseFloat(v) / 100,
+            format: v => (v * 100).toFixed(2).toString(),
         }
     }
 }
 ```
-
-The target property can also be a callback.
-
-eg: in this contrived example, the checkbox would update the `enabled`
-field on one of the objects in an array:
-
-```js
-class MyComponent extends Component
-{
-    options = [{
-        enabled: true,
-    }];
-    selectedIndex = 0;
-
-    static template: {
-        type: "input type=checkbox",
-        input: {
-            prop: "enabled"
-            target: c => c.options[c.selectedIndex],
-        }
-    }
-}
-```
-
-When not specified, the template's `context.model` (usually the 
-component) is used.
-
-<div class="tip">
-
-When using a `target` property you can still use the dotted
-notation on the `prop` field to access sub-objects.
-
-</div>
-
 
 
 ### `get` / `set`
@@ -212,22 +241,7 @@ Where
 ```
 
 
-### `event`
 
-Normally, input bindings trigger in response to the HTML `input` event giving
-immediate updates when the user interacts with the input field.
-
-The `event` option lets you choose a different trigger event.  
-
-eg: setting this to `change` will fire when the input value changes, but only
-after the user leaves the field (not every keystroke)
-
-```js
-    input: {
-        prop: 'myField',
-        event: 'change'     // Trigger `change` event instead of `input`
-    }
-```
 
 
 ### `on_change`
@@ -268,18 +282,65 @@ eg: if the target property must be an integer:
 ```
 
 
-### format
+### `prop`
 
-A callback to format a property value for display in an input field.
+The name of the property on the target object to bind to/from.
 
 
-eg: to display a floating point as a percentage with two decimal places:
+### `target`
+
+The `target` option specifies the target object of the input 
+binding.  ie: the object whose `prop` is to be used.
+
+eg: suppose you had a global `appSettings` object with a `darkMode`
+setting, you could bind a checkbox like so:
 
 ```js
-    input: {
-        prop: 'percent',
-        parse: v => parseFloat(v) / 100,
-        format: v => (v * 100).toFixed(2).toString(),
+import { appSettings } from "./appSettings.js"
+
+class MyComponent extends Component
+{
+    static template = {
+        type: "input type=checkbox",
+        input: {
+            prop: "darkMode"
+            target: appSettings,
+        }
     }
+}
 ```
+
+The target property can also be a callback.
+
+eg: in this contrived example, the checkbox would update the `enabled`
+field on one of the objects in an array:
+
+```js
+class MyComponent extends Component
+{
+    options = [{
+        enabled: true,
+    }];
+    selectedIndex = 0;
+
+    static template = {
+        type: "input type=checkbox",
+        input: {
+            prop: "enabled"
+            target: c => c.options[c.selectedIndex],
+        }
+    }
+}
+```
+
+When not specified, the template's `context.model` (usually the 
+component) is used.
+
+<div class="tip">
+
+When using a `target` property you can still use the dotted
+notation on the `prop` field to access sub-objects.
+
+</div>
+
 
