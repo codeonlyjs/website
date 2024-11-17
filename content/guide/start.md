@@ -3,8 +3,8 @@ title: "Getting Started"
 ---
 # Getting Started
 
-Because there's so many ways to use CodeOnly, the best way to
-get started will depend on what you're trying to achieve.
+The best way to get started with CodeOnly will depend on what you're trying 
+to achieve...
 
 <div class="box-container">
 
@@ -20,7 +20,7 @@ Learn the basics by running simple experiments right here in your browser.
 
 #### CDN Packages
 
-The easiest way to add CodeOnly to a project, no server required.
+The easiest way to add CodeOnly to a project - no server required.
 
 </a>
 
@@ -75,12 +75,11 @@ your browser.
 
 * The ".html" button will download a .html file containing your 
   experiment.  You'll still need a web connection to run it because it
-  gets JavaScript and CSS files from the CodeOnly site, but it's an
+  gets JavaScript and CSS files via CDN, but it's an
   easy way to make a simple web app.
 
 * The Lab only supports a single source code file but you can still 
-  create multiple component classes - just put them one after the 
-  other. 
+  use multiple components - just put them one after the other. 
 
 ## CDN Packages
 

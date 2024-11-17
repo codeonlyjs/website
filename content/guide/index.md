@@ -28,24 +28,25 @@ front-end websites but can also be used to make small embellishments
 to existing projects - basically any project that needs an easy way 
 to populate and make updates to the DOM. 
 
+## Features
+
 * Self Contained Componets
 * Expressive JSON-like DOM templates
 * Everything in modern JavaScript
 * No template or markup languages to learn
-* Inlcudes flexible SPA router
+* Two-way input bindings
+* Includes flexible SPA router
     * async
     * navigation guards
     * uses History API
-    * normal or hashes URL paths
+    * normal or hashed URL paths
 * CSS animations and transitions 
-* Tuned to run fast and no proxies, wrappers or reactivity plumbing to
-  slow things down
+* Tuned to run fast
+* No proxies, wrappers or reactivity 
 * No build server
 * Debug your code exactly as you wrote it
 * Live Server auto reload
-* Just 14kb gzipped
-
-
+* Less than 50kB minimized, 15kB gzipped.
 
 
 ## Basic Example
@@ -109,7 +110,7 @@ Let's take a closer look some of the features of developing components this way.
 ## Single File Components
 
 One of the nicest things about developing CodeOnly components is that everything
-is contained in one regular `.js` file.
+about a component can be contained in one regular `.js` file.
 
 Notice in the above example that the logic, DOM template and CSS styles are all
 declared together in the one place.
@@ -125,7 +126,7 @@ automatic reactivity in CodeOnly.
 
 There's a few reasons for this but primarily we feel its just too
 intrusive. Proxies, wrappers and all the plumbing required for
-reactivity adds a lot of complexity, often make a project harder to 
+reactivity adds a lot of complexity, often making a project harder to 
 understand and to debug. 
 
 With CodeOnly your objects are left alone. 
@@ -145,7 +146,7 @@ CodeOnly doesn't try to cram the declaration of dynamic values into an
 existing markup language.  Instead, CodeOnly's DOM templates are declared 
 using plain JavaScript objects. 
 
-Templates are JSON-like with fat arrow `=>` callbacks to provide 
+Templates are JSON-like structures with fat arrow `=>` callbacks to provide 
 dynamic values.
 
 Yes, it's a little more verbose but it's surprising how flexible this
