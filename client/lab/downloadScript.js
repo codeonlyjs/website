@@ -1,3 +1,19 @@
+export function findMainClass(script)
+{
+    let classes = Array.from(script.matchAll(/\bclass\s+([-_a-zA-Z0-9]+)\s+extends\s+Component\b/g));
+    // If no classes, assume Main
+    if (classes.length == 0)
+        return "Main";
+    // If just one class, use it
+    if (classes.length == 1)
+        return classes[0][1];
+    // If there's a main class, use it
+    if (classes.some(x => x[1] == "Main"))
+        return "Main";
+    // Otherwise, use the last class
+    return classes.pop()[1];
+}
+
 export function downloadScript(script)
 {
     let html = `<html lang="en">
@@ -20,7 +36,7 @@ export function downloadScript(script)
 <script type="module">
 import { Component, Style } from "@codeonlyjs/core";
 ${script}
-new Main().mount("body");
+new ${findMainClass(script)}().mount("body");
 </script>
 </body>
 </html>

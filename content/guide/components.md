@@ -62,16 +62,17 @@ can be anything you like, but will typically consist of:
 * Event handlers for DOM elements
 * Event handlers for external objects
 * Code to raise events from this component
-* Life-cycle handlers (eg: `onMounted()`, `onUnmounted()`)
+* Life-cycle handlers (eg: `onMount()`, `onUnmount()`)
 
 
 
 ## Templates
 
-Templates are covered in detail in the template documentation.
+A component's template declares the DOM elements that represent
+the component in the document.
 
-The following sections explain key concepts relating to use templates
-in components.
+Templates are covered in detail in the template documentation. The
+following sections cover the basics of using templates with components.
 
 
 ## Template Declaration
@@ -83,7 +84,8 @@ Most components will declare their template using a static
 field named `template` on the component class.
 
 ```js
-export class MyComponent extends Component
+// lab demo code
+class MyComponent extends Component
 {
     static template = {  /* i:  This component's template */
         type: "div",
@@ -97,8 +99,8 @@ export class MyComponent extends Component
 It's important to understand that the template is static and not
 associated with any one component instance.  
 
-This is because CodeOnly "compiles" the template to JavaScript and 
-it would be extremely inefficient to do this for every component instance.
+This is because templates are "compiled" to JavaScript. To re-compile
+the template for every component instance would be extremely inefficient.
 
 </div>
 
@@ -109,26 +111,27 @@ it would be extremely inefficient to do this for every component instance.
 A template can declare dynamic values using callbacks.
 
 ```js
-export class MyComponent extends Component
+// lab demo code
+class MyComponent extends Component
 {
-    constructor()
-    {
-    }
+    #clicked = false;
 
-    #title;
+    // A dynamic property used by the template
     get title() 
     { 
-        return this.#title 
+        return this.#clicked ? "Clicked" : "Not Clicked";
     }
-    set title(value)
+
+    onClick()
     {
-        this.#title = value;
-        this.invalidate();  /* i:  Update the DOM */ 
+        this.#clicked = !this.#clicked;
+        this.invalidate(); /* i: Tells component to update */
     }
 
     static template = {
         type: "div",
-        text: c => c.title, /* i:  Callback for dynamic content */
+        text: c => c.title, /* i: Callback for dynamic content */
+        on_click: "onClick", /* i: See below for more on events */
     }
 }
 ```
@@ -158,10 +161,10 @@ to get a callback after the pending updates have been made.
 
 ## Binding Elements
 
-To access the DOM element in a template, use the `bind` directive.
+To access a DOM element in a template, use the `bind` directive.
 
 eg: suppose you're using a third party light-box component as a photo
-    viewer and it needs to be passed a root element to work in.
+    viewer and it needs to be passed a root element to work with.
 
 ```js
 export class MyLightBox extends Component
@@ -170,17 +173,17 @@ export class MyLightBox extends Component
     {
         super();
 
-        // Make sure DOM is created before accessing it
-        this.create();
+        this.create(); /* i: see tip below */
 
-        // `this.lightbox` set by the bind setting in the template
+        // `this.lightbox` will be set to the div element due
+        // to the `bind: "lightbox"` directive in the template
         externalLightBoxLibrary.init(this.lightbox);
     }
 
     static template = [
         {
             type: "div",
-            bind: "lightbox",
+            bind: "lightbox", /* i: Causes this.lightbox above to be set */
         }
     ]
 }
@@ -200,7 +203,8 @@ call the `create()` method as shown in the above example.
 Hook up event handlers using the `on_` prefix in the template.
 
 ```js
-export class MyButton extends Component
+// demo lab code
+class MyButton extends Component
 {
     onClick()
     {
@@ -209,6 +213,7 @@ export class MyButton extends Component
 
     static template = {
         type: "button",
+        text: "Click Me",
         on_click: c => c.onClick(),
     }
 }
@@ -218,86 +223,115 @@ If you need the event object, it's passed as the second parameter to the
 callback:
 
 ```js
-export class MyForm extends Component
+// demo lab code
+class MyComponent extends Component
 {
-    onSubmit(ev)
+    onClick(ev)
     {
         ev.preventDefault();
+        alert("Navigation Cancelled");
     }
 
     static template = {
-        type: "form",
-        on_submit: (c, ev) => c.onSubmit(ev),
+        type: "a",
+        href: "https://codeonlyjs.org/",
+        text: "Link",
+        on_click: (c, ev) => c.onClick(ev),
     }
 }
 ```
 
-Passing the name of an event handler as a string is a short-cut.
-
-The is identical to the above:
+Passing the name of an event handler as a string is a short-cut. The
+following is identical to the above:
 
 ```js
-export class MyForm extends Component
+// demo lab code
+// ---
+class MyComponent extends Component
 {
-    onSubmit(ev)
+    onClick(ev)
     {
         ev.preventDefault();
+        alert("Navigation Cancelled");
     }
 
     static template = {
-        type: "form",
-        on_submit: "onSubmit",
+        type: "a",
+        href: "https://codeonlyjs.org/",
+        text: "Link",
+// ---
+        on_click: "onClick",
+// ---
     }
 }
+// ---
 ```
+
+
 ## Components in Templates
 
-To use another component in a template:
+To use a component in a template:
 
 1. set the `type` setting to the component class
 2. set properties and event handlers as per usual
 
-In the following example, the `Main` component's template uses three other 
-components:  `Header`, `SidePanel` and `ContentArea`.
+The following example implements a `Widget` component that displays 
+a `text` property in a `div`.  The main component then uses
+two instances of the Widget.
 
 ```js
-import { Header } from "./Header.js";
-import { SidePanel} from "./SidePanel.js";
-import { ContentArea } from "./ContentArea.js";
+// lab code demo
+// A simple "widget"
+class Widget extends Component
+{
+    text;
 
-export class Main extends Component
+    static template = {
+        type: "div",
+        text: c => c.text,
+    }
+}
+
+class Main extends Component
 {
     static template = [
-        Header, /* i:  If no other settings, just reference the class directly */
         {
-            type: "div",
-            $: [
-                {
-                    type: SidePanel, /* i:  Component class */
-                    title: "Table of Contents", /* i:  A component property */
-                    on_click: c => /* i:  A event from the component */
-                        c.onSidePanelClick() 
-                },
-                {
-                    type: ContentArea, /* i:  Component class */
-                    document: "readme.md", /* i:  A Component property */
-                }
-            ]
+            type: Widget, /* i: First Widget component */
+            text: "Hello", /* i: Sets the Widget's 'text' property */
+        },
+        {
+            type: Widget, /* i: Second component instance */
+            text: "World",
         }
     ]
 }
 ```
 
-<div class="tip">
-
 If a referenced component has no properties or event handlers, you
-can just use the component class name directly - as shown in the 
-above example with the `Header` component.
+can just use the component class name directly:
 
-ie: `Header` is a shortcut for `{ type: Header }`
+```js
+// demo lab code
+// A button that shows an alert when clicked
+class MyButton extends Component
+{
+    static template = {
+        type: "button",
+        text: "Click Me",
+        style_marginRight: "10px",
+        on_click: () => alert("Click"),
+    }
+}
 
-</div>
-
+class Main extends Component
+{
+    static template = [
+        MyButton,  /* i: No properties or events so no need for { type: } */
+        MyButton,
+        MyButton,
+    ]
+}
+```
 
 
 ## Raising Events
@@ -308,19 +342,34 @@ it can raise (aka "fire" or "dispatch") its own events.
 eg: a custom button component raising a "click" event.
 
 ```js
+// lab demo code
+// A component that raises "click" events
 class MyButton extends Component  /* i:  Component extends EventTarget */
 {
+// ---
     onClick()
     {
-        // Raise event
-        let ev = new Event("click");
-        ev.target = this;   /* i:  Attach any other event properties here */
-        this.dispatchEvent(ev);
+        this.dispatchEvent(new Event("click")); /* i: Raise event */
     }
 
     static template = {
         type: "button",
-        on_click: c => c.onClick(), /* i:  Original event from the internal button */
+        text: "MyButton",
+        on_click: c => c.onClick(),
+    }
+// ---
+}
+
+class Main extends Component
+{
+    onMyButtonClick()
+    {
+        alert("Received click from MyButton");
+    }
+
+    static template = {
+        type: MyButton,
+        on_click: (c) => c.onMyButtonClick(), /* i: Listen to events from component */
     }
 }
 ```
@@ -350,52 +399,38 @@ The `load` method does the following:
 For example:
 
 ```js
-class ProductsPage extends Component
+// lab demo code
+class Main extends Component
 {
-    constructor()
+    loadData()
     {
-        super();
-
-        // Call refresh method to start data load
-        this.refresh();
-    }
-
-    refresh()
-    {
-        // Call `load`
         this.load(async () => {
-
-            // Clear old data
-            this.data = null;
-
-            // Load new data
-            let response = await fetch("/products");
+            let response = await fetch("https://swapi.dev/api/people/3/");
             this.data = await response.json();
-
         });
     }
 
+
     static template = [
         {
-            // Show spinner (while loading)
-            if: c => c.loading,
-            type: MySpinnerComponent,
+            if: c => c.loading, /* i: Show spinner while loading */
+            type: "div .spinner",
         },
         {
-            // Show load error (if failed)
-            elseif: c = c.loadError,
-            type: "div",
-            class: "error",
-            text: c => c.loadError.message,
-        },
-        {
-            // Show data (if succeeded)
-            else: true,
-            type: "div",
-            class: "products",
-            $: {
-                // products template here
-            }
+            else: true, /* i: Otherwise show loaded data */
+            $: [
+// ---
+                {
+                    type: "span",
+                    text: c => `Name: ${c.data?.name ?? "No Data"} `,
+                },
+                {
+                    type: "button",
+                    text: "Load Data",
+                    on_click: c => c.loadData(),
+                }
+// ---
+            ]
         }
     ]
 }

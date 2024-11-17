@@ -3,6 +3,7 @@ import { env } from "@codeonlyjs/core";;
 import { openLabWithCode } from "./lab/LabPage.js";
 import { htmlIcon } from "./Icon.js";
 import * as commonmark from "commonmark";
+import { findMainClass } from "./lab/downloadScript.js";
 
 
 export class Document
@@ -45,7 +46,7 @@ export class Document
         for (let d of this.demos)
         {
             // Create a closure for the demo
-            let code = `${d.code}\n\nreturn new Main();`;
+            let code = `${d.code}\n\nreturn new ${findMainClass(d.code)}();`;
             let closure = new Function("Component", "Style", code);
             d.main = closure(Component, fakeStyle);
             d.main.mount(document.getElementById(d.id));

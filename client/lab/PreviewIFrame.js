@@ -1,4 +1,5 @@
 import { Component } from "@codeonlyjs/core";
+import { findMainClass } from "./downloadScript.js";
 
 // srcdoc for the iFrame
 let head = `<html>
@@ -66,7 +67,7 @@ export class PreviewIFrame extends Component
     get srcdoc()
     {
         return `${head}${this.script}
-        new Main().mount("body");
+        new ${findMainClass(this.script)}().mount("body");
         ${tail}
         `;
     }
