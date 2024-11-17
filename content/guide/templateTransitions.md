@@ -3,19 +3,19 @@ title: "Transitions"
 ---
 # Transitions
 
-CodeOnly can initiate CSS transitions by applying classes on DOM 
-elements when the following actions occur:
+CodeOnly can initiate CSS transitions by applying classes to DOM 
+elements where certain actions are initiated:
 
 * Inserting and removing content with `if` directives
 * Showing and hiding elements with the `display` directive
 * Adding or removing a class with boolean `class_` directives
 * Changing the content of an embed slot
-* Changing an items `key`
+* Changing an item's `key`
 
 ## In/Out States
 
-All transitions currently supported by CodeOnly are considered
-to be in either an in-state or an out-state. 
+All transitions currently supported are considered
+to be in either an "in-state" or an "out-state". 
 
 * `if` directives - the active branch has the in-state and all other branches
   are in the out-state.
@@ -135,54 +135,15 @@ The transition will trigger when the content value changes.
 
 ## Transition CSS Classes
 
-When an element is being transitioned, the following classes are 
-applied:
-
-* `tx-active` - the element is actively entering or leaving
-* `tx-entering` - the element is actively entering
-* `tx-enter-start` - set for one frame when an element starts entering
-* `tx-enter-end` - set for the rest of the frames until the transition ends
-* `tx-leaving` - the element is actively leaving
-* `tx-leave-start` - set for one frame when an element starts leaving
-* `tx-leave-end` - set for the rest of the frames until the transition ends
-* `tx-out` - same as `tx-enter-start` for entering elements and `tx-leave-end`
-  for leaving elements
-* `tx-in` - same as `tx-enter-end` for entering elements and `tx-leave-start`
-  for leaving elements
-
+To understand the set of CSS classes used by CodeOnly it's useful to consider
+the two main types of transitions - symmetric vs asymmetric.
 
 <div class="tip">
 
-The above describes the default CSS class names - see below for 
-information on how to customize them.
+The following sections describe the default CSS class names - see below for 
+information on how to customize these names.
 
 </div>
-
-Looking at this from the perspective of an entering element:
-
-1. Before the element is switched to the entered state, the `tx-active`,
-   `tx-entering`, `tx-enter-start` and `tx-out` classes are added.
-2. The element is "entered" - ie: the DOM is mutated.
-3. One frame later the `tx-enter-start` and `tx-out` classes are removed
-   and the `tx-enter-end` and `tx-in` classes are added
-4. The elements and all their child elements are monitored for animations 
-   and transitions and once all have finished the transition classes
-   are removed (ie: `tx-active`, `tx-entering`, `tx-enter-end` and `tx-in`).
-
-The inverse happens for a leaving element:
-
-1. The `tx-active`, `tx-leaving`, `tx-leave-start` and `tx-in` classes are
-   added.
-3. One frame later the `tx-leave-start` and `tx-in` classes are removed
-   and the `tx-leave-end` and `tx-out` classes are added
-4. The elements and all their child elements are monitored for animations 
-   and transitions and once all have finished all the transition classes
-   are removed (ie: `tx-active`, `tx-leaving`, `tx-leave-end` and `tx-out`).
-5. The element is left ie: the DOM is mutated. 
-
-There's a lot to grasp here.  One way to better understand these classes
-is to consider symmetric vs asymmetric transitions.
-
 
 
 ### Symmetric vs Asymmetric
@@ -209,7 +170,7 @@ but more concise for symmetric transitions.
 
 ### Symmetric Class Names
 
-For symmetric transitions the following classes can be used
+For symmetric transitions the following classes are used for transitions:
 
 * `tx-active` - transitioning in or out
 * `tx-out` - the out state of the transition
@@ -235,7 +196,7 @@ declarations:
 }
 ```
 
-There's no need to use the `tx-in` class because the default opacity
+There's no need to use the `tx-in` class here because the default opacity
 of an element is 1 and doesn't need to be explicitly set.
 
 <div class="tip">
@@ -251,7 +212,7 @@ with other transition settings.
 
 ### Asymmetric Class Names
 
-For asymmetric transitions use the following classes for the enter
+For asymmetric transitions use the following classes for used for the enter
 side of the transition:
 
 * `tx-entering` - element is entering
@@ -322,6 +283,49 @@ eg: for a slide in from the bottom, slide out to the top with fading
 }
 ```
 
+### Full Transition Class List
+
+There's no need to specify whether a transition is symmetric or asymmetric - in both cases
+both sets of classes are applied.
+
+The full list of class names is therefore:
+
+* `tx-active` - the element is actively entering or leaving
+* `tx-entering` - the element is actively entering
+* `tx-enter-start` - set for one frame when an element starts entering
+* `tx-enter-end` - set for the rest of the frames until the transition ends
+* `tx-leaving` - the element is actively leaving
+* `tx-leave-start` - set for one frame when an element starts leaving
+* `tx-leave-end` - set for the rest of the frames until the transition ends
+* `tx-out` - same as `tx-enter-start` for entering elements and `tx-leave-end`
+  for leaving elements
+* `tx-in` - same as `tx-enter-end` for entering elements and `tx-leave-start`
+  for leaving elements
+
+
+
+Looking at this from the perspective of an entering element:
+
+1. Before the element is switched to the entered state, the `tx-active`,
+   `tx-entering`, `tx-enter-start` and `tx-out` classes are added.
+2. The element is "entered" - ie: the DOM is mutated.
+3. One frame later the `tx-enter-start` and `tx-out` classes are removed
+   and the `tx-enter-end` and `tx-in` classes are added
+4. The elements and all their child elements are monitored for animations 
+   and transitions and once all have finished the transition classes
+   are removed (ie: `tx-active`, `tx-entering`, `tx-enter-end` and `tx-in`).
+
+The inverse happens for a leaving element:
+
+1. The `tx-active`, `tx-leaving`, `tx-leave-start` and `tx-in` classes are
+   added.
+3. One frame later the `tx-leave-start` and `tx-in` classes are removed
+   and the `tx-leave-end` and `tx-out` classes are added
+4. The elements and all their child elements are monitored for animations 
+   and transitions and once all have finished all the transition classes
+   are removed (ie: `tx-active`, `tx-leaving`, `tx-leave-end` and `tx-out`).
+5. The element is left ie: the DOM is mutated. 
+
 
 ## Transition Options
 
@@ -388,7 +392,7 @@ For example, consider an `if`/`else` block with a fade transition. The
 old active branch will be faded out at 
 the same time the new active branch is faded in.
 
-The `mode` option on a `transition` can be used have the two
+The `mode` option on a `transition` can be used to make the two
 transitions run one after the other. 
 
 * "enter-leave" - run the enter transition then the leave
@@ -438,7 +442,7 @@ The name propery can be a string or a callback returning a string.
 ### classNames
 
 For even more control over class names you can explicitly specify them 
-by setting the classNames property in the transition options:
+by setting the `classNames` property in the transition options:
 
 ```js
 {
@@ -496,12 +500,14 @@ The supplied object must include class name entries for all classes.
 The `duration` option lets you specify an explicit duration of a transition
 instead of watching for the element's animations to complete.  
 
-This can be useful in complex scenarios with many transitions animations where determining the correct end condition might be ambiguous.
+This can be useful in complex scenarios with many animations where determining 
+the correct end condition might be ambiguous.
 
 The `duration` is specified in milliseconds and can be:
 
 * A single value used for both the entering and leaving phase of the transition
-* An array of two values, where [0] is the duration of the entering phase and [1] of the leaving.
+* An array of two values, where `[0]` is the entering duration and `[1]` the 
+  leaving duration.
 * A callback that returns one of the above.
 
 
@@ -513,11 +519,11 @@ entire sub-tree of the contained elements are monitored for animations.
 If a transition only affects the immediate child elements contained within
 it, the `subtree` property can be set to `false` to only monitor those elements.
 
-This can be used in situations where:
+This can be used in situations when:
 
 * elements have a very deep sub-tree that might be expensive to monitor, or 
-* helements ave other unrelated transitions and animations that might confuse 
-  the end of transition detection.
+* elements have other unrelated animations that might confuse the end of 
+  transition detection.
 
 
 
