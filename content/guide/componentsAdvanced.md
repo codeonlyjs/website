@@ -78,13 +78,14 @@ Notifies the CLObject that it has been mounted or unmounted.
 The object must pass this on to any nested CLObjects it is hosting.  For
 components extended from the `Component` class this is handled automatically.
 
-A mounted object is always consider "alive" and in use and is the correct indicator
-for when a CLObject should acquire and release external resources.
+A mounted object is always considered "alive" and in use and is the 
+correct indicator for when a CLObject should acquire and release external 
+resources.
 
 
 ### isSingleRoot
 
-This property is optional, and if present and if it is `true` the object is guaranteed
+This property is optional, but if present and if `true` the object guarantees
 to always only ever have one root node.
 
 Single root node components can be used more efficently in `foreach` blocks so if an
@@ -101,17 +102,17 @@ The template compiler can host any object that conforms the CLObject requirement
 above, so long as it has a parameterlesss constructor.
 
 If the `type` parameter of a template node is a function it's assumed to be CLObject
-constructor.  This is normally used to loaded nested Component objects into a template
+constructor.  This is normally used to load nested Component objects into a template
 but could be used to host other component like objects:
 
 ```js
 {
-    type: MyCLObjectConstructor, /* i:  Pparameterless constructor of a custom CLObject*/
+    type: MyCLObjectConstructor, /* i:  Parameterless constructor of a custom CLObject*/
 }
 ```
 
 Also, if the CLObject is known to be a single root node, this should be reported
-on the constructor function as a boolean `isSingleRoot` property.  This is requires
+on the constructor function as a boolean `isSingleRoot` property.  This is required
 so the template compiler can accurately determine if a component is single rooted
 before constructing it.
 
@@ -159,21 +160,21 @@ component, or calling its `create()` method again will create a new `domTree`.
 
 ## The setMounted Method
 
-The `setMounted` method is an internal method used to notify and component
+The `setMounted` method is an internal method used to notify a component
 and its template that it has been mounted or unmounted.
 
 When a component's `setMounted` method is called, it calls `onMount()` or
 `onUmount()` method to notify the component of the new state.  It then calls
-`setMounted()` on the components `domTree` so the notification is reflected
+`setMounted()` on the component's `domTree` so the notification is reflected
 recursively through all `domTree`s.
 
 You can override the `setMounted` method however it's extremely important
 that you also call `super.setMounted(mounted)` so all other nested components
 receive the notification.  
 
-When overriding `onMount()` and `onUnmount` this isn't required (unless you've
-extended another class that expects these notification).
-
+When overriding `onMount()` and `onUnmount()` calling `super.onMount()` and 
+`super.onUnmount()` isn't required (unless you're extending another class 
+that expects these notification).
 
 
 

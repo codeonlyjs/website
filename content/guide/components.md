@@ -140,7 +140,7 @@ component needs to be updated to apply those changes in the DOM.
 There two methods for this:
 
 * `update()` - updates the DOM immediately
-* `invalidate()` - schedules the component to be update on the next
+* `invalidate()` - schedules the component to be updated on the next
   update cycle.
 
 In general you should use `invalidate()` as it can coaelesc multiple 
@@ -158,7 +158,7 @@ to get a callback after the pending updates have been made.
 
 ## Binding Elements
 
-To access the DOM element in a template, use the `bind` setting.
+To access the DOM element in a template, use the `bind` directive.
 
 eg: suppose you're using a third party light-box component as a photo
     viewer and it needs to be passed a root element to work in.
@@ -232,11 +232,29 @@ export class MyForm extends Component
 }
 ```
 
+Passing the name of an event handler as a string is a short-cut.
+
+The is identical to the above:
+
+```js
+export class MyForm extends Component
+{
+    onSubmit(ev)
+    {
+        ev.preventDefault();
+    }
+
+    static template = {
+        type: "form",
+        on_submit: "onSubmit",
+    }
+}
+```
 ## Components in Templates
 
 To use another component in a template:
 
-1. set the "type" setting to the component class
+1. set the `type` setting to the component class
 2. set properties and event handlers as per usual
 
 In the following example, the `Main` component's template uses three other 
@@ -250,7 +268,7 @@ import { ContentArea } from "./ContentArea.js";
 export class Main extends Component
 {
     static template = [
-        Header, /* i:  If no other settings, just use class name */
+        Header, /* i:  If no other settings, just reference the class directly */
         {
             type: "div",
             $: [
@@ -276,7 +294,7 @@ If a referenced component has no properties or event handlers, you
 can just use the component class name directly - as shown in the 
 above example with the `Header` component.
 
-ie; `Header` is a shortcut for `{ type: Header }`
+ie: `Header` is a shortcut for `{ type: Header }`
 
 </div>
 
@@ -285,7 +303,7 @@ ie; `Header` is a shortcut for `{ type: Header }`
 ## Raising Events
 
 The `Component` class extends the standard `EventTarget` class so
-it can raise (aka "fire" or "dispatch") it's own events.
+it can raise (aka "fire" or "dispatch") its own events.
 
 eg: a custom button component raising a "click" event.
 
@@ -336,14 +354,16 @@ class ProductsPage extends Component
 {
     constructor()
     {
+        super();
+
         // Call refresh method to start data load
         this.refresh();
     }
 
-    async refresh()
+    refresh()
     {
         // Call `load`
-        return this.load(async () => {
+        this.load(async () => {
 
             // Clear old data
             this.data = null;
@@ -386,7 +406,7 @@ Using this approach provides a couple of benefits:
 * The `load` method is `async`, so you can `await` it to know
   when the load has finished.
 * It's exception safe - any thrown errors are captured and the 
-  the `loading` flag is cleared on success or failure.
+  `loading` flag is cleared on success or failure.
 * It provides an easy mechanism for a component to know if
   data, an error or a spinner should be shown.
 * It's integrated with a broader "environment" loading mechanism 
@@ -396,7 +416,7 @@ Using this approach provides a couple of benefits:
 The `load` method also supports a second parameter `silent`.  In 
 silent mode, the callback is invoked and awaited and then the 
 component invalidated.  It can be used for silent data refreshes
-when the component also has data on view and wants to refresh
+when the component already has data on view and wants to refresh
 the view without showing a spinner.
 
 
@@ -473,17 +493,17 @@ happens automatically just before the component is mounted.  If you
 need to access the DOM elements beforehand, call the `create()` method.
 
 * **Mounted**: After the component's DOM is attached to the document DOM - 
-The component's `onMounted()` method is called when it's mounted.
+The component's `onMount()` method is called when it's mounted.
 
 * **Unmounted**: After a component is removed from the document DOM.  
-The component's `onUnmounted()` method is called when it's unmounted.
+The component's `onUnmount()` method is called when it's unmounted.
 
 * **Destroyed**: After a parent component that constructed this component
-no longer needs the component it will call's the component's `destroy()`
+no longer needs the component it will call the component's `destroy()`
 method which releases the DOM elements associated with the component.
 
 In general a component should connect to external resources in the
-`onMounted()` and disconnect from them in `onUnmounted()`.  These are
+`onMount()` and disconnect from them in `onUnmount()`.  These are
 the most reliable mechanism to know if a component is still in use.
 
 A component will never be destroyed while it's mounted.
