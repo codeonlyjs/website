@@ -88,28 +88,50 @@ the child content of a node.
 For HTML elements it's an array of child nodes:
 
 ```js
+// code demo lab
+// ---
+class Main extends Component
 {
-    type: "header",
-    $: [
-        {
-            type: "div",
-            text: "apples",
-        },
-        {
-            type: "div",
-            text: "pears",
-        }
-    ]
+// ---
+    static template = {
+        type: "div .child-nodes-demo",
+        $: [
+            {
+                type: "span",
+                text: "apples",
+            },
+            {
+                type: "span",
+                text: "pears",
+            }
+        ]
+    }
+// ---
 }
+
+Style.declare(`
+.child-nodes-demo
+{
+    span
+    {
+        display: inline-block;
+        padding: 0 10px;
+        margin: 0 5px;
+        border: 1px solid var(--gridline-color);
+        border-radius: 5px;
+    }
+}
+`)
+// ---
 ```
 
 The above is equivalent to:
 
 ```html
-<header>
-    <div>apples</div>
-    <div>pears</div>
-</header>
+<div class="child-nodes-demo">
+    <span>apples</span>
+    <span>pears</span>
+</div
 ```
 
 <div class="tip">
@@ -128,13 +150,35 @@ list rendering the template format starts to become much more attractive
 If a node has only a single child node, there's no need for the array syntax:
 
 ```js
+// code demo lab
+// ---
+class Main extends Component
 {
-    type: "header",
-    $: { /* i:  only a single child node, so no need for an array here */
-        type: "div",
-        text: "apples",
-    },
+    static template = {
+        type: "div .child-nodes-demo2",
+// ---
+        $: { /* i:  only a single child node, so no need for an array here */
+            type: "span",
+            text: "apples",
+        },
+// ---
+    }
 }
+
+Style.declare(`
+.child-nodes-demo2
+{
+    span
+    {
+        display: inline-block;
+        padding: 0 10px;
+        margin: 0 5px;
+        border: 1px solid var(--gridline-color);
+        border-radius: 5px;
+    }
+}
+`)
+// ---
 ```
 
 
@@ -242,3 +286,243 @@ property on the model, a property is added to the constructed DOM object.
 This is rarely used but is convered in [Template Internals](templateInternals).
 
 </div>
+
+
+<div class="tip">
+
+It's important to understand that the template is static and not
+associated with any one component instance.  
+
+This is because templates are "compiled" to JavaScript. To re-compile
+the template for every component instance would be extremely inefficient.
+
+</div>
+
+
+
+## Dynamic Values
+
+A template can declare dynamic values using callbacks.
+
+```js
+// lab demo code
+class MyComponent extends Component
+{
+    #clicked = false;
+
+    // A dynamic property used by the template
+    get title() 
+    { 
+        return this.#clicked ? "Clicked" : "Not Clicked";
+    }
+
+    onClick()
+    {
+        this.#clicked = !this.#clicked;
+        this.invalidate(); /* i: Tells component to update */
+    }
+
+    static template = {
+        type: "div",
+        text: c => c.title, /* i: Callback for dynamic content */
+        on_click: "onClick", /* i: See below for more on events */
+    }
+}
+```
+
+
+If the dynamic content used by a component's template change, the 
+component needs to be updated to apply those changes in the DOM.
+
+There two methods for this:
+
+* `update()` - updates the DOM immediately
+* `invalidate()` - schedules the component to be updated on the next
+  update cycle.
+
+In general you should use `invalidate()` as it can coaelesc multiple 
+updates into a single DOM update.  This save's the browser from multiple
+reflows and is more efficient.
+
+<div class="tip">
+
+If you need to access the DOM but there are pending updates you 
+can either call the `update` method, or use the `nextFrame` function
+to get a callback after the pending updates have been made.
+
+</div>
+
+
+## Binding Elements
+
+To access a DOM element in a template, use the `bind` directive.
+
+eg: suppose you're using a third party light-box component as a photo
+    viewer and it needs to be passed a root element to work with.
+
+```js
+export class MyLightBox extends Component
+{
+    constructor()
+    {
+        super();
+
+        this.create(); /* i: see tip below */
+
+        // `this.lightbox` will be set to the div element due
+        // to the `bind: "lightbox"` directive in the template
+        externalLightBoxLibrary.init(this.lightbox);
+    }
+
+    static template = [
+        {
+            type: "div",
+            bind: "lightbox", /* i: Causes this.lightbox above to be set */
+        }
+    ]
+}
+```
+
+<div class="tip">
+
+Normally, the DOM elements for a component aren't created until
+the component is mounted.  To access the elements before then,
+call the `create()` method as shown in the above example.
+
+</div>
+
+
+## Event Handlers
+
+Hook up event handlers using the `on_` prefix in the template.
+
+```js
+// demo lab code
+class MyButton extends Component
+{
+    onClick()
+    {
+        alert("Oi!");
+    }
+
+    static template = {
+        type: "button",
+        text: "Click Me",
+        on_click: c => c.onClick(),
+    }
+}
+```
+
+If you need the event object, it's passed as the second parameter to the 
+callback:
+
+```js
+// demo lab code
+class MyComponent extends Component
+{
+    onClick(ev)
+    {
+        ev.preventDefault();
+        alert("Navigation Cancelled");
+    }
+
+    static template = {
+        type: "a",
+        href: "https://codeonlyjs.org/",
+        text: "Link",
+        on_click: (c, ev) => c.onClick(ev),
+    }
+}
+```
+
+Passing the name of an event handler as a string is a short-cut. The
+following is identical to the above:
+
+```js
+// demo lab code
+// ---
+class MyComponent extends Component
+{
+    onClick(ev)
+    {
+        ev.preventDefault();
+        alert("Navigation Cancelled");
+    }
+
+    static template = {
+        type: "a",
+        href: "https://codeonlyjs.org/",
+        text: "Link",
+// ---
+        on_click: "onClick",
+// ---
+    }
+}
+// ---
+```
+
+
+## Components in Templates
+
+To use a component in a template:
+
+1. set the `type` setting to the component class
+2. set properties and event handlers as per usual
+
+The following example implements a `Widget` component that displays 
+a `text` property in a `div`.  The main component then uses
+two instances of the Widget.
+
+```js
+// lab code demo
+// A simple "widget"
+class Widget extends Component
+{
+    text;
+
+    static template = {
+        type: "div",
+        text: c => c.text,
+    }
+}
+
+class Main extends Component
+{
+    static template = [
+        {
+            type: Widget, /* i: First Widget component */
+            text: "Hello", /* i: Sets the Widget's 'text' property */
+        },
+        {
+            type: Widget, /* i: Second component instance */
+            text: "World",
+        }
+    ]
+}
+```
+
+If a referenced component has no properties or event handlers, you
+can just use the component class name directly:
+
+```js
+// demo lab code
+// A button that shows an alert when clicked
+class MyButton extends Component
+{
+    static template = {
+        type: "button",
+        text: "Click Me",
+        style_marginRight: "10px",
+        on_click: () => alert("Click"),
+    }
+}
+
+class Main extends Component
+{
+    static template = [
+        MyButton,  /* i: No properties or events so no need for { type: } */
+        MyButton,
+        MyButton,
+    ]
+}
+```

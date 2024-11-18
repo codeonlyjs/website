@@ -139,6 +139,7 @@ Style.declare(`
         border-radius: 10px;
         padding: 10px;
         border: 1px solid var(--accent-color);
+        margin-bottom: 80px;
     }
 
     div.tip

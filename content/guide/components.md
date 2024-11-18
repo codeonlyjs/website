@@ -1,23 +1,41 @@
 ---
-title: "Basics"
+title: "Overview"
 ---
-# Component Basics
+# Components Overview
 
-A component is the core concept in CodeOnly.  
+Components are the primary building block for constructing CodeOnly
+applications. They encapsulate program logic, a DOM (aka HTML) template 
+and an optional a set of CSS styles.
 
-This page describes the most common and most important concepts of
-working with components.  See [Advanced Component Topics](componentsAdvanced)
-to go deeper.
+Components can be either used in the templates of other components
+or mounted onto the document DOM to appear in a web page.
 
 
 ## Anatomy of a Component
 
-Most components will conform to the common basic structure consisting
-of:
+Most components will conform to this common structure:
 
-* logic
-* a DOM template
-* CSS style declarations
+```js
+import { Component, Style } from "@codeonlyjs/core";
+
+// Components extend the 'Component' class
+export class MyComponent extends Component
+{
+    // Logic
+    constructor()
+    {
+        super()
+    }
+
+    // DOM template
+    static template = {
+
+    }
+}
+
+// CSS styles
+Style.declare(``);
+```
 
 <div class="tip">
 
@@ -28,60 +46,38 @@ ie: single file components.
 </div>
 
 
-```js
-import { Component, Style } from "@codeonlyjs/core";
-
-// Components extend the 'Component' class
-export class MyComponent extends Component
-{
-    // Logic here
-
-    static template = {
-        
-        // DOM template here
-
-    }
-}
-
-// CSS styles here
-Style.declare(`
-
-`);
-
-```
 
 ## Logic
 
 A component is just a regular JavaScript class so its "logic"
 can be anything you like, but will typically consist of:
 
-* Data fetching
 * Business logic
+* Data fetching
 * Public properties to configure the component
 * Properties and methods to support the template
-* Event handlers for DOM elements
-* Event handlers for external objects
-* Code to raise events from this component
+* Event handling and dispatching
 * Life-cycle handlers (eg: `onMount()`, `onUnmount()`)
 
 
 
 ## Templates
 
-A component's template declares the DOM elements that represent
-the component in the document.
+A component's template declares the HTML elements that will appear
+in the document and provide the visual representation of the component.
 
-Templates are covered in detail in the template documentation. The
-following sections cover the basics of using templates with components.
+Templates are covered in detail in the [template documentation](templates),
+but since they're central to understanding components the following is a 
+brief introduction.
 
-
-## Template Declaration
-
-A template is a JavaScript object that describes the DOM elements 
-associated with a component.
+A template is a JSON-like object that describes the DOM structure of a 
+component - that is the set of HTML elements that comprise the component's
+appearance.
 
 Most components will declare their template using a static
 field named `template` on the component class.
+
+
 
 ```js
 // lab demo code
@@ -94,259 +90,60 @@ class MyComponent extends Component
 }
 ```
 
-<div class="tip">
 
-It's important to understand that the template is static and not
-associated with any one component instance.  
+A template can use fat arrow (`=>`) callbacks for dynamic 
+content - usually calling methods and properties on the component
+itself.
 
-This is because templates are "compiled" to JavaScript. To re-compile
-the template for every component instance would be extremely inefficient.
+In the example below, the template's `<div>` element retrieves its text
+from the `MyComponent.text` property.
 
-</div>
-
-
-
-## Dynamic Values
-
-A template can declare dynamic values using callbacks.
+This example also shows using an event handler to respond to clicks
+on the `<div>`.  Clicking the `<div>` toggles the text between "on" and 
+"off".
 
 ```js
 // lab demo code
 class MyComponent extends Component
 {
-    #clicked = false;
+    #on = false;
 
     // A dynamic property used by the template
-    get title() 
+    get text() 
     { 
-        return this.#clicked ? "Clicked" : "Not Clicked";
+        return this.#on ? "On" : "Off";
     }
 
     onClick()
     {
-        this.#clicked = !this.#clicked;
+        this.#on = !this.#on;
         this.invalidate(); /* i: Tells component to update */
     }
 
     static template = {
         type: "div",
-        text: c => c.title, /* i: Callback for dynamic content */
-        on_click: "onClick", /* i: See below for more on events */
+        text: c => c.text, /* i: Callback for dynamic content */
+        on_click: "onClick", /* i: 'click' event handler */
     }
 }
 ```
 
-
-If the dynamic content used by a component's template change, the 
-component needs to be updated to apply those changes in the DOM.
-
-There two methods for this:
-
-* `update()` - updates the DOM immediately
-* `invalidate()` - schedules the component to be updated on the next
-  update cycle.
-
-In general you should use `invalidate()` as it can coaelesc multiple 
-updates into a single DOM update.  This save's the browser from multiple
-reflows and is more efficient.
-
-<div class="tip">
-
-If you need to access the DOM but there are pending updates you 
-can either call the `update` method, or use the `nextFrame` function
-to get a callback after the pending updates have been made.
-
-</div>
-
-
-## Binding Elements
-
-To access a DOM element in a template, use the `bind` directive.
-
-eg: suppose you're using a third party light-box component as a photo
-    viewer and it needs to be passed a root element to work with.
-
-```js
-export class MyLightBox extends Component
-{
-    constructor()
-    {
-        super();
-
-        this.create(); /* i: see tip below */
-
-        // `this.lightbox` will be set to the div element due
-        // to the `bind: "lightbox"` directive in the template
-        externalLightBoxLibrary.init(this.lightbox);
-    }
-
-    static template = [
-        {
-            type: "div",
-            bind: "lightbox", /* i: Causes this.lightbox above to be set */
-        }
-    ]
-}
-```
-
-<div class="tip">
-
-Normally, the DOM elements for a component aren't created until
-the component is mounted.  To access the elements before then,
-call the `create()` method as shown in the above example.
-
-</div>
-
-
-## Event Handlers
-
-Hook up event handlers using the `on_` prefix in the template.
-
-```js
-// demo lab code
-class MyButton extends Component
-{
-    onClick()
-    {
-        alert("Oi!");
-    }
-
-    static template = {
-        type: "button",
-        text: "Click Me",
-        on_click: c => c.onClick(),
-    }
-}
-```
-
-If you need the event object, it's passed as the second parameter to the 
-callback:
-
-```js
-// demo lab code
-class MyComponent extends Component
-{
-    onClick(ev)
-    {
-        ev.preventDefault();
-        alert("Navigation Cancelled");
-    }
-
-    static template = {
-        type: "a",
-        href: "https://codeonlyjs.org/",
-        text: "Link",
-        on_click: (c, ev) => c.onClick(ev),
-    }
-}
-```
-
-Passing the name of an event handler as a string is a short-cut. The
-following is identical to the above:
-
-```js
-// demo lab code
-// ---
-class MyComponent extends Component
-{
-    onClick(ev)
-    {
-        ev.preventDefault();
-        alert("Navigation Cancelled");
-    }
-
-    static template = {
-        type: "a",
-        href: "https://codeonlyjs.org/",
-        text: "Link",
-// ---
-        on_click: "onClick",
-// ---
-    }
-}
-// ---
-```
-
-
-## Components in Templates
-
-To use a component in a template:
-
-1. set the `type` setting to the component class
-2. set properties and event handlers as per usual
-
-The following example implements a `Widget` component that displays 
-a `text` property in a `div`.  The main component then uses
-two instances of the Widget.
-
-```js
-// lab code demo
-// A simple "widget"
-class Widget extends Component
-{
-    text;
-
-    static template = {
-        type: "div",
-        text: c => c.text,
-    }
-}
-
-class Main extends Component
-{
-    static template = [
-        {
-            type: Widget, /* i: First Widget component */
-            text: "Hello", /* i: Sets the Widget's 'text' property */
-        },
-        {
-            type: Widget, /* i: Second component instance */
-            text: "World",
-        }
-    ]
-}
-```
-
-If a referenced component has no properties or event handlers, you
-can just use the component class name directly:
-
-```js
-// demo lab code
-// A button that shows an alert when clicked
-class MyButton extends Component
-{
-    static template = {
-        type: "button",
-        text: "Click Me",
-        style_marginRight: "10px",
-        on_click: () => alert("Click"),
-    }
-}
-
-class Main extends Component
-{
-    static template = [
-        MyButton,  /* i: No properties or events so no need for { type: } */
-        MyButton,
-        MyButton,
-    ]
-}
-```
-
+Templates also support conditional blocks, list rendering, embed slots,
+CSS transitions and more.  See the [template documentation](templates)
+for more on working with templates.
 
 ## Raising Events
 
 The `Component` class extends the standard `EventTarget` class so
 it can raise (aka "fire" or "dispatch") its own events.
 
-eg: a custom button component raising a "click" event.
+Here is a custom button component raising a "click" event:
 
 ```js
 // lab demo code
 // A component that raises "click" events
 class MyButton extends Component  /* i:  Component extends EventTarget */
 {
-// ---
     onClick()
     {
         this.dispatchEvent(new Event("click")); /* i: Raise event */
@@ -357,8 +154,9 @@ class MyButton extends Component  /* i:  Component extends EventTarget */
         text: "MyButton",
         on_click: c => c.onClick(),
     }
-// ---
 }
+
+// ---
 
 class Main extends Component
 {
@@ -372,14 +170,27 @@ class Main extends Component
         on_click: (c) => c.onMyButtonClick(), /* i: Listen to events from component */
     }
 }
+// ---
 ```
 
+<div class="tip">
+
+In some of the samples, like the one above, we've hidden some of the 
+supporting code to help emphasize the point being made.  
+
+These snipped sections of code are indicated with the scissor icon:
+
+<div class="snip" title="Some code omitted for clarity." style="margin-top: 20px;margin-bottom: 20px"><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg&quot;" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div>
+
+To view the full code, open the sample in the Lab, by clicking the Edit button above.
+
+</div>
 
 ## Async Data Loads
 
 Components will often need to load data from external sources. 
-This is commonly referred to as "async data loading" and usually 
-a spinner will be shown until the data is received.
+This is commonly referred to as "async data loading" and often 
+a spinner will be shown while the data is being fetched.
 
 Since this is a common pattern for many components, the `Component`
 class includes a couple of helpers: a `load` method, a `loading` and
@@ -405,8 +216,11 @@ class Main extends Component
     loadData()
     {
         this.load(async () => {
+            // Load data here
+// ---
             let response = await fetch("https://swapi.dev/api/people/3/");
             this.data = await response.json();
+// ---
         });
     }
 
@@ -419,6 +233,7 @@ class Main extends Component
         {
             else: true, /* i: Otherwise show loaded data */
             $: [
+                // Display data here
 // ---
                 {
                     type: "span",
@@ -460,9 +275,8 @@ the view without showing a spinner.
 
 Mounting a component makes it appear on the page.
 
-Most of your components will be mounted automatically by parent
-components, but the root of your application needs to be mounted
-manually.
+Most components are mounted automatically by parent components, but
+ the root of your application needs to be mounted manually.
 
 To mount a component, call the `mount` method passing an element 
 or selector indicating where the component should be appear:
@@ -527,7 +341,7 @@ but before the DOM elements have been created.
 happens automatically just before the component is mounted.  If you
 need to access the DOM elements beforehand, call the `create()` method.
 
-* **Mounted**: After the component's DOM is attached to the document DOM - 
+* **Mounted**: After the component's DOM is attached to the document DOM.
 The component's `onMount()` method is called when it's mounted.
 
 * **Unmounted**: After a component is removed from the document DOM.  
@@ -599,6 +413,164 @@ external CSS preprocesor (LESS, SASS etc...) - but they can't be
 used with the CodeOnly's `Style.declare` mechanism.
 
 </div>
+
+
+## Custom Templates
+
+Normally components use the template declared by the static `template` 
+property but this can be changed by overriding the `onProvideTemplate()`
+function.
+
+```js
+class MyComponent extends Component
+{
+    // Called by Component to get the template to be compiled
+    static onProvideTemplate()
+    {
+        let modifiedTemplate = {
+            // ... whatever ...
+        };
+
+        return modifiedTemplate;
+    }
+}
+```
+
+Consider, for example, a dialog class where every dialog has the same frame
+but different content in the main body.
+
+```js
+// lab code demo
+class Dialog extends Component
+{
+// ---
+    showModal()
+    {
+        // Add dialog to the document and show it
+        document.body.appendChild(this.domTree.rootNode);
+        this.domTree.rootNode.showModal();
+
+        // Remove from document when closed
+        this.domTree.rootNode.addEventListener("close", () => {
+            this.domTree.rootNode.remove();
+        });
+    }
+
+// ---
+    // Override to wrap template in dialog frame
+    static onProvideTemplate()
+    {
+        return {
+            type: "dialog",
+            class: "dialog",
+            id: this.template.id, /* i: From the derived class template */
+            $: {
+                type: "form",
+                method: "dialog",
+                $: [
+                    {
+                        type: "header",
+                        $: this.template.title, /* i: From the derived class template */
+                    },
+                    {
+                        type: "main",
+                        $: this.template.content,  /* i: From the derived class template */
+                    },
+                    {
+                        type: "footer",
+                        $: {
+                            type: "button",
+                            $: "Close",
+                        }
+                    },
+                ]
+            }
+        };
+    }
+}
+// ---
+
+// Styling common to all dialogs
+Style.declare(`
+dialog.dialog
+{
+    header
+    {
+        padding: 10px;
+    }
+}
+`);
+
+
+// ---
+
+class MyDialog extends Dialog
+{
+    // This template will be "re-templated" by the base Dialog class
+    // to wrap it in <dialog>, <form> etc... before compilation
+    static template = {
+        title: "My Dialog's Title",
+        id: "my-dialog",
+        content: {
+            type: "p",
+            $: "Hello World!  This is the dialog's content",
+        }
+    }
+}
+
+// ---
+
+// Styling specific to this dialog class
+Style.declare(`
+#my-dialog
+{
+}
+`);
+
+
+class Main extends Component
+{
+    onClick()
+    {
+        let dlg = new MyDialog();
+        dlg.showModal();
+    }
+    static template = {
+        type: "button",
+        text: "Show Dialog",
+        on_click: "onClick"
+    }
+}
+// ---
+```
+
+<div class="tip">
+
+In the above example, anything not directly related to template handling has been
+omitted. Click the "Edit" link above to see the full code.
+
+</div>
+
+Notice how the enclosing `dialog`, `form`, `header`, `main` and `footer` elements
+are provided automatically by the base `Dialog` class, but the content of the `header`
+and `main` elements is provided by the derived `MyDialog` class
+
+```html
+<dialog class="dialog" id="my-dialog">
+    <form method="dialog">
+        <header>
+            My Dialog
+        </header>
+        <main>
+            <p>Hello World</p>
+        </main>
+        <footer>
+            <button>Close</button>
+        </footer>
+    </form>
+</dialog>
+```
+
 
 
 ## Next Steps
