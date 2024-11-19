@@ -3,8 +3,8 @@ title: "Basics"
 ---
 # Template Basics
 
-A CodeOnly template is a JavaScript object that can be used to create and update
-DOM elements.
+A template is a JSON-like object that describes how create and update
+a heirarchy of DOM elements.   
 
 <div class="tip">
 
@@ -35,7 +35,7 @@ heirarchy of DOM elements that the template creates and manages.
 
 There are different kinds of template nodes:
 
-* **Plain Text** - declared as plain JavaScript strings, or a function that
+* **Plain Text** - declared as a string or a function that
   returns a string:
 
   ```js
@@ -43,8 +43,8 @@ There are different kinds of template nodes:
   () => new Date().toString(),
   ```
 
-* **HTML Text** - declared using the `html()` function passed a string or 
-  a callback:
+* **HTML Text** - declared using the `html()` directive wrapping a string or 
+  a callback that returns a string. 
 
   ```js
   html("<span>My Text Span</span>"),
@@ -52,7 +52,8 @@ There are different kinds of template nodes:
   ```
 
 * **HTML Elements** - declared as an object with a `type` property that is 
-  the tag name of the element, attributes as other properties and child nodes with the `$` property:
+  the tag name of the element, attributes declared as other properties and 
+  child nodes declared with the `$` property:
   
   ```js
   {
@@ -88,10 +89,10 @@ There are different kinds of template nodes:
   ```
   
 
-* **Components** - templates can load other components by declaring a node
+* **Components** - templates can include components by declaring a node
   with a `type` property that is the component class and other properties
-  to be assigned to the component instance.
-  
+  declaring propertirs to be assigned to tbe component. 
+
   ```js
   {
     type: MyComponent, /* i: the component class */
@@ -156,7 +157,7 @@ The above is equivalent to:
 
 <div class="tip">
 
-You might be looking at the above template vs HTML declaration and feel
+You might look at the above template and HTML and feel
 the HTML is easier to type and clearer to understand.
 
 For this simple example it is but by the time you add in dynamic
@@ -223,7 +224,7 @@ callback(model, context)
 When using templates with components the `model` object is the component instance 
 which is why we conventionally call it `c`. The `context` object is often unused. 
 
-When any dynamic content has changed, the template's `update` method
+When any dynamic content changes, the template's `update` method
 needs to be called in order for the change to be reflected in the DOM.  
 
 When working with components this can be managed using the `Component.invalidate()` 
@@ -268,7 +269,7 @@ with `on_`.
     on_click: c => c.onClick();
 ```
 
-This example, listens to a button for its "click" event:
+This example listens to a button for its "click" event:
 
 ```js
 // demo lab code
@@ -354,9 +355,9 @@ To access the DOM nodes and nested compoonents constructed by a template
 use the `bind` directive to specify the name of a property on your component.
 
 When the DOM tree is created, the specified property will be assigned a reference
-to the create element (or component).
+to the created element (or component).
 
-For example, this would make the input field available to the component
+For example this would make the input field available to the component
 as `this.myInput`:
 
 ```js
