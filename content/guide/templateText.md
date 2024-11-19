@@ -7,7 +7,7 @@ title: "Text and HTML"
 
 To declare a text node in a template, use a plain JavaScript string.  
 
-Plain text nodes are automatically escaped and can safely be passed 
+Text nodes don't need to be encoded and can safely be passed 
 untrusted text data.
 
 ```js
@@ -32,8 +32,8 @@ class Main extends Component
 
 ## HTML Nodes
 
-To declare text that won't be escaped (ie: raw HTML), use the `html` directive
-to mark the text as html.
+To include raw HTML text, use the `html` directive
+to mark the text as HTML.
 
 This example requires escaping on the ampersand (`&amp;`) and uses embedded 
 formatting elements (`<em>`):
@@ -215,7 +215,7 @@ class Main extends Component
 
 ## Comments
 
-To create HTML comment nodes by use the special type `#comment`.
+To create HTML comment node use the special type `#comment`.
 
 ```js
 {
@@ -239,5 +239,5 @@ As usual, the `text` can be dynamic:
 }
 ```
 
-Although rarely used the comment node can be used for diagnostics, and
+Although rarely used, the comment node can be used for diagnostics and
 is also occassionally useful with server-side rendering (SSR).
