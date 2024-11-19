@@ -56,7 +56,7 @@ class Main extends Component
 ```
 
 
-Attribute declared this way can be dynamic, by providing a callback:
+Attributes declared this way can be dynamic, by providing a callback:
 
 ```js
 // demo lab code
