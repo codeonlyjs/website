@@ -240,9 +240,18 @@ export class Document
             });
 
             // Pull out snipped sections
+            let anySnips = false;
             code = code.replace(/(?:^|(?<=\n))\/\/ ---\n[\s\S]*?\/\/ ---\n/g, (m, code) => {
+                anySnips = true;
                 return `/* -- snip -- */`;
             });
+
+            if (anySnips)
+            {
+                let sections = code.split("/* -- snip -- */");
+                sections = sections.map(x => removeLeadingWhitespace(x));
+                code = sections.join("/* -- snip -- */");
+            }
 
             // Highlight the code
             let html = hljs.highlight(code, { 
@@ -360,4 +369,49 @@ function convertHeadingTextToId(text)
     // Get rid if leading/trailing hypens
     text = text.replace(/^-|-$/g, "");
     return text;
+}
+
+
+function removeLeadingWhitespace(str) {
+
+    // Split the string into lines
+    let lines = str.split('\n');
+
+    let common = null;
+    for (let l of lines)
+    {
+        // Get leading space for this line
+        let linespace = l.match(/^([ \t]*)/);
+        if (!linespace)
+            return str;
+
+        // Ignore completely whitespace lines
+        if (linespace[1].length == l.length)
+            continue;
+
+        if (common == null)
+        {
+            common = linespace[1];
+        }
+        else
+        {
+            for (let i=0; i < common.length; i++)
+            {
+                if (linespace[1][i] != common[i])
+                {
+                    common = common.substring(0, i);
+                    break;
+                }
+            }
+        }
+    }
+
+    if (!common || common.length == 0)
+        return str;
+
+    lines = lines.map(x => x.substring(common.length));
+
+
+    // Join the lines back into a single string
+    return lines.join('\n');
 }
