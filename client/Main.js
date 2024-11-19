@@ -1,4 +1,4 @@
-import { Component, Style } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 import { Header } from "./Header.js";
 import { router } from "./router.js";
 import { HomePage } from "./HomePage.js";
@@ -66,7 +66,7 @@ class Main extends Component
     }
 }
 
-Style.declare(`
+css`
 #layoutRoot
 {
     padding-top: var(--fixed-header-height);
@@ -78,7 +78,7 @@ Style.declare(`
     align-items: center;
 }
 
-`);
+`;
 
 // Main entry point, create Application and mount
 export function main()

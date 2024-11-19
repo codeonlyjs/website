@@ -93,7 +93,7 @@ class Main extends Component /* i:  Components extend the `Component` class */
   }
 }
 
-Style.declare(` /* i:  CSS styles (with '.counter' as scoping class) */
+css` /* i:  CSS styles (with '.counter' as scoping class) */
 .counter
 {
   display: flex;
@@ -101,7 +101,7 @@ Style.declare(` /* i:  CSS styles (with '.counter' as scoping class) */
   justify-content: center;
   gap: 1rem;
 }
-`); 
+`; 
 ```
 
 Let's take a closer look some of the features of developing components this way.
@@ -162,7 +162,7 @@ approach is.
 ## Styles
 
 In the above example, notice how it includes the CSS declarations
-for the component using the `Style.declare()` method.
+for the component using the `css` template literal string.
 
 This approach is completely optional, but it lets us declare everything 
 about a component in the one file.

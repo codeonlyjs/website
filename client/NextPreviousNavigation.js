@@ -1,4 +1,4 @@
-import { Component, Style, Html } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 import { navigationContext } from "./NavigationContext.js";
 
 export class NextPreviousNavigation extends Component
@@ -61,7 +61,7 @@ export class NextPreviousNavigation extends Component
     }
 }
 
-Style.declare(`
+css`
 .next-previous-navigation
 {
     border-top: 1px solid var(--gridline-color);
@@ -83,4 +83,4 @@ Style.declare(`
         color: rgb(from var(--body-fore-color) r g b / 75%);
     }
 }
-`);
+`;

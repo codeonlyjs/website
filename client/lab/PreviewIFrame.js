@@ -7,7 +7,7 @@ let head = `<html>
 <script type="importmap">
 {
     "imports": {
-        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.min.js"
+        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core@0.0.56/dist/codeonly.min.js"
     }
 }
 </script>
@@ -20,7 +20,7 @@ window.addEventListener("error", (ev) => {
 </head>
 <body>
 <script type="module">
-import { Component, Style } from "@codeonlyjs/core";
+import { $, Component, css, html, htmlEncode, input, transition} from "@codeonlyjs/core";
 `;
 
 let tail = `

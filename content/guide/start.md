@@ -109,7 +109,7 @@ You can then import from the library using the same `@codeonlyjs/core` package n
 
 ```html
 <script type="module">
-import { Component, Style } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 // etc...
 </script>
 ```

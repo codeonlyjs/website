@@ -1,4 +1,4 @@
-import { Component, Style, Html } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 import { router } from "../router.js";
 import { CodeEditor } from "./CodeEditor.js";
 import { Preview } from "./Preview.js";
@@ -166,7 +166,7 @@ class LabPage extends Component
     };
 }
 
-Style.declare(`
+css`
 .lab
 {
     display: flex;
@@ -215,7 +215,7 @@ Style.declare(`
         z-index: 100;
     }
 }
-`);
+`;
 
 
 router.register({

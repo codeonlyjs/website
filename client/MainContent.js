@@ -1,4 +1,4 @@
-import { Component, Style, router } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 
 // The main header
 export class MainContent extends Component
@@ -18,10 +18,10 @@ export class MainContent extends Component
     }
 }
 
-Style.declare(`
+css`
 main
 {
 }
 
-`);
+`;
 

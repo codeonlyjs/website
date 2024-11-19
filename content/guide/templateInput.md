@@ -91,12 +91,12 @@ class Main extends Component
 }
 // ---
 
-Style.declare(`
+css`
     span.output
     {
         padding: 10px;
     }
-`)
+`
 // ---
 ```
 
@@ -135,13 +135,13 @@ class Main extends Component
 }
 // ---
 
-Style.declare(`
+css`
     input
     {
         width: 200px;
         margin-right: 10px;
     }
-`)
+`
 // ---
 ```
 

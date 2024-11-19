@@ -159,3 +159,67 @@ template = {
 
 
 
+## Components in Templates
+
+To use a component in a template:
+
+1. set the `type` setting to the component class
+2. set properties and event handlers as per usual
+
+The following example implements a `Widget` component that displays 
+a `text` property in a `div`.  The main component then uses
+two instances of the Widget.
+
+```js
+// lab code demo
+// A simple "widget"
+class Widget extends Component
+{
+    text;
+
+    static template = {
+        type: "div",
+        text: c => c.text,
+    }
+}
+
+class Main extends Component
+{
+    static template = [
+        {
+            type: Widget, /* i: First Widget component */
+            text: "Hello", /* i: Sets the Widget's 'text' property */
+        },
+        {
+            type: Widget, /* i: Second component instance */
+            text: "World",
+        }
+    ]
+}
+```
+
+If a referenced component has no properties or event handlers, you
+can just use the component class name directly:
+
+```js
+// demo lab code
+// A button that shows an alert when clicked
+class MyButton extends Component
+{
+    static template = {
+        type: "button",
+        text: "Click Me",
+        style_marginRight: "10px",
+        on_click: () => alert("Click"),
+    }
+}
+
+class Main extends Component
+{
+    static template = [
+        MyButton,  /* i: No properties or events so no need for { type: } */
+        MyButton,
+        MyButton,
+    ]
+}
+```

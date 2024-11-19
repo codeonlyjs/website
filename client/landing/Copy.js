@@ -54,8 +54,7 @@ class Main extends Component /* i: Components extend the \`Component\` class */
   }
 }
 
-Style.declare( /* i: CSS styles (with \`.counter\` as scoping class) */
-\`
+css\` /* i: CSS styles (with \`.counter\` as scoping class) */
 .counter
 {
   display: flex;
@@ -63,7 +62,7 @@ Style.declare( /* i: CSS styles (with \`.counter\` as scoping class) */
   justify-content: center;
   gap: 1rem;
 }
-\`); 
+\` 
 \`\`\`
 
 `

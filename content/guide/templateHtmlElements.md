@@ -6,13 +6,6 @@ title: "HTML Elements"
 
 This section describes how to declare HTML elements in templates.
 
-<div class="tip">
-
-HTML elements are the most common nodes declared in templates so it's worth 
-learning this section well.
-
-</div>
-
 
 ## Tag Name
 
@@ -20,9 +13,18 @@ An HTML element is declared by specifying its tag name as the `type` property
 of the node:
 
 ```js
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "div", /* i:  A string value for the type makes this an HTML element */
+    static template = 
+// ---
+    {
+        type: "hr", /* i:  <hr /> */
+    }
+// ---
 }
+// ---
 ```
 
 Note: unlike most other properties, the `type` property can *not* be a dynamic
@@ -32,39 +34,85 @@ callback function.
 
 ## Attributes
 
-The attributes of a HTML element are declared using the other properties of
-the template node
+The attributes of a HTML element are declared as properties of
+the template node:
 
 ```js
-// <img src="/content/logo.svg" >
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "img",
-    src: "/content/logo.svg",
+    static template = 
+// ---
+    {
+        type: "img",
+        src: "/codeonly-icon.svg",
+        width: "64",
+        height: "64",
+    }
+// ---
 }
+// ---
 ```
 
-Attribute declared this way can be dynamic, but providing a callback:
+
+Attribute declared this way can be dynamic, by providing a callback:
 
 ```js
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "img",
-    src: c => c.currentPhotoUrl,
+    size = 64;
+
+    onToggle()
+    {
+        this.size = this.size == 64 ? 128 : 64;
+        this.invalidate();
+    }
+
+    static template = [
+// ---
+    {
+        type: "img",
+        src: "/codeonly-icon.svg",
+        width: c => c.size,
+        height: c => c.size,
+    },
+// ---
+    {
+        type: "button",
+        text: "Toggle Size",
+        on_click: "onToggle",
+    }
+    ]
 }
+// ---
 ```
 
-If an attribute name clashes with a name that has other special meaning 
-to CodeOnly, you can use the `attr_` prefix to specify the attribute.
+If an attribute name clashes with a name that has other special meaning, 
+use the `attr_` prefix to explicitly state the value should be treated
+as an attribute.
 
 The most common example of this is setting the `type` attribute of an
 input element (although this can usually be avoided using static attributes
 as described below)
 
+
 ```js
-// <input type="password">
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "input",
-    attr_type: "password"
+    static template = 
+// ---
+    {
+        type: "input", 
+        attr_type: "color", /* i: 'type' attribute clashes */
+    }
+// ---
 }
+// ---
 ```
 
 
@@ -75,29 +123,76 @@ The static attributes of an element can be set by appending them
 to the type field using the `name=value` syntax:
 
 ```js
-// <input type="password">
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "input type=password"
+    static template = 
+// ---
+    {
+        type: "input type=color", 
+    }
+// ---
 }
+// ---
 ```
+
+<div class="tip">
+
+Notice there's no clash on the 'type' attirbute using this method.
+
+</div>
+
 
 Use single or double quotes for attribute values with spaces:
 
 ```js
-// <input type="password">
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "div title='this is a div'"
+    static template = 
+// ---
+    {
+        type: "input type=password placeholder='Enter your password'", 
+    }
+// ---
 }
+// ---
 ```
 
 The `id` and `class` attributes can also be set using a short-hand 
 notation similar to CSS query selectors:
 
 ```js
-// <div id="#my-div" class="class1 class2">
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "div#my-div.class1.class2",
+    static template = 
+// ---
+
+    {
+        type: "div #my-div .redbox", 
+        text: "This is my div",
+    }
+
+// ---
 }
+// ---
+
+css`
+#my-div
+{
+    width: 200px;
+    text-align: center;
+}
+.redbox
+{
+    border: 1px solid red;
+    color: red;
+}
+`
 ```
 
 Unlike CSS query selectors where spaces are significant, here they're
@@ -113,6 +208,61 @@ not so spaces are allowed:
 
 
 ## Inner Text/HTML
+
+
+```js
+// demo lab code
+// ---
+class Main extends Component
+{
+    static template = 
+// ---
+    {
+        type: "div",
+        text: "inner text",
+    }
+// ---
+}
+// ---
+```
+
+The text property also supports callbacks and the `html` directive:
+
+```js
+// demo lab code
+// ---
+class Main extends Component
+{
+    static template = 
+// ---
+    {
+        type: "div",
+        text: html(() => `<strong>${new Date().toString()}</strong>`),
+    }
+// ---
+}
+// ---
+```
+
+
+Since inner text can also be expressed as child nodes, the
+`$` property can also be used to set the text of an element:
+
+```js
+{
+    type: "div",
+    $: "inner text",
+}
+```
+
+Caveat: when using a callback for the inner text of an element,
+the `text` property is slightly more efficient than the `$` property.
+
+ie: use `text: c => c.text` in preference to `$: c => c.text` where 
+performance is critical.  
+
+When the value is not a callback, the two approaches are identical.
+
 
 The inner text of an HTML element can be set with the `text` property:
 

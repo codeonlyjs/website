@@ -1,4 +1,4 @@
-import { Component } from "@codeonlyjs/core";
+import { $, Component, html, htmlEncode, input, transition } from "@codeonlyjs/core";
 import { env } from "@codeonlyjs/core";;
 import { openLabWithCode } from "./lab/LabPage.js";
 import { htmlIcon } from "./Icon.js";
@@ -42,14 +42,28 @@ export class Document
                 styles += "\n" + style;
             }
         }
+        let fakeCss = function(strings)
+        {
+            let r = "";
+            for (let i=0; i<strings.length - 1; i++)
+            {
+                r += strings[i];
+                r += arguments[i + 1];
+            }
+            r += strings[strings.length - 1];
+            fakeStyle.declare(r);
+        }
 
         for (let d of this.demos)
         {
             // Create a closure for the demo
-            let code = `${d.code}\n\nreturn new ${findMainClass(d.code)}();`;
-            let closure = new Function("Component", "Style", code);
-            d.main = closure(Component, fakeStyle);
-            d.main.mount(document.getElementById(d.id));
+            if (d.isDemo)
+            {
+                let code = `${d.code}\n\nreturn new ${findMainClass(d.code)}();`;
+                let closure = new Function("$", "Component", "Style", "css", "input", "transition", "html", "htmlEncode", code);
+                d.main = closure($, Component, fakeStyle, fakeCss, input, transition, html, htmlEncode);
+                d.main.mount(document.getElementById(d.id));
+            }
 
             if (d.isLab)
             {
@@ -69,7 +83,8 @@ export class Document
     {
         for (let d of this.demos)
         {
-            d.main.unmount();
+            if (d.isDemo)
+                d.main.unmount();
         }
         this.elStyles.remove();
     }
@@ -217,11 +232,11 @@ export class Document
 
             let originalCode = code;
 
-            // Pull out Style.declare() blocks
+            // Pull out css blocks
             let cssBlocks = [];
-            code = code.replace(/Style\.declare\(`([^`]*)`\)/g, (m, css) => {
+            code = code.replace(/\bcss`([^`]*)`/g, (m, css) => {
                 cssBlocks.push(css);
-                return `Style.declare("-- style block ${cssBlocks.length} --")`
+                return `css\"-- style block ${cssBlocks.length} --\"`
             });
 
             // Pull out snipped sections
@@ -276,7 +291,7 @@ export class Document
 
                 // Insert thte demo block
                 let id = `demo-${this.demos.length}`
-                this.demos.push({ id, code: originalCode, isLab });
+                this.demos.push({ id, code: originalCode, isLab, isDemo });
                 if (isLab)
                 {
                     wrapper_html += `

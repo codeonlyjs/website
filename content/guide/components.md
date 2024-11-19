@@ -16,7 +16,7 @@ or mounted onto the document DOM to appear in a web page.
 Most components will conform to this common structure:
 
 ```js
-import { Component, Style } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 
 // Components extend the 'Component' class
 export class MyComponent extends Component
@@ -34,7 +34,8 @@ export class MyComponent extends Component
 }
 
 // CSS styles
-Style.declare(``);
+css`
+`;
 ```
 
 <div class="tip">
@@ -66,9 +67,8 @@ can be anything you like, but will typically consist of:
 A component's template declares the HTML elements that will appear
 in the document and provide the visual representation of the component.
 
-Templates are covered in detail in the [template documentation](templates),
-but since they're central to understanding components the following is a 
-brief introduction.
+Templates are [covered in detail here](templates), but since they're 
+central to understanding components the following is a brief introduction.
 
 A template is a JSON-like object that describes the DOM structure of a 
 component - that is the set of HTML elements that comprise the component's
@@ -90,17 +90,53 @@ class MyComponent extends Component
 }
 ```
 
+<div class="tip">
 
-A template can use fat arrow (`=>`) callbacks for dynamic 
-content - usually calling methods and properties on the component
-itself.
+Templates are declared static because they're are compiled at runtime to JavaScript 
+and it would be extremely inefficient to re-compile for each component instance.  
 
-In the example below, the template's `<div>` element retrieves its text
-from the `MyComponent.text` property.
+The template is compiled the first time an instance of a component is constructed 
+and re-used for all subsequent instances.
 
-This example also shows using an event handler to respond to clicks
-on the `<div>`.  Clicking the `<div>` toggles the text between "on" and 
-"off".
+</div>
+
+
+## Dynamic Content
+
+A template can use fat arrow (`=>`) callbacks for dynamic content.
+
+The callback is passed a reference to the owning component instance
+and by convention the argument is usually named `c` (for "Component"):
+
+This example sets a `<div>`'s inner text using the component's `greeting`
+property:
+
+```js
+    static template = {
+        type: "div",
+        text: c => c.greeting, /* i: Callback to get text content */
+    }
+```
+
+
+When the value of any dynamic content changes, the component needs to 
+be updated to apply those changes in the DOM using one of these two
+methods:
+
+* `update()` - updates the DOM immediately
+* `invalidate()` - schedules the component to be updated on the next
+  update cycle.
+
+<div class="tip">
+
+In general you should use `invalidate()` as it coaelesces multiple 
+updates into a single DOM update.  This is more efficient as it saves
+the browser from multiple reflows.
+
+</div>
+
+The following example toggles the text shown in a `<div>` each time
+it is clicked.
 
 ```js
 // lab demo code
@@ -123,21 +159,23 @@ class MyComponent extends Component
     static template = {
         type: "div",
         text: c => c.text, /* i: Callback for dynamic content */
-        on_click: "onClick", /* i: 'click' event handler */
+        on_click: "onClick",
     }
 }
 ```
 
-Templates also support conditional blocks, list rendering, embed slots,
-CSS transitions and more.  See the [template documentation](templates)
+Templates also support events, conditional blocks, list rendering, 
+embed slots, CSS transitions and more.  See the [Templates](templates) 
 for more on working with templates.
 
-## Raising Events
+
+
+## Dispatching Events
 
 The `Component` class extends the standard `EventTarget` class so
-it can raise (aka "fire" or "dispatch") its own events.
+components can dispatch (aka "fire" or "raise") events.
 
-Here is a custom button component raising a "click" event:
+Here is a custom button component dispatching a "click" event:
 
 ```js
 // lab demo code
@@ -182,7 +220,8 @@ These snipped sections of code are indicated with the scissor icon:
 
 <div class="snip" title="Some code omitted for clarity." style="margin-top: 20px;margin-bottom: 20px"><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg&quot;" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div>
 
-To view the full code, open the sample in the Lab, by clicking the Edit button above.
+To view the unabridged code open the sample in the Lab by clicking the Edit 
+button.
 
 </div>
 
@@ -364,17 +403,18 @@ and can re-created if necessary.
 ## Styles
 
 To declare CSS styles associated with your component, use the 
-`Style.declare()` function.  It takes a CSS string and adds
+<code>css``</code> template literal function.  It takes a CSS string and adds
 it to the `<head>` section of the document.
 
 We recommend scoping your styles to a component specific CSS class 
 to avoid CSS name clashes.
 
-This example scopes its content with the class name `my-component`
-and nests styles with-in that class.  Styles on the `<p>` element
-only apply to those in this component.
+The example scopes its content with the class name `my-component`
+and nests styles with-in that class.  Styles declare for he `<p>` 
+element only apply to those in this component.
 
 ```js
+// lab code demo
 class MyComponent extends Component
 {
   static template = { 
@@ -384,33 +424,35 @@ class MyComponent extends Component
         // Child elements
         {
             type: "p",
-            text: "This is some text",
+            text: "A Styled Paragraph",
         }
     ]
   }
 }
 
-Style.declare(`
+css`
 .my-component
 {
     p
     {
         text-align: center;
+        font-weight: bold;
+        color: orange;
     }
 }
-`); 
+`; 
 ```
 
 <div class="tip">
 
-Styles declared by `Style.declare()` are added to the document
-exactly as specified.  The above example using nested CSS for
-scoping requires a reasonably modern browser.
+Styles declared with <code>css``</code> are added to the document
+exactly as declared.  The above example which is using nested CSS 
+for scoping which requires a reasonably modern browser.
 
 If you need to work with old browsers that don't support this you
 will need to either manually de-nest your declarations or use an 
 external CSS preprocesor (LESS, SASS etc...) - but they can't be
-used with the CodeOnly's `Style.declare` mechanism.
+used with the <code>css``</code> function.
 
 </div>
 
@@ -427,11 +469,9 @@ class MyComponent extends Component
     // Called by Component to get the template to be compiled
     static onProvideTemplate()
     {
-        let modifiedTemplate = {
-            // ... whatever ...
-        };
-
-        return modifiedTemplate;
+        return {
+            // ... template definition ...
+        }
     }
 }
 ```
@@ -491,7 +531,7 @@ class Dialog extends Component
 // ---
 
 // Styling common to all dialogs
-Style.declare(`
+css`
 dialog.dialog
 {
     header
@@ -499,7 +539,7 @@ dialog.dialog
         padding: 10px;
     }
 }
-`);
+`;
 
 
 // ---
@@ -521,11 +561,11 @@ class MyDialog extends Dialog
 // ---
 
 // Styling specific to this dialog class
-Style.declare(`
+css`
 #my-dialog
 {
 }
-`);
+`;
 
 
 class Main extends Component

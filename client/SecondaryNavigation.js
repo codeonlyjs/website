@@ -1,4 +1,4 @@
-import { Component, Style, DocumentScrollPosition } from "@codeonlyjs/core";
+import { Component, css, DocumentScrollPosition } from "@codeonlyjs/core";
 
 
 // The main header
@@ -163,7 +163,7 @@ export class SecondaryNavigation extends Component
     }
 }
 
-Style.declare(`
+css`
 #secondary-nav
 {
     padding: 1rem;
@@ -208,4 +208,4 @@ Style.declare(`
     }
 }
 
-`);
+`;

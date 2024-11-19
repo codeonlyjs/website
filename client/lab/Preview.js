@@ -1,4 +1,4 @@
-import { Component, Style } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 import { PreviewIFrame } from "./PreviewIFrame.js";
 
 // The preview pane
@@ -41,7 +41,7 @@ export class Preview extends Component
 }
 
 
-Style.declare(`
+css`
 #preview
 {
     position: relative;
@@ -54,5 +54,5 @@ Style.declare(`
         border: none;
     }
 }
-`);
+`;
 

@@ -1,4 +1,4 @@
-import { Component, Style, transition } from "@codeonlyjs/core";
+import { Component, css, transition } from "@codeonlyjs/core";
 import { MobileBar } from "./MobileBar.js";
 import { MainNavigation } from "./MainNavigation.js";
 import { SecondaryNavigation } from "./SecondaryNavigation.js";
@@ -87,7 +87,7 @@ export class LayoutDocumentation extends Component
 const maxContentWidth = 720;
 const sidePanelWidth = 250;
 
-Style.declare(`
+css`
 :root
 {
     --side-panel-width: ${sidePanelWidth}px;
@@ -382,6 +382,4 @@ Style.declare(`
 
 }
 
-
-
-`);
+`

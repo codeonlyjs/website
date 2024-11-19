@@ -1,134 +1,215 @@
 ---
-title: "Text and Comments"
+title: "Text and HTML"
 ---
-# Text and Comments
+# Text and HTML
 
 ## Text Nodes
 
-To declare a text node in a template, use a plain JavaScript string.
+To declare a text node in a template, use a plain JavaScript string.  
+
+Plain text nodes are automatically escaped and can safely be passed 
+untrusted text data.
 
 ```js
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: [
-        "Hello & Goodbye World", /* i:  text child node*/
-    ]   
+    static template = 
+    {
+        type: "div",
+        $: [
+// ---
+"Hello & Goodbye World", /* i:  text child node*/
+// ---
+        ]   
+    }
 }
-```
-
-With plain text, characters are automatically escaped and the above is
-equivalent to:
-
-```html
-<div>Hello &amp; Goodbye World</div>
+// ---
 ```
 
 
-## Raw Text Nodes
 
-To declare text that won't be escaped (ie: raw HTML), use the `Html.raw` method
-and be sure to escape the text as required.
+## HTML Nodes
 
-Notice how this example requires escaping the ampersand `&amp;`:
+To declare text that won't be escaped (ie: raw HTML), use the `html` directive
+to mark the text as html.
+
+This example requires escaping on the ampersand (`&amp;`) and uses embedded 
+formatting elements (`<em>`):
 
 ```js
-import { Html } from 'codeonly.js';
-
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: [
-        Html.raw("Hello &amp; Goodbye World"), /* i:  HTML text child node*/
-    ]   
+    static template = 
+    {
+        type: "div",
+        $: [
+// ---
+html("Hello &amp; Goodbye <em>World</em>"),
+// ---
+        ]   
+    }
 }
+// ---
 ```
 
+
+
+## Dynamic Text
+
+A callback function can be used to provide dynamic text:
+
+```js
+// demo lab code
+// ---
+class Main extends Component
+{
+    static template = 
+    {
+        type: "div",
+        $: [
+// ---
+() => new Date().toString(), /* i: dynamic text content */
+// ---
+        ]   
+    }
+}
+// ---
+```
+
+For dynamic HTML, wrap the callback itself in the `html()` directive:
+
+ie: do this:
+
+```js
+html(c => getHtml())
+```
+
+not this:
+
+```js
+c => html(getHtml())
+```
+
+eg:
+
+```js
+// demo lab code
+// ---
+class Main extends Component
+{
+    static template = 
+    {
+        type: "div",
+        $: [
+// ---
+html(() => `<strong>${htmlEncode(new Date().toString())}</strong>`), 
+// ---
+        ]   
+    }
+}
+// ---
+```
 
 <div class="tip">
 
-Be careful using the `Html.raw` method especially with untrusted data as it will
-be written directly to the DOM as is - malicious scripts included.
+Never use the `html()` method with untrusted data. `html()` inserts
+the passed text directly into the document - malicious scripts included.
 
 </div>
 
-To use `Html.raw` with callbacks, put the entire callback inside the call to 
-`Html.raw`:
 
+To mix untrusted data with HTML content it's usually best to express
+the HTML using template nodes explicitly rather than using the `html()` 
+directive.
 
 ```js
-import { Html } from 'codeonly.js';
-
+// lab code demo
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: Html.raw(c => c.htmlContent),
+    untrustedData = "<script>alert('Bad guy here')</" + "script>";
+    static template = 
+    {
+        type: "div",
+        $: [
+// ---
+{
+    type: "em",
+    text: c => c.untrustedData
 }
+// ---
+        ]   
+    }
+}
+// ---
 ```
 
-ie: don't do this: `c => Html.raw(c.htmlContent)`
+
+If you really must mix the `html()` directive and untrusted data, 
+use the `htmlEncode` function to escape the untrusted data:
+
+```js
+// lab code demo
+// ---
+class Main extends Component
+{
+    untrustedData = "<script>alert('Bad guy here')</" + "script>";
+    static template = 
+    {
+        type: "div",
+        $: [
+// ---
+html(c => `<em>${htmlEncode(c.untrustedData)}</em>`),
+// ---
+        ]   
+    }
+}
+// ---
+```
 
 
 ## Text Property
 
 HTML elements also have a `text` property that can be used to directly assign
-the inner text of the element
+the inner text or HTML of an element.
 
-To create plain text elements, use the `text` property:
+See [Inner Text/HTML](templateHtmlElements#inner-text-html) for more on this.
 
-```js
-// <div>This is my &lt;Div&gt;</div>
-{
-    type: "div",
-    text: "This is my <Div>",
-}
-```
-
-To create unescaped HTML text use the `Html.raw()` helper:
-
-```js
-import { Html } from 'codeonly.js';
-
-// <div><span class="myclass">Span</span></div>
-{
-    type: "div",
-    text: Html.raw('<span class="myclass">Span</span>'),
-}
-```
-
-Since inner text can also be expressed as child nodes, the
-`$` property can also be used to set the text of an element:
-
-```js
-{
-    type: "div",
-    $: "inner text",
-}
-```
-
-Caveat: when using a callback for the inner text of an element,
-the `text` property is slightly more efficient than the `$` property.
-
-ie: use `text: c => c.text` in preference to `$: c => c.text` where 
-performance is critical.  
-
-When the value is not a callback, the two approaches are identical.
 
 
 ## Whitespace
 
-Templates don't include any whitespace between HTML elements.  Often this
-doesn't matter, but when it does, simply include the spaces in the template:
+Templates don't include any whitespace between HTML elements.  
+
+Usually this doesn't matter, but when it does, simply include the spaces 
+in the template:
 
 ```js
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: [
-        // Without spaces, these buttons would have no gaps between them
-        { type: "button", $: "Button 1" },
-        " ",
-        { type: "button", $: "Button 2" },
-        " ",
-        { type: "button", $: "Button 3" },
-    ]
+    static template = 
+// ---
+    {
+        type: "div",
+        $: [
+            // Without spaces, these buttons would have no 
+            // gaps between them
+            { type: "button", text: "Button 1" },
+            " ",
+            { type: "button", text: "Button 2" },
+            " ",
+            { type: "button", text: "Button 3" },
+        ]
+    }
+// ---
 }
+// ---
 ```
 
 

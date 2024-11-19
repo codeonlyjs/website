@@ -1,4 +1,4 @@
-import { Component, Style } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 
 // The main header
 export class MobileBar extends Component
@@ -39,7 +39,7 @@ export class MobileBar extends Component
     }
 }
 
-Style.declare(`
+css`
 #mobile-bar
 {
     display: flex;
@@ -66,4 +66,4 @@ Style.declare(`
         margin-right: 0.2rem;
     }
 }
-`);
+`;

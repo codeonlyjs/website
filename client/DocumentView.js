@@ -1,7 +1,4 @@
-import { Component, Style, Html, nextFrame } from "@codeonlyjs/core";
-import { router } from "./router.js";
-import { Document } from "./Document.js";
-import { NotFoundPage } from "./NotFoundPage.js";
+import { Component, css, html, nextFrame } from "@codeonlyjs/core";
 
 export class DocumentView extends Component
 {
@@ -43,12 +40,12 @@ export class DocumentView extends Component
         {
             type: "div",
             class: "document-view",
-            $: c => Html.raw(c.document?.html ?? ""),
+            $: c => html(c.document?.html ?? ""),
         },
     ]
 }
 
-Style.declare(`
+css`
 .document-view
 {
     padding: 10px 30px 50px 30px;
@@ -248,5 +245,5 @@ Style.declare(`
 }
 
 
-`);
+`;
 

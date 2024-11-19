@@ -1,4 +1,4 @@
-import { Component, Style, Html } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 import { Header } from "../Header.js";
 import { HeroPage } from "./HeroPage.js";
 import { Register } from "./Register.js";
@@ -24,12 +24,12 @@ class Main extends Component
 }
 
 
-Style.declare(`
+css`
 #layoutRoot
 {
     padding-top: var(--header-height);
 }
-`);
+`;
 
 // Main entry point, create Application and mount
 export function main()

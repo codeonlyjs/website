@@ -1,4 +1,4 @@
-import { Component, Style, Html, transition } from "@codeonlyjs/core";
+import { Component, css, transition } from "@codeonlyjs/core";
 
 // The main header
 export class Register extends Component
@@ -97,7 +97,7 @@ export class Register extends Component
                 $: {
                     type: "div",
                     $: [
-                        Html.p("Coming Soon. Register to get early access..."),
+                        $.p("Coming Soon. Register to get early access..."),
                         {
                             type: "input",
                             bind: "email",
@@ -116,7 +116,7 @@ export class Register extends Component
                 $: {
                     type: "div",
                     $: [
-                        Html.p("We've emailed you a one-time-password"),
+                        $.p("We've emailed you a one-time-password"),
                         {
                             type: "input",
                             bind: "otp",
@@ -138,7 +138,7 @@ export class Register extends Component
     }
 }
 
-Style.declare(`
+css`
 .register
 {
     margin-top: 40px;
@@ -202,4 +202,4 @@ Style.declare(`
         max-width: 80%;
     }
 }
-`);
+`;

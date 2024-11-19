@@ -1,7 +1,5 @@
-import { $, Component, Style, Html } from "@codeonlyjs/core";
+import { $, Component, css } from "@codeonlyjs/core";
 import { HeroPage } from "./landing/HeroPage.js";
-import { homeDemo } from "./landing/Copy.js";
-import { DocumentView } from "./DocumentView.js";
 
 // Main 
 export class HomePage extends Component
@@ -27,10 +25,10 @@ export class HomePage extends Component
 }
 
 
-Style.declare(`
+css`
 .homePage
 {
     text-align: center;
     margin-bottom: 50px;
 }
-`);
+`;

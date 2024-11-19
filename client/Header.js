@@ -1,4 +1,4 @@
-import { Component, Style } from "@codeonlyjs/core";
+import { Component, css } from "@codeonlyjs/core";
 import { makeIcon } from "./Icon.js";
 
 // The main header
@@ -62,7 +62,7 @@ export class Header extends Component
     }
 }
 
-Style.declare(`
+css`
 :root
 {
     --header-height: 50px;
@@ -148,4 +148,4 @@ Style.declare(`
     }
 }
 
-`);
+`;

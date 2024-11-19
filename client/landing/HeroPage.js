@@ -1,4 +1,4 @@
-import { $, Component, Style, Html } from "@codeonlyjs/core";
+import { $, Component, css } from "@codeonlyjs/core";
 import { homeDemo, featureBoxes, featureBullets, codeOnlyBullets, reactivityBullets, learnBullets } from "./Copy.js";
 import { Document } from "../Document.js";
 import { DocumentView } from "../DocumentView.js";
@@ -94,15 +94,15 @@ export class HeroPage extends Component
             type: "div",
             class: "box",
             $: [
-                Html.h(3, x.title),
-                Html.p(Html.raw(x.body)),
+                $.h3(x.title),
+                $.p($.html(x.body)),
             ]   
         }
     }
 
 }    
 
-Style.declare(`
+css`
 main.hero
 {
     text-align: center;
@@ -219,4 +219,4 @@ main.hero
     }
 }
 
-`);
+`;

@@ -1,7 +1,4 @@
-import { Component, Style } from "@codeonlyjs/core";
-import { MobileBar } from "./MobileBar.js";
-import { MainNavigation } from "./MainNavigation.js";
-import { SecondaryNavigation } from "./SecondaryNavigation.js";
+import { Component, css } from "@codeonlyjs/core";
 
 // Main application
 export class LayoutBare extends Component
@@ -27,11 +24,11 @@ export class LayoutBare extends Component
     };
 }
 
-Style.declare(`
+css`
 #layoutBare
 {
     max-width: 1050px;
     margin: 0 auto;
     padding-top: var(--header-height);
 }
-`);
+`;
