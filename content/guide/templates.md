@@ -31,7 +31,7 @@ class MyComponent extends Component
 ## Node Kinds
 
 The structure of a template is a tree of "nodes" that describe a 
-heirarchy of DOM elements that the template creates and managed.
+heirarchy of DOM elements that the template creates and manages. 
 
 There are different kinds of template nodes:
 
@@ -229,7 +229,7 @@ needs to be called in order for the change to be reflected in the DOM.
 When working with components this can be managed using the `Component.invalidate()` 
 or `Component.update()` methods - [see here](components#dynamic-content).
 
-This example toggles the text displayed in `div` each time it's clicked:
+This example toggles the text displayed in a `div` each time it's clicked:
 
 ```js
 // lab demo code
