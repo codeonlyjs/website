@@ -195,13 +195,12 @@ css`
 `
 ```
 
-Unlike CSS query selectors where spaces are significant, here they're
-not so spaces are allowed:
+Spaces before `.class` and `#id` attributes are optional:
 
 ```js
 // <div id="#my-div" class="class1 class2">
 {
-    type: "div #my-div .class1 .class2",
+    type: "div#my-div.class1.class2",
 }
 ```
 
@@ -209,6 +208,7 @@ not so spaces are allowed:
 
 ## Inner Text/HTML
 
+The inner text of an element can be set using the `text` property:
 
 ```js
 // demo lab code
@@ -226,7 +226,7 @@ class Main extends Component
 // ---
 ```
 
-The text property also supports callbacks and the `html` directive:
+Use the `html()` directive to set inner HTML:
 
 ```js
 // demo lab code
@@ -237,7 +237,26 @@ class Main extends Component
 // ---
     {
         type: "div",
-        text: html(() => `<strong>${new Date().toString()}</strong>`),
+        text: html("<em>inner text</em>"),
+    }
+// ---
+}
+// ---
+```
+
+
+The text property also supports callbacks for dynamic content:
+
+```js
+// demo lab code
+// ---
+class Main extends Component
+{
+    static template = 
+// ---
+    {
+        type: "div",
+        text: html(() => `<em>${new Date().toString()}</em>`),
     }
 // ---
 }
@@ -264,40 +283,6 @@ performance is critical.
 When the value is not a callback, the two approaches are identical.
 
 
-The inner text of an HTML element can be set with the `text` property:
-
-```js
-{
-    type: "p",
-    text: "Hello World",
-}
-```
-
-To set raw HTML, use the `html` modifier function:
-
-```js
-import { html } from "@codeonlyjs/core";
-
-{
-    type: "p",
-    text: html('<span class="bold">Hello</span> World'),
-}
-```
-
-The text property can be a dynamic callback and it can return
-either plain or html text.
-
-Note, since the HTML content of elements are child nodes, an element's
-text can also be specified using the `$` child node syntax:
-
-```js
-{
-    type: "p",
-    $: "Hello World",
-}
-```
-
-
 
 ## Child Nodes
 
@@ -307,14 +292,23 @@ or the special `$` content property (both are equivalent).
 Child nodes are declared as an array:
 
 ```js
+// lab code demo
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: [ /* i:  Array of child nodes */
-        { type: "div", text: "child 1" },
-        { type: "div", text: "child 2" },
-        { type: "div", text: "child 3" },
-    ]
+    static template = 
+// ---
+    {
+        type: "div",
+        $: [ /* i:  Array of child nodes */
+            { type: "div", text: "child 1" },
+            { type: "div", text: "child 2" },
+            { type: "div", text: "child 3" },
+        ]
+    }
+// ---
 }
+// ---
 ```
 
 If there is only a single child the array container is not required:
@@ -333,17 +327,55 @@ If there is only a single child the array container is not required:
 
 Boolean classes conditionally add a CSS class to an element.
 
-Declare a boolean class by prefixing the name of the class to add or remove with `class_`:
+Declare a boolean class by prefixing the name of the class to add or remove with `class_`.
+
+In this example the `selected` class will be added to, or removed from the
+element depending on the value of the `c.selected` property:
 
 ```js
-// when c.isSelected is true:
-//    <div class="selected" >
-// otherwise
-//    <div class="" >
-{ 
-    type: "div",
-    class_selected: c => isSelected,
+// code lab demo
+// ---
+class Main extends Component
+{
+    selected = false;
+
+    onClick()
+    {
+        this.selected = !this.selected;
+        this.invalidate();
+    }
+
+    static template = {
+        type: "div .bool-class-demo",
+        $: [
+// ---
+            { 
+                type: "div",
+                text: c => c.selected ? "Selected" : "Not Selected",
+                class_selected: c => c.selected,
+            },
+// ---
+            " ",
+            {
+                type: "button",
+                text: "Toggle",
+                on_click: "onClick"
+            }
+        ]
+    }
 }
+
+css`
+.bool-class-demo
+{
+    .selected
+    {
+        background-color: orange;
+        color: white;
+    }
+}
+`
+// ---
 ```
 
 To set class names that contain hyphens, use camelCase:
@@ -364,13 +396,9 @@ or, a string property key:
 }
 ```
 
-<div class="tip">
-
 Boolean classes can be used in conjunction with CodeOnly CSS transitions to 
 provide animation effects when a class is added or removed from an element. 
 See [CSS Transitions](templateTransitions) for more on this.
-
-</div>
 
 
 
@@ -382,13 +410,37 @@ CSS style property.
 Declare a named styles by prefixing the name of the CSS property to set with `style_`:
 
 
+
 ```js
-// when textColor returns 'red':
-//    <div style="color: red" >
-{ 
-    type: "div",
-    style_color: c => textColor,
+// code lab demo
+// ---
+class Main extends Component
+{
+    color = "green"
+
+    onClick()
+    {
+        this.color = this.color == "green" ? "orange" : "green";
+        this.invalidate();
+    }
+
+    static template = [
+// ---
+        { 
+            type: "div",
+            text: "Colored",
+            style_color: c => c.color,
+        },
+// ---
+        " ",
+        {
+            type: "button",
+            text: "Toggle",
+            on_click: "onClick"
+        }
+    ]
 }
+// ---
 ```
 
 To set style names that contain hyphens, use camelCase:
@@ -423,36 +475,91 @@ Set `display` to:
 * a string to set the `display` style explicitly.
 
 ```js
-// when isVisible returns true:
-//     <div style="">
-// otherwise
-//     <div style="display: none">
-{ 
-    type: "div",
-    display: c => isVisible,
+// code lab demo
+// ---
+class Main extends Component
+{
+    showIt = false;
+
+    onClick()
+    {
+        this.showIt = !this.showIt;
+        this.invalidate();
+    }
+
+    static template = [
+// ---
+        { 
+            type: "div",
+            text: "I'm here!",
+            display: c => c.showIt,
+        },
+// ---
+        " ",
+        {
+            type: "button",
+            text: "Toggle",
+            on_click: "onClick"
+        }
+    ]
 }
+// ---
 ```
 
-Note the display attribute is smart enough to remember the previous
-display style setting:
+The display attribute remembers and correcly restores the previous
+display style setting. 
+
+In this example, the `display` property is correctly toggled between
+`flex` and `none`:
 
 ```js
-// when isVisible returns true:
-//     <div style="display: flex">
-// otherwise
-//     <div style="display: none">
-{ 
-    type: "div",
-    style_display: "flex",
-    display: c => isVisible,
+// code lab demo
+// ---
+class Main extends Component
+{
+    showIt = false;
+
+    onClick()
+    {
+        this.showIt = !this.showIt;
+        this.invalidate();
+    }
+
+    static template = [
+// ---
+        { 
+            type: "div",
+            style: "display: flex; justify-content: space-between",
+            display: c => c.showIt,
+            $: [ 
+                $.span("I'm"),
+                $.span("Here!"),
+            ]
+        },
+// ---
+        " ",
+        {
+            type: "button",
+            text: "Toggle",
+            on_click: "onClick"
+        }
+    ]
 }
+// ---
 ```
 
+
 <div class="tip">
+
+The above example is using [Fluent Templates](templateFluent) to 
+declare the two child `span` elements.
+
+</div>
+
 
 The `display` setting can be used in conjunction with CodeOnly 
 CSS transitions to provide animation effects when the element becomes 
 visible or hidden. See [CSS Transitions](templateTransitions) for more on 
 this.
 
-</div>
+

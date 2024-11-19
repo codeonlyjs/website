@@ -280,17 +280,13 @@ import { $, Component, css, html, htmlEncode, input, transition} from "@codeonly
 
 return new ${re(o.code)}();`,i=new Function("$","Component","Style","css","input","transition","html","htmlEncode",r);o.main=i(P,l1,n,s,Ne,Un,ee,z1),o.main.mount(document.getElementById(o.id))}o.isLab&&document.getElementById(`edit-${o.id}`).addEventListener("click",r=>{ds(o.code),r.preventDefault()})}this.elStyles=document.createElement("style"),this.elStyles.innerHTML=t,document.head.appendChild(this.elStyles)}unmountDemos(){for(let t of this.demos)t.isDemo&&t.main.unmount();this.elStyles.remove()}processMarkdown(t){this.frontmatter={},t=t.replace(/\r\n/g,`
 `),this.markdown=t.replace(/^---([\s\S]*?)---\n/,(u,m)=>{for(let d of m.matchAll(/^([a-zA-Z0-9_]+):\s*(\"?.*\"?)\s*?$/gm))try{this.frontmatter[d[1]]=JSON.parse(d[2])}catch{this.frontmatter[d[1]]=d[2]}return""});let n=new jR;this.ast=n.parse(this.markdown);let s=this.ast.walker(),o,r=null,i=null,c="";this.structure={headings:[],allHeadings:[]};let h=[];for(;o=s.next();){if(o.entering&&o.node.type==="heading"&&(o.node.level==1||o.node.level==2||o.node.level==3)&&(r=o.node),r!=null&&(o.node.type==="text"||o.node.type==="code")&&(c+=o.node.literal),!o.entering&&o.node==r){if(o.node.level==1){this.structure.title=c,c="",r=null;continue}let u=CB(c);if(u.length>0){let m={node:o.node,text:c,id:u};this.structure.allHeadings.push(m),o.node.level==2?this.structure.headings.push(i=m):i&&(i.subHeadings||(i.subHeadings=[]),i.subHeadings.push(m),m.id=`${i.id}-${m.id}`),r=!1}c="",r=null}o.entering&&o.node.type=="code_block"&&h.push(o.node)}if(this.enableHeadingLinks)for(let u of this.structure.allHeadings){let m=new O("html_inline",u.node.sourcepos);m.literal=`<a class="hlink" href="#${u.id}">#</a>`,u.node.prependChild(m)}this.demos=[];for(let u of h){if(u.info!="js"&&u.info!="html"&&u.info!="css")continue;let m=u.literal,d=m.match(/^\/\/(?:\s*\b(?:demo|code|lab)\b)+\n/),b=(d==null?void 0:d[0].indexOf("demo"))>=0,y=(d==null?void 0:d[0].indexOf("code"))>=0,v=(d==null?void 0:d[0].indexOf("lab"))>=0;d?m=m.substring(d[0].length):y=!0;let g=m,k=[];m=m.replace(/\bcss`([^`]*)`/g,(A,I)=>(k.push(I),`css"-- style block ${k.length} --"`)),m=m.replace(new RegExp("(?:^|(?<=\\n))\\/\\/ ---\\n[\\s\\S]*?\\/\\/ ---\\n","g"),(A,I)=>"/* -- snip -- */");let L=hljs.highlight(m,{language:u.info,ignoreIllegals:!0});for(let A=0;A<k.length;A++){let K=`\`${hljs.highlight(k[A],{language:"css",ignoreIllegals:!0}).value}\``;L.value=L.value.replace(`&quot;-- style block ${A+1} --&quot;`,K)}L.value=L.value.replace(/<span class="hljs-comment">\/\* i: ([\s\S]*?)\*\/<\/span>/g,'<span class="note"><span class="inner">$1</span></span>'),L.value=L.value.replace(/<span class="hljs-comment">\/\* -- snip -- \*\/<\/span>/g,`<div class="snip" title="Some code omitted for clarity."><span class="hline"></span>${ye("scissors",16)}<span class="hline"></span></div>`);let C="";if(y&&(C+=`<pre><code class="hljs language-${L.language}">${L.value}</code></pre>
-`),b||v){g=g.replace(/\s\/\*.*\*\//g,""),g=g.replace(new RegExp("(?:^|(?<=\\n))\\/\\/ ---\\n","g"),"");let A=`demo-${this.demos.length}`;this.demos.push({id:A,code:g,isLab:v,isDemo:b}),v&&(C+=`
-<div class="demo-header">
+`),b||v){g=g.replace(/\s\/\*.*\*\//g,""),g=g.replace(new RegExp("(?:^|(?<=\\n))\\/\\/ ---\\n","g"),"");let A=`demo-${this.demos.length}`;this.demos.push({id:A,code:g,isLab:v,isDemo:b}),b&&(C+=`
+<div id="${A}" class="demo">
+</div>
+`),v&&(C+=`
+<div class="demo-footer">
     <span></span>
     <a id="edit-${A}" class="edit-demo-link vcenter" href="#">${ye("science",22)}<span> Edit</span></a>
-</div>
-`),b&&(v||(C+=`
-<div class="demo-header">
-    <span></span>
-</div>
-`),C+=`
-<div id="${A}" class="demo">
 </div>
 `)}let M=new O("html_block",u.sourcepos);M.literal=C,u.insertBefore(M),u.unlink()}let p=new R,f=p.attrs;p.attrs=u=>{let m=f.call(p,...arguments);if(u.type=="heading"&&(u.level==2||u.level==3)){let d=this.structure.allHeadings.find(b=>b.node==u);d&&m.push(["id",d.id])}return m},this.html=p.render(this.ast)}}function CB(e){return e=e.toLowerCase(),e=e.replace(/^async /,""),e=e.replace(/\b\(.*?\)/g,""),e=e.replace(/[^\p{L}\p{N}]+/gu,"-"),e=e.replace(/-+/,"-"),e=e.replace(/^-|-$/g,""),e}var nt;class xn extends l1{constructor(n){super();x(this,nt);w(this,nt,n)}get document(){return a(this,nt)}set document(n){w(this,nt,n),this.invalidate()}get structure(){return this.document.structure}onMount(){ne(()=>{this.document.mountDemos()})}onUnmount(){this.document.unmountDemos()}}nt=new WeakMap,U(xn,"template",[{type:"div",class:"document-view",$:n=>{var s;return ee(((s=n.document)==null?void 0:s.html)??"")}}]);vt`
 .document-view
@@ -371,19 +367,21 @@ return new ${re(o.code)}();`,i=new Function("$","Component","Style","css","input
         }
     }
 
-    div.demo-header
+    div.demo-footer
     {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 80px;
+        margin-top: 10px;
     }
 
     div.demo
     {
+        margin-top: -40px;
         background-color: rgb(from var(--fore-color) r g b / 2%);
         border-radius: 10px;
         padding: 10px;
         border: 1px solid var(--accent-color);
-        margin-bottom: 80px;
     }
 
     div.tip

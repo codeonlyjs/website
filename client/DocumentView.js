@@ -124,19 +124,21 @@ css`
         }
     }
 
-    div.demo-header
+    div.demo-footer
     {
         display: flex;
         justify-content: space-between;
+        margin-bottom: 80px;
+        margin-top: 10px;
     }
 
     div.demo
     {
+        margin-top: -40px;
         background-color: rgb(from var(--fore-color) r g b / 2%);
         border-radius: 10px;
         padding: 10px;
         border: 1px solid var(--accent-color);
-        margin-bottom: 80px;
     }
 
     div.tip

@@ -292,32 +292,25 @@ export class Document
                 // Insert thte demo block
                 let id = `demo-${this.demos.length}`
                 this.demos.push({ id, code: originalCode, isLab, isDemo });
+
+                if (isDemo)
+                {
+                    wrapper_html += `
+<div id="${id}" class="demo">
+</div>
+`;
+                }
+
                 if (isLab)
                 {
                     wrapper_html += `
-<div class="demo-header">
+<div class="demo-footer">
     <span></span>
     <a id="edit-${id}" class="edit-demo-link vcenter" href="#">${htmlIcon("science", 22)}<span> Edit</span></a>
 </div>
 `
                 }
 
-                if (isDemo)
-                {
-                    if (!isLab)
-                    {
-                        wrapper_html += `
-<div class="demo-header">
-    <span></span>
-</div>
-`
-                    }
-
-                    wrapper_html += `
-<div id="${id}" class="demo">
-</div>
-`;
-                }
             }
 
             // Update markdown AST with the new raw HTML block

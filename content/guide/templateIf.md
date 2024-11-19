@@ -3,10 +3,8 @@ title: "If Directive"
 ---
 # If Directive
 
-A template node (and all it's children) can be conditionally included or excluded using
-the `if`, `elseif` and `else` directive properties.
-
-(Note: while the `display` attribute just hides an element, `if` completely excludes it)
+A template node (and all it's children) can be conditionally included or 
+excluded using the `if`, `elseif` and `else` directives.
 
 
 ## The `if` Directive
@@ -29,11 +27,11 @@ The `if` directive can be used to dynamically include or exclude an items:
 
 ## The `else` Directive
 
-To declare alternative nodes if the `if` condition is false, on the 
-node immediately after the node with the `if` directive, add an `else`
-directive.
+To declare alternative nodes if the `if` condition is false,  
+add an `else` directive on the node immediately following the node 
+with the `if` directive,
 
-For `else` directives, the value is ignored.
+For `else` directives, the value is ignored but should the truthy.
 
 ```js
 {
@@ -119,18 +117,19 @@ function isDevelopmentMode()
 In the above example, the `isDevelopmentMode()` function will be called when the 
 template object is first executed by the JavaScript loader.
 
-The result will be stored in the template and then when the template is later compiled 
-for the first time whatever value the function returned originally will decide if that 
-part of the template will be included or note.
+The result will be stored in the template and then when the template is later 
+compiled for the first time whatever value the function returned originally 
+will decide if that part of the template will be included or note.
 
 </div>
 
 
 ## Update Semantics
 
-When a template's DOM tree is updated any conditional directives are re-evaluated by calling
-their condition callbacks.  This is done in order from the first `if` directive through 
-any `elseif` directives and to the last `else` directive (if present).
+When a template's DOM tree is updated any conditional directives are 
+re-evaluated by calling their condition callbacks.  This is done in 
+order from the first `if` directive through any `elseif` directives 
+and to the last `else` directive (if present).
 
 The first directive that matches becomes the "active branch".
 
@@ -141,8 +140,9 @@ If the active branch is different:
 1. the DOM tree of the old branch is removed from the document and released
 2. the DOM tree of the new branch is created and added to the document
 
-In either case (same or different active branch) the eventual active branch is then
-updated so any dynamic callback properties in that branch are also reflected in the DOM.
+In either case (same or different active branch) the eventual active branch 
+is then updated so any dynamic callback properties in that branch are also
+reflected in the DOM.
 
 
 ## CSS Transitions
