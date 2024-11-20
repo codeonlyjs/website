@@ -446,7 +446,7 @@ css`
 <div class="tip">
 
 Styles declared with <code>css``</code> are added to the document
-exactly as declared.  The above example which is using nested CSS 
+exactly as declared.  The above example is using nested CSS 
 for scoping which requires a reasonably modern browser.
 
 If you need to work with old browsers that don't support this you
