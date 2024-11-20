@@ -91,7 +91,7 @@ var Nn=Object.defineProperty;var fe=e=>{throw TypeError(e)};var Sn=(e,t,n)=>t in
 
 `;let St=new Vn(new jn);new Gn(St);St.register({pattern:"/logout",match:()=>null});let Kn=[{title:"Tool Free",body:`No transpiling, packaging or bundling to slow things down. 
                Debug your code in the browser <em>exactly</em> 
-               as you wrote it.`},{title:"Build Anything",body:`Embellish existing sites with tiny web widgets to build entire single page apps.  
+               as you wrote it.`},{title:"Build Anything",body:`Embellish existing sites with tiny web widgets or build entire single page apps.  
              (Includes SPA suitable router)`},{title:"Fast and Small",body:`Component templates are JIT compiled, produce minimal DOM updates and we've 
                tuned it to run <em>fast!</em>.`}],ts=`
 \`\`\`js
@@ -122,7 +122,7 @@ class Main extends Component /* i: Components extend the \`Component\` class */
   }
 }
 
-css\` /* i: CSS styles (with \`.counter\` as scoping class) */
+css\` /* i: CSS styles (with ".counter" as scoping class) */
 .counter
 {
   display: flex;
@@ -491,7 +491,7 @@ return new ${re(o.code)}();`,i=new Function("$","Component","Style","css","input
 }
 
 
-`;const Tt=class Tt extends u1{constructor(){super(),this.document=new qB,this.document.enableHeadingLinks=!1,this.document.processMarkdown(ts)}onMount(){stylish.addEventListener("darkModeChanged",this.invalidate),document.documentElement.classList.add("home-colors")}onUnmount(){stylish.removeEventListener("darkModeChanged",this.invalidate),document.documentElement.classList.remove("home-colors")}static makeFeatureBox(t){return{type:"div",class:"box",$:[I.h3(t.title),I.p(I.html(t.body))]}}};U(Tt,"template",{type:"main",class:"hero",$:[{type:"img",id:"hero",src:t=>`/hero-${stylish.darkMode?"dark":"light"}.svg`},I.h2.text("The front-end Web framework for coders."),{type:"div.row",$:Kn.map(t=>Tt.makeFeatureBox(t))},I.div.class("heading-graphic")(V1("codeonly",50)),I.h2.text("What is Code Only Development?"),I.p.text("An approach to front-end development where everything is written in clean, modern JavaScript."),es.map(t=>({type:"span.featureBullet",text:t})),I.div.class("heading-graphic")(V1("box",50)),I.h2.text("What's in the Box?"),I.p.text("Everything you need to build simple widgets or fully functional single page apps."),ns.map(t=>({type:"span.featureBullet",text:t})),I.div.class("heading-graphic")(V1("nonreactive",50)),I.h2.text("Non-Reactive and Non-Intrusive"),I.p.text("Reactivity is great and all, but it can be intrusive.  We've taken a different path."),ss.map(t=>({type:"span.featureBullet",text:t})),I.div.class("heading-graphic")(V1("school",50)),I.h2.text("Easy to Learn"),I.p.text("Learn the most important topics in just one afternoon, get started in no time..."),os.map(t=>({type:"span.featureBullet",text:t})),I.div.class("heading-graphic")(V1("file",50)),I.h2.text("Self-Contained Components"),I.p.text("Logic, Templates and Styles all in self contained .js files."),{type:xn,document:t=>t.document}]});let Ee=Tt;vt`
+`;const Tt=class Tt extends u1{constructor(){super(),this.document=new qB,this.document.enableHeadingLinks=!1,this.document.processMarkdown(ts)}onMount(){stylish.addEventListener("darkModeChanged",this.invalidate),document.documentElement.classList.add("home-colors")}onUnmount(){stylish.removeEventListener("darkModeChanged",this.invalidate),document.documentElement.classList.remove("home-colors")}static makeFeatureBox(t){return{type:"div",class:"box",$:[I.h3(t.title),I.p(I.html(t.body))]}}};U(Tt,"template",{type:"main",class:"hero",$:[{type:"img",id:"hero",src:t=>`/hero-${stylish.darkMode?"dark":"light"}.svg`},I.h2.text("The front-end Web framework for coders."),{type:"div.row",$:Kn.map(t=>Tt.makeFeatureBox(t))},I.div.class("heading-graphic")(V1("codeonly",50)),I.h2.text("What is Code Only Development?"),I.p.text("An approach to front-end development where everything is written in clean, modern JavaScript."),es.map(t=>({type:"span.featureBullet",text:t})),I.div.class("heading-graphic")(V1("box",50)),I.h2.text("What's in the Box?"),I.p.text("Everything you need to build simple widgets or fully functional single page apps."),ns.map(t=>({type:"span.featureBullet",text:t})),I.div.class("heading-graphic")(V1("nonreactive",50)),I.h2.text("Non-Reactive and Non-Intrusive"),I.p.text("Reactivity is great and all, but it's also intrusive.  We've taken a different path."),ss.map(t=>({type:"span.featureBullet",text:t})),I.div.class("heading-graphic")(V1("school",50)),I.h2.text("Easy to Learn"),I.p.text("Learn the most important topics in just one afternoon, get started in no time..."),os.map(t=>({type:"span.featureBullet",text:t})),I.div.class("heading-graphic")(V1("file",50)),I.h2.text("Self-Contained Components"),I.p.text("Logic, Templates and Styles all in self contained .js files."),{type:xn,document:t=>t.document}]});let Ee=Tt;vt`
 main.hero
 {
     text-align: center;
