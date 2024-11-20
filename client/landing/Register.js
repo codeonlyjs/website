@@ -1,4 +1,4 @@
-import { Component, css, transition } from "@codeonlyjs/core";
+import { $, Component, css, transition } from "@codeonlyjs/core";
 
 // The main header
 export class Register extends Component

@@ -32,6 +32,7 @@ else
             { from: "./Landing/Main.js", to: "/Landing/Main.js" },
         ],
         livereload: true,
+        inYaFace: true,
     }));
 }
 

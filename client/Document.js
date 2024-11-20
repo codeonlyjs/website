@@ -23,12 +23,24 @@ export class Document
                 pathname += "index";
     
             // Fetch the page
-            const response = await fetch(`/content/${pathname}.md`);
-            if (!response.ok)
-                throw new Error(`Response status: ${response.status} - ${response.statusText}`);
+            let text;
+            try
+            {
+                const response = await fetch(`/content/${pathname}.md`);
+                if (!response.ok)
+                    throw new Error(`Response status: ${response.status} - ${response.statusText}`);
+
+                text = await response.text()
+            }
+            catch (err)
+            {
+                let newErr = new Error(`Failed to load page - ${err.message}`);
+                newErr.pageLoadError = true;
+                throw newErr;
+            }
     
             // Process markdown body
-            this.processMarkdown( await response.text());
+            this.processMarkdown(text);
 
         });
     }
@@ -231,6 +243,8 @@ export class Document
             }
 
             let originalCode = code;
+
+            throw new Error("Blah");
 
             // Pull out css blocks
             let cssBlocks = [];

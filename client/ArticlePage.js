@@ -63,9 +63,12 @@ router.register({
             to.page = new ArticlePage(to.document);
             return true;
         }
-        catch
+        catch (err)
         {
-            to.page = new NotFoundPage(to.url);
+            if (err.pageLoadError)
+                to.page = new NotFoundPage(to.url);
+            else
+                throw err;
         }
         return true;
     },

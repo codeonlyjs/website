@@ -69,6 +69,7 @@ else
             { from: "./Main.js", to: "/Main.js" },
         ],
         livereload: true,
+        inYaFace: true,
     }));
 
     // Live reload
