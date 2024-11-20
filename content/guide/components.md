@@ -7,7 +7,7 @@ Components are the primary building block for constructing CodeOnly
 applications. They encapsulate program logic, a DOM (aka HTML) template 
 and an optional a set of CSS styles.
 
-Components can be either used in the templates of other components
+Components can be used either in the templates of other components
 or mounted onto the document DOM to appear in a web page.
 
 
@@ -41,8 +41,7 @@ css`
 <div class="tip">
 
 By declaring logic, templates and styles in code the entire
-definition of a component can be contained in a single `.js` file - 
-ie: single file components.
+definition of a component can be contained in a single `.js` file.
 
 </div>
 
@@ -165,7 +164,7 @@ class MyComponent extends Component
 ```
 
 Templates also support events, conditional blocks, list rendering, 
-embed slots, CSS transitions and more.  See the [Templates](templates) 
+embed slots, CSS transitions and more.  See [Templates](templates) 
 for more on working with templates.
 
 
@@ -284,6 +283,7 @@ class Main extends Component
                     on_click: c => c.loadData(),
                 }
 // ---
+
             ]
         }
     ]
@@ -302,11 +302,12 @@ Using this approach provides a couple of benefits:
   so other interested parties (eg: server side rendering) can
   be notified when the entire page is loaded - more on this later.
 
-The `load` method also supports a second parameter `silent`.  In 
-silent mode, the callback is invoked and awaited and then the 
-component invalidated.  It can be used for silent data refreshes
-when the component already has data on view and wants to refresh
-the view without showing a spinner.
+The `load` method also supports a second parameter `silent`.  Silent
+mode allows refreshing the data without showing spinners or other
+feedback:
+
+1. calls and awaits the supplied callback
+2. calls the invalidate method 
 
 
 
@@ -362,9 +363,9 @@ export function main()
 <div class="tip">
 
 Although this example shows how a typical single-page-application
-might mount the top-level component for an entire application, the
-same approach can be used to mount smaller widgets, controls and
-panels - even if the rest of the project doesn't use CodeOnly.
+might mount the top-level component, the same approach can be used 
+to mount smaller widgets, controls and panels - even if the rest 
+of the project doesn't use CodeOnly.
 
 </div>
 
@@ -376,7 +377,7 @@ Components have the following life-cycle states:
 * **Constructed**: Immediately after the JavaScript object is constructed
 but before the DOM elements have been created. 
 
-* **Created**: Once the DOM elements have been created. Usually this 
+* **Created**: After the DOM elements have been created. Usually this 
 happens automatically just before the component is mounted.  If you
 need to access the DOM elements beforehand, call the `create()` method.
 
@@ -400,6 +401,39 @@ A destroyed component is effectively reset to the "constructed" state
 and can re-created if necessary.  
 
 
+## Listening to External Events
+
+When a component needs to listen to external events care must be
+taken to ensure the event handlers are removed otherwise dangling
+references to the component may prevent it from being garbage
+collected by the JavaScript runtime.
+
+The correct way to handle this is for the component to register
+event listeners when the component is mounted and remove them
+when the component is unmounted.
+
+While this can be done by implementing `onMount()` and `onUnmount()`
+overrides, a simpler method is to use the `Component.listen`
+method.
+
+```js
+listen(target, event, handler)
+```
+
+where:
+
+* `target` - any object that supports `add/removeEventListener()`
+* `event` - the event to listen for
+* `handler` - a handler function for the event.
+
+The `listen` function automatically adds the event listener when
+the component is mounted and removes the event listen when the 
+component is unmounted.
+
+See [listen()](component#component-class-listen) for more.
+
+
+
 ## Styles
 
 To declare CSS styles associated with your component, use the 
@@ -407,7 +441,7 @@ To declare CSS styles associated with your component, use the
 it to the `<head>` section of the document.
 
 We recommend scoping your styles to a component specific CSS class 
-to avoid CSS name clashes.
+to avoid name clashes.
 
 The example scopes its content with the class name `my-component`
 and nests styles with-in that class.  Styles declared for the `<p>` 
@@ -544,10 +578,10 @@ dialog.dialog
 
 // ---
 
-class MyDialog extends Dialog
+class MyDialog extends Dialog /* i: extending Dialog, not Component */
 {
     // This template will be "re-templated" by the base Dialog class
-    // to wrap it in <dialog>, <form> etc... before compilation
+    // to wrap it in <dialog>, <form> etc...
     static template = {
         title: "My Dialog's Title",
         id: "my-dialog",

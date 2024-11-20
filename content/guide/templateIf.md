@@ -6,10 +6,22 @@ title: "If Directive"
 A template node (and all it's children) can be conditionally included or 
 excluded using the `if`, `elseif` and `else` directives.
 
+<div class="tip">
 
-## The `if` Directive
+Unlike the `display` directive which simply hides an element, the
+`if` directive completely removes it.
 
-The `if` directive can be used to dynamically include or exclude items:
+</div>
+
+
+## `if`, `elseif` and `else` Directives
+
+The `if` directive can be used to conditional include a template
+node.  
+
+The value of the `if` directive is the condition to be tested
+and if it evaluates to a truthy value, the node and all its child
+nodes are included.
 
 ```js
 // code lab demo
@@ -43,21 +55,13 @@ class Main extends Component
 // ---
 ```
 
-<div class="tip">
 
-Unlike the `display` directive which simply hides an element, the
-`if` directive completely removes it.
 
-</div>
+The `else` directive can be used to show alternate content when
+`if` directive's condition is false.
 
-## The `else` Directive
-
-The `else` directive can be used to show alternate content to an
-`if` directive's true branch.
-
-The value of `else` directives is ignored but should be a truthy 
-value.  Also it should be on the immmediately next sibling to the node
-with the `if` or `elseif` directive.
+The value of an `else` directive is ignored but should be a truthy 
+value. (eg: `else: true`)
 
 ```js
 // code lab demo
@@ -97,9 +101,7 @@ class Main extends Component
 ```
 
 
-## The `elseif` Directive
-
-You can also include one or more `elseif` directives after the `if` nodes.
+You can also include one or more `elseif` directives:
 
 ```js
 // lab code demo
@@ -147,8 +149,8 @@ class Main extends Component
 ```
 <div class="tip">
 
-The `if`, `elseif` and `else` conditional elements must all follow each other consecutively 
-in the containing child node array.
+Nodes with `if`, `elseif` and `else` directives must all follow each 
+other consecutively in the containing child node array.
 
 </div>
 
@@ -180,17 +182,6 @@ class Main extends Component
 }
 // ---
 ```
-
-<div class="tip">
-
-In the above example, the `isDevelopmentMode()` function will be called when the 
-template object is first executed by the JavaScript loader.
-
-The result will be stored in the template and then when the template is later 
-compiled for the first time whatever value the function returned originally 
-will decide if that part of the template will be included or note.
-
-</div>
 
 
 ## Update Semantics

@@ -1,7 +1,7 @@
 ---
-title: "Introduction"
+title: "Welcome"
 ---
-# Introduction
+# Welcome to CodeOnly
 
 CodeOnly is a simple, lightweight, easy-to-learn framework for
 front-end web development. 
@@ -107,7 +107,7 @@ css` /* i:  CSS styles (with '.counter' as scoping class) */
 Let's take a closer look some of the features of developing components this way.
 
 
-## Single File Components
+## Self Contained Components
 
 One of the nicest things about developing CodeOnly components is that everything
 about a component can be contained in one regular `.js` file.

@@ -34,7 +34,7 @@ callback function.
 
 ## Attributes
 
-The attributes of a HTML element are declared as properties of
+The attributes of an HTML element are declared as properties of
 the template node:
 
 ```js
@@ -325,9 +325,10 @@ If there is only a single child the array container is not required:
 
 ## Boolean CSS Classes
 
-Boolean classes conditionally add a CSS class to an element.
+Boolean classes conditionally add and remove a CSS class to an element.
 
-Declare a boolean class by prefixing the name of the class to add or remove with `class_`.
+Declare a boolean class by adding a property to the node named as the 
+CSS class name prefixed by `class_`.
 
 In this example the `selected` class will be added to, or removed from the
 element depending on the value of the `c.selected` property:

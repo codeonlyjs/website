@@ -160,7 +160,7 @@ might find it easier to use a centralized approach where all the
 routes are declared in one central routing table. 
 
 All this requires is moving all the `router.register` calls into 
-a single file.  And since the `register()` method accepts an 
+a one central file.  And since the `register()` method accepts an 
 array of route handlers all the routes can be registered in a
 single call:
 

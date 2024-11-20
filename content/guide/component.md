@@ -69,8 +69,8 @@ so it can be passed directly to functions to add/remove event listeners.
 
 ### listen(target, event, handler)
 
-Registers an event listener to be added/remove on an external object
-as this component is mounted/unmounted.
+Registers an event listener to be added/removed on an external object
+when this component is mounted/unmounted.
 
 * The target object must support `addEventListener` and `removeEventListener`
   methods

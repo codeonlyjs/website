@@ -80,19 +80,17 @@ class Main extends Component
 // ---
 ```
 
-For dynamic HTML, wrap the callback itself in the `html()` directive:
-
-ie: do this:
-
-```js
-html(c => getHtml())
-```
-
-not this:
+For dynamic HTML, wrap either the callback itself in the `html()` directive
+or just the return value
 
 ```js
-c => html(getHtml())
+// this 
+html(c => c.getHtml())
+
+// or this:
+c => html(c.getHtml())
 ```
+
 
 eg:
 
@@ -215,7 +213,7 @@ class Main extends Component
 
 ## Comments
 
-To create HTML comment node use the special type `#comment`.
+To create HTML comments use the special type `#comment`.
 
 ```js
 {

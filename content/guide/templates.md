@@ -43,7 +43,7 @@ There are different kinds of template nodes:
   () => new Date().toString(),
   ```
 
-* **HTML Text** - declared using the `html()` directive wrapping a string or 
+* **HTML Text** - declared by using the `html()` directive to wrap a string or
   a callback that returns a string. 
 
   ```js
