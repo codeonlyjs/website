@@ -9,46 +9,91 @@ excluded using the `if`, `elseif` and `else` directives.
 
 ## The `if` Directive
 
-The `if` directive can be used to dynamically include or exclude an items:
+The `if` directive can be used to dynamically include or exclude items:
 
 ```js
+// code lab demo
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: [
-        {
-            if: c => showError,
+    showIt = false;
+
+    onClick()
+    {
+        this.showIt = !this.showIt;
+        this.invalidate();
+    }
+
+    static template = [
+// ---
+        { 
             type: "div",
-            class: "error",
-            $: "Failed: ...",
+            text: "I'm here!",
+            if: c => c.showIt,
+        },
+// ---
+        " ",
+        {
+            type: "button",
+            text: "Toggle",
+            on_click: "onClick"
         }
     ]
 }
+// ---
 ```
+
+<div class="tip">
+
+Unlike the `display` directive which simply hides an element, the
+`if` directive completely removes it.
+
+</div>
 
 ## The `else` Directive
 
-To declare alternative nodes if the `if` condition is false,  
-add an `else` directive on the node immediately following the node 
-with the `if` directive,
+The `else` directive can be used to show alternate content to an
+`if` directive's true branch.
 
-For `else` directives, the value is ignored but should the truthy.
+The value of `else` directives is ignored but should be a truthy 
+value.  Also it should be on the immmediately next sibling to the node
+with the `if` or `elseif` directive.
 
 ```js
+// code lab demo
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: [
-        {
-            if: c => showError,
-            type: "p",
-            $: "Error: ...",
+    showIt = true;
+
+    onClick()
+    {
+        this.showIt = !this.showIt;
+        this.invalidate();
+    }
+
+    static template = [
+// ---
+        { 
+            if: c => c.showIt,
+            type: "div",
+            text: "I'm here!",
         },
         {
-            else: true,     /* i:  Value ignored */
-            type: "p",
-            $: "All is well!",
+            else: true,
+            type: "div",
+            text: "So am I",
+        },
+// ---
+        " ",
+        {
+            type: "button",
+            text: "Toggle",
+            on_click: "onClick"
         }
     ]
 }
+// ---
 ```
 
 
@@ -57,28 +102,49 @@ For `else` directives, the value is ignored but should the truthy.
 You can also include one or more `elseif` directives after the `if` nodes.
 
 ```js
+// lab code demo
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: [
-        {
-            if: c => showError,
-            type: "p",
-            $: "Error: ...",
+    get selection()
+    {
+        return this.select.value;
+    }
+
+    static template = 
+    [
+// ---
+        { 
+            if: c => c.selection == "apples",
+            type: "div",
+            text: "Apples are Red",
         },
         {
-            elseif: c => showWarning,
-            type: "p",
-            $: "Warning: ...",
+            elseif: c => c.selection == "pears",
+            type: "div",
+            text: "Pears are Green",
         },
         {
             else: true,
-            type: "p",
-            $: "All OK",
-        }
+            type: "div",
+            text: "Bananas are yellow",
+        },
+// ---
+        " ",
+        {
+            type: "select",
+            bind: "select",
+            on_input: c => c.invalidate(),
+            $: [
+                $.option("Apples").value("apples"),
+                $.option("Pears").value("pears"),
+                $.option("Bananas").value("bananas"),
+            ]
+        },
     ]
 }
+// ---
 ```
-
 <div class="tip">
 
 The `if`, `elseif` and `else` conditional elements must all follow each other consecutively 
@@ -95,21 +161,24 @@ Although not commonly used, an `if` directive can be hard coded as `true` or `fa
 This can be handy for including or excluding content based on conditions like build environment.
 
 ```js
-// Template
+// lab code demo
+// ---
+class Main extends Component
 {
-    type: "pre",
-    if: isDevelopmentMode(), /* i:  Static `if`, because there's no callback */
-    $: {
-        type: "code",
-        $: c => JSON.stringify(c.returnedData)
-    },
+    static template = 
+    [
+// ---
+        "Before →",
+        { 
+            if: false,
+            type: "div",
+            text: "Nothing to See Here",
+        },
+        "← After",
+// ---
+    ]
 }
-
-// Elsewhere
-function isDevelopmentMode()
-{
-    return true;
-}
+// ---
 ```
 
 <div class="tip">
@@ -131,7 +200,8 @@ re-evaluated by calling their condition callbacks.  This is done in
 order from the first `if` directive through any `elseif` directives 
 and to the last `else` directive (if present).
 
-The first directive that matches becomes the "active branch".
+The first directive whose condition evaluates to `true` becomes the 
+"active branch".
 
 If the active branch is the same, the existing DOM tree of that branch is maintained.
 
@@ -143,6 +213,10 @@ If the active branch is different:
 In either case (same or different active branch) the eventual active branch 
 is then updated so any dynamic callback properties in that branch are also
 reflected in the DOM.
+
+If any of the branches contain `bind` directives those element references
+will be set to `null` when the branch is removed and restored to the
+element reference when the branch is re-created.
 
 
 ## CSS Transitions

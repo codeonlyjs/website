@@ -7,7 +7,7 @@ let head = `<html>
 <script type="importmap">
 {
     "imports": {
-        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core@0.0.56/dist/codeonly.min.js"
+        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core@0.0.57/dist/codeonly.min.js"
     }
 }
 </script>

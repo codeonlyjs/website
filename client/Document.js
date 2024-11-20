@@ -244,8 +244,6 @@ export class Document
 
             let originalCode = code;
 
-            throw new Error("Blah");
-
             // Pull out css blocks
             let cssBlocks = [];
             code = code.replace(/\bcss`([^`]*)`/g, (m, css) => {

@@ -128,13 +128,12 @@ css`
     {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 80px;
-        margin-top: 10px;
+        margin: 10px 10px 60px 10px;
     }
 
     div.demo
     {
-        margin-top: -40px;
+        margin: -40px 10px 0px 10px;
         background-color: rgb(from var(--fore-color) r g b / 2%);
         border-radius: 10px;
         padding: 10px;

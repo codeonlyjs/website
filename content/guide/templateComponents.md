@@ -3,7 +3,7 @@ title: "Component References"
 ---
 # Component References
 
-A template can use other components.  To use a component in a template:
+A template can use other components.
 
 1. set the `type` setting to the component class
 2. set properties and event handlers as per usual
