@@ -410,7 +410,7 @@ We recommend scoping your styles to a component specific CSS class
 to avoid CSS name clashes.
 
 The example scopes its content with the class name `my-component`
-and nests styles with-in that class.  Styles declare for he `<p>` 
+and nests styles with-in that class.  Styles declared for the `<p>` 
 element only apply to those in this component.
 
 ```js
