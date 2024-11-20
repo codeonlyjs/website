@@ -7,7 +7,7 @@ export let featureBoxes = [
     },
     {
       title: "Build Anything",
-      body: `Embellish existing sites with tiny web widgets to build entire single page apps.  
+      body: `Embellish existing sites with tiny web widgets or build entire single page apps.  
              (Includes SPA suitable router)`
     },
     /*
