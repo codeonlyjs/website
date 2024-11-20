@@ -61,7 +61,7 @@ export class HeroPage extends Component
 
             $.div.class("heading-graphic")(makeIcon("nonreactive", 50)),
             $.h2.text("Non-Reactive and Non-Intrusive"),
-            $.p.text("Reactivity is great and all, but it can be intrusive.  We've taken a different path."),
+            $.p.text("Reactivity is great and all, but it's also intrusive.  We've taken a different path."),
             reactivityBullets.map(x => ({
                 type: "span.featureBullet",
                 text: x
