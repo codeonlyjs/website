@@ -364,7 +364,7 @@ export function main()
 Although this example shows how a typical single-page-application
 might mount the top-level component for an entire application, the
 same approach can be used to mount smaller widgets, controls and
-panels - even if the rest of the proejct doesn't use CodeOnly.
+panels - even if the rest of the project doesn't use CodeOnly.
 
 </div>
 
