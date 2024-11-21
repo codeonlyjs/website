@@ -89,7 +89,7 @@ export function sessionMiddleware(req, res, next)
             // Refresh cookie
             res.cookie("session", session_id, {
                 httpOnly: true,
-                sameSite: true,
+                sameSite: "Lax",
                 expires: new Date(Date.now() + (14 * (1000 * 60 * 60 * 24))),
                 secure: process.env.NODE_ENV === 'production',
             });
