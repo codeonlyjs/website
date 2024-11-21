@@ -17,7 +17,7 @@ Components.  For information on using the template compiler directly see
 
 ## Declaring a Component Template
 
-Most components declare their template as a static field 
+Components declare their template as a static field 
 named `template`:
 
 ```js
