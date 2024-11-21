@@ -103,8 +103,8 @@ css`
 
 ## Targeting a Sub-Object of a Component
 
-In the above examples, the input binding was targeted to the
-template's component.
+In the above examples, the input binding was targeted to a property of the
+component.
 
 To target a sub-object of the component, use dotted notation:
 
@@ -158,7 +158,7 @@ name is declared using the `prop` key of the options object.
 
 ```js
 input: {
-    prop: "userName",
+    prop: 'userName',
     // other settings here
 }
 ```
@@ -176,7 +176,7 @@ after the user leaves the field (not every keystroke)
 ```js
     input: {
         prop: 'myField',
-        event: 'change'     // Trigger `change` event instead of `input`
+        event: "change" /* i: Trigger on "change" event instead of "input" */
     }
 ```
 
@@ -185,7 +185,7 @@ after the user leaves the field (not every keystroke)
 A callback to format a property value for display in an input field.
 
 
-eg: to display a floating point as a percentage with two decimal places:
+eg: to display a floating point value as a percentage with two decimal places:
 
 ```js
 // demo lab code
@@ -261,7 +261,7 @@ field changes.
 
 <div class="tip">
 
-This field is always `on_change` - regardless of the actual underlying
+This field is always called `on_change` - regardless of the actual underlying
 HTML event (ie: `input` vs `change`).
 
 </div>
@@ -303,7 +303,7 @@ class MyComponent extends Component
     static template = {
         type: "input type=checkbox",
         input: {
-            prop: "darkMode"
+            prop: 'darkMode',
             target: appSettings,
         }
     }
@@ -326,7 +326,7 @@ class MyComponent extends Component
     static template = {
         type: "input type=checkbox",
         input: {
-            prop: "enabled"
+            prop: 'enabled',
             target: c => c.options[c.selectedIndex],
         }
     }

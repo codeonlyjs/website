@@ -27,7 +27,7 @@ is the same as
 }
 ```
 
-Similarly, `$: Html.raw("...")` is the same as `text: Html.raw("...")`;
+Similarly, `$: html("...")` is the same as `text: html("...")`;
 
 Note, this only applies for non-callback strings and this:
 

@@ -67,7 +67,7 @@ yields:
 While it might appear that fluent templates are limited to a set of hard-coded
 element and attribute names, this isn't the case.
 
-The fluent node object uses JavaScript Prox to detect the property names
+The fluent node object uses JavaScript proxies to detect the property names
 as they're invoked allowing any element/attribute name to be set.
 
 ie: `$.foo.bar("baz")` will give `<foo bar="baz">` - even though CodeOnly 

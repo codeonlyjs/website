@@ -4,7 +4,7 @@ title: "Transitions"
 # Transitions
 
 CodeOnly can initiate CSS transitions by applying classes to DOM 
-elements where certain actions are initiated:
+elements when certain actions are initiated:
 
 * Inserting and removing content with `if` directives
 * Showing and hiding elements with the `display` directive
@@ -14,8 +14,7 @@ elements where certain actions are initiated:
 
 ## In/Out States
 
-All transitions currently supported are considered
-to be in either an "in-state" or an "out-state". 
+Transitions are considered to be in either an "in-state" or an "out-state". 
 
 * `if` directives - the active branch has the in-state and all other branches
   are in the out-state.
@@ -28,6 +27,10 @@ When the state of an element switches from the out-state to the
 in-state it is said to be "entering".  When an item switches from 
 the in-state to the out-state is it said to be leaving.
 
+When changing the content of an embed slot, or changing and item's key
+
+* the old item/content moves from the in-state to the out-state and 
+* the new item/content moves from the out-state to the in-state.
 
 
 ## Declaring Transition Conditions
@@ -135,7 +138,7 @@ The transition will trigger when the content value changes.
 
 ## Transition CSS Classes
 
-To understand the set of CSS classes used by CodeOnly it's useful to consider
+To understand the set of CSS classes used by transitions it's useful to consider
 the two main types of transitions - symmetric vs asymmetric.
 
 <div class="tip">
@@ -350,7 +353,7 @@ The following is equivalent to `transition(c => c.showThisDiv)`.
 
 Alternatively you can specify options as a series of
 values and objects.  Each successive argument is merged 
-over thr previous ones:
+over the previous ones:
 
 * a function argument is merged as the `value` property
 * a string argument is merged as the `name` property

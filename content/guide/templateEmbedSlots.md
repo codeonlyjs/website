@@ -3,18 +3,15 @@ title: "Embed Slots"
 ---
 # Embed Slots
 
-Embed slots provide a place in a template where other content can be loaded.
+An embed slot provides a place in a template where other content can be loaded.
 
-They're commonly used for:
+Embed slots are commonly used for:
 
-* Loading non-template sourced DOM elements
+* Loading non-template based DOM elements
 * Loading router pages into the main content area of a single page app
 * "Pushing down" content templates into nested components
 
-
-## Declaring an Embed Slot
-
-Embed slots are declared in a template using the special type name "`embed-slot`":
+Embed slots are declared with the special type name "`embed-slot`":
 
 ```js
 {
@@ -25,52 +22,173 @@ Embed slots are declared in a template using the special type name "`embed-slot`
 }
 ```
 
-## Loading Content into an Embed Slot
+## Loading Content (dynamic callback)
 
-To set the content of an embed slot, use the embed slot's "content" property. You
-can do this either with an dynamic callback property:
+To set the content of an embed slot, use the `content` property.
+
+This can be done with a dynamic callback:
 
 ```js
+// demo lab code
+class Main extends Component
 {
-    type: "div",
-    $: {
-        type: "embed-slot",
-        content: c => c.getContent(),
+    getContent()
+    {
+        return "Hello World";
+    }
+
+    static template = {
+        type: "DIV",
+        $: {
+            type: "embed-slot",
+            content: c => c.getContent(),
+        }
     }
 }
 ```
 
-Or, by binding to the embed slot to your component:
+
+## Loading Content (via binding)
+
+The content of an embed-slot can also be set programatically by binding
+the embed slot and directly setting its `content` property.
 
 ```js
+// demo lab code
+class Main extends Component
 {
-    type: "div",
-    $: {
-        type: "embed-slot",
-        bind: "pageSlot"        /* i:  Bind the embed slot to the component */
+    constructor()
+    {
+        super();
+        
+        // Create DOM
+        this.create();
+
+        // Set content
+        this.slot.content = "Hello World";
+    }
+
+    static template = {
+        type: "DIV",
+        $: {
+            type: "embed-slot",
+            bind: "slot"
+        }
     }
 }
 ```
-
-and setting the content directly:
-
-```js
-// Load a page component from a route into the page slot
-this.pageSlot = router.current.page
-```
-
 
 ## Content Types
 
-Embed slots support various kinds of content:
+Embed slots support various kinds of content.
 
-* CodeOnly Components
-* Arrays of HTML DOM nodes
-* Single HTML DOM nodes
-* HTML raw string (as returned by `Html.raw()`)
-* Plain string (will be escaped)
+* Plain strings
+* HTML strings
+* Components
+* An array of, or a single HTML DOM nodes
 * CodeOnly DOM Trees
 
+
+### Plain Strings
+
+Setting a plain string as the `content` property will create a text node as
+the content.
+
+It is safe to set untrusted data with this approach.
+
+```js
+// demo lab code
+// ---
+class Main extends Component
+{
+    static template = 
+// ---
+    {
+        type: "embed-slot",
+        content: () => "<Hello World>",
+    }
+// ---
+}
+// ---
+```
+
+### HTML Strings
+
+To set the content to a HTML string, use the `html()` directive.
+
+It is *not safe* to set untrusted data with this approach.
+
+```js
+// demo lab code
+// ---
+class Main extends Component
+{
+    static template = 
+// ---
+    {
+        type: "embed-slot",
+        content: () => html("<em>Hello World</em>"),
+    }
+// ---
+}
+// ---
+```
+
+
+### Components
+
+The content property can be set to a component instance
+
+```js
+// demo lab code
+
+class MyComponent extends Component
+{
+    static template = {
+        type: "div",
+        text: "This is a component"
+    }
+}
+
+// ---
+class Main extends Component
+{
+    static template = 
+// ---
+    {
+        type: "embed-slot",
+        content: () => new MyComponent(),
+    }
+// ---
+}
+// ---
+```
+
+### HTML DOM Nodes
+
+An embed-slot's content can be set to either an array of, or a single HTML
+DOM node.
+
+
+```js
+// demo lab code
+// ---
+class Main extends Component
+{
+    static template = 
+// ---
+    {
+        type: "embed-slot",
+        content: () => [
+            document.createElement("hr"),
+            document.createTextNode("Hello World"),
+            document.createElement("hr"),
+        ]
+    }
+// ---
+}
+// ---
+```
 
 
 ## Placeholders
@@ -80,18 +198,39 @@ is not set:
 
 
 ```js
+// demo lab code
+// ---
+class Main extends Component
 {
-    type: "div",
-    $: {
-        type: "embed-slot",
-        placeholder: {
-            type: "div",
-            class: "no-active-page",
-            text: "Nothing to see here!",
-        }
+    content = null;
+
+    onClick()
+    {
+        if (this.content == null)
+            this.content = html("<p>Hello World</p>");
+        else
+            this.content = null;
+        this.invalidate();
     }
+
+    static template = [
+// ---
+    {
+        type: "embed-slot",
+        content: c => c.content,
+        placeholder: html("<p>Nothing to see here</p>"),
+    },
+// ---
+    {
+        type: "button",
+        text: "Toggle",
+        on_click: "onClick"
+    }
+    ]
 }
+// ---
 ```
+
 
 ## Exported Component Slots
 
@@ -102,7 +241,8 @@ Consider the following component which implements a custom link that has
 some special click handling logic:
 
 ```js
-export class MyLink extends Component
+// demo lab code
+class MyLink extends Component
 {
     #href = "#";
     get href() { return this.#href; }
@@ -114,27 +254,27 @@ export class MyLink extends Component
 
     on_click(ev)
     {
-        // Special click handling goes here
+        ev.preventDefault();
+        alert("Special link handling done here!");
     }
 
     static template = {
         type: "a",
-        attr_href: c => c.href,
+        href: c => c.href,
         on_click: (c, ev) => c.on_click(ev),
-        $: c => c.title
+        $: c => " " + c.title + " "
     };
 }
-```
 
-This component can then be used to create links with the special click handling:
-
-```js
+class Main extends Component
 {
-    type: "div",
-    $: [
-        { type: MyLink, href: "/", title: "Home" },
-        { type: MyLink, href: "/profile", title: "Profile" },
-    ]
+    static template = {
+        type: "div",
+        $: [
+            { type: MyLink, href: "/", title: "Home" },
+            { type: MyLink, href: "/profile", title: "Profile" },
+        ]
+    }
 }
 ```
 
@@ -146,50 +286,63 @@ We can improve on this by using an embed-slot to allow any arbitrary content to
 be used as the link content:
 
 ```js
-export class MyLink extends Component
+// code lab demo
+class MyLink extends Component
 {
-    // everything else as before
+// ---
+    #href = "#";
+    get href() { return this.#href; }
+    set href(value) { this.#href = value; this.invalidate() }
 
+    #title = "link";
+    get title() { return this.#title; }
+    set title(value) { this.#title = value; this.invalidate() }
+
+    on_click(ev)
+    {
+        ev.preventDefault();
+        alert("Special link handling done here!");
+    }
+// ---
     static template = {
         type: "a",
-        attr_href: c => c.href,
-        on_click: c => c.on_click(ev),
+        href: c => c.href,
+        on_click: (c, ev) => c.on_click(ev),
         $: {
             type: "embed-slot", /* i:  Special name "embed-slot" */
             bind: "content", /* i:  Make this slot available as a component property */
-            placeholder: c => c.title, /* i:  Revert to text if no slot content */
-        }
-    }
+            placeholder: c => " " + c.title + " ", /* i:  Revert to text if no slot content */
+        },
+    };
 
     static slots = [ "content" ]; /* i:  Slot names need to be declared */
 }
-```
 
-<div class="tip">
-
-Notice the slot names need to be explicitly declared using the `static slots` 
-declaration on the component class.  
-
-This is required as the template compiler generates code to handle
-embed slots and needs to know at compile time whether to treat assignments
-to component properties as slot assignments or as a regular property assignment.
-
-</div>
-
-We can now use this like so:
-
-```js
+// ---
+class Main extends Component
 {
-    type: MyLink, 
-    href: "/", 
-    content: [ /* i:  This image and "Home" text are used as the link content */
-        {
-            type: "img",
-            attr_src: "home_button.png",
-        },
-        " Home",
-    ]
+    static template = {
+        type: "div .vcenter",
+        $: 
+// ---
+        [
+            { 
+                type: MyLink, 
+                href: "/", 
+                content: {
+                    type: "img",
+                    src: "/codeonly-icon.svg",
+                    style: "margin-right: 10px",
+                    width: 24,
+                    height: 24,
+                } 
+            },
+            { type: MyLink, href: "/profile", title: "Profile" },
+        ]
+// ---
+    }
 }
+// ---
 ```
 
 Note the following:
@@ -210,7 +363,7 @@ Note the following:
   up front which properties are templates.
 
 * Since `$` is an alias for a component's `content` property, we
-  could have used `$: [...]` instead of `content: [...]`.
+  could have used `$: {...}` instead of `content: {...}`.
 
 
 
