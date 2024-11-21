@@ -208,7 +208,7 @@ Spaces before `.class` and `#id` attributes are optional:
 
 ## Inner Text/HTML
 
-The inner text of an element can be set using the `text` property:
+The text content of an element can be set using the `text` property:
 
 ```js
 // demo lab code
@@ -274,7 +274,7 @@ Since inner text can also be expressed as child nodes, the
 }
 ```
 
-Caveat: when using a callback for the inner text of an element,
+Caveat: when using a callback for the text content of an element,
 the `text` property is slightly more efficient than the `$` property.
 
 ie: use `text: c => c.text` in preference to `$: c => c.text` where 
