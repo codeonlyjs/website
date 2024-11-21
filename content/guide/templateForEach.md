@@ -441,7 +441,7 @@ words this is a problem that should be solved by the `Photo` object and
 To setup this event/listener mechanism you can either roll your own event
 system, use the standard 
 [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
- mechanism, or use CodeOnly's [`notify`](notify).
+ mechanism, or use CodeOnly's [`notify`](utilities#notify).
 
 Also consider using the `Component.listen()` function to simplify adding
 and removing event listeners in the item component.

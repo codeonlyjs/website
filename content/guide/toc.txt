@@ -15,9 +15,8 @@ templateIf
 templateForEach
 templateEmbedSlots
 templateInput
-templateContentProperty
-templateFluent
 templateTransitions
+templateFluent
 templateUpdateSemantics
 templateInternals
 templateDebugDirectives
@@ -35,7 +34,6 @@ router
 # Utilities
 
 utilities
-notify
 
 # Related
 
