@@ -90,57 +90,10 @@ template = {
 
 
 
-## Updating `foreach` Lists
+## More Information
 
-Updating of `foreach` blocks has two aspects:
+See the following sections for more information about the update semantics of
+other directives:
 
-* Updating the set of items in the DOM
-* Updating the DOM for each item
-
-
-## Updating the Set of DOM Elements for a `foreach` List
-
-In this discussion, the following terms are used:
-
-* The old list - the previous set of items supplied to the foreach block
-* The new list - the new set of items supplied to the foreach
-* DOM elements - the set of DOM elements or components (if using a foreach
-    block on a nested component).
-
-When updating the set of items, the template operates uses one of three
-strategies for updates:
-
-* If the `foreach` block has a `itemKey` property:
-
-    * items with the same key in both the old and new list will re-use the
-        existing DOM elements
-    * DOM elements for items in the old list that aren't in the new list (ie: 
-        deleted items) will be re-used for other new items, or destroyed 
-        if not needed.
-    * items in the new list that aren't in the old list (ie: new items) will 
-        either use a deleted DOM element, or a new DOM element will be created.
-
-* If the `foreach` block doesn't have an `itemKey` property, the list
-    will be updated by using the existing DOM elements and "over-patching"
-    the new items onto each element.
-
-    Overpatching is where the elements in the DOM are re-used in-order
-    for the items in the list.  New DOM elements are created if the new
-    list is larger, old DOM elements are deleted if the new list is smaller.
-
-    ie: the first DOM element will be re-used for the first item in the list,
-    the second DOM element for the second, etc...
-
-
-## Updating the DOM Elements for Items in a `foreach` List
-
-If the elements created by a `foreach` block are regular HTML template items
-they will be updated at he same time the foreach blocks is updated.
-
-If the elements created by a `foreach` block are components, each item's
-properties will be updated (if changed) but the component is not updated
-or invalidated.  
-
-ie: it's the Components reponsibility to determine if an update
-is required.
-
+* [`if` Update Semantics](templateIf#update-semantics)
+* [`foreach` Update Semantics](templateForEach#update-semantics)

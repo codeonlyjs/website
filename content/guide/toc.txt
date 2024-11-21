@@ -18,8 +18,6 @@ templateInput
 templateTransitions
 templateFluent
 templateUpdateSemantics
-templateInternals
-templateDebugDirectives
 
 # Router
 
@@ -34,6 +32,7 @@ router
 # Utilities
 
 utilities
+Notify
 
 # Related
 

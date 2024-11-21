@@ -433,7 +433,10 @@ While the behaviour in the second case may seem inconvenient and problematic
 this is actually the exact behaviour you want when managing large collections
 because it allows you to make small and precise updates.
 
-The way to handle this is to have the `Photo` object fire change events and
+One way to handle this is to use [deep component updates](templateUpdateSemantics#deep-component-updates)
+although this is generally not recommended - especially for large collections.
+
+The correct way to handle this is to have the `Photo` object fire change events and
 for the `PhotoCell` component to add listeners for those events.  In other
 words this is a problem that should be solved by the `Photo` object and
 `PhotoCell` component - not by the `foreach` block.
@@ -441,7 +444,7 @@ words this is a problem that should be solved by the `Photo` object and
 To setup this event/listener mechanism you can either roll your own event
 system, use the standard 
 [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
- mechanism, or use CodeOnly's [`notify`](utilities#notify).
+ mechanism, or use CodeOnly's [`notify`](Notify).
 
 Also consider using the `Component.listen()` function to simplify adding
 and removing event listeners in the item component.
