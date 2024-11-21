@@ -5,7 +5,6 @@ import { HomePage } from "./HomePage.js";
 
 import "./ArticlePage.js";
 import "./lab/LabPage.js";
-import "./TestPage.js";
 import "./NotFoundPage.js";
 
 router.register({
