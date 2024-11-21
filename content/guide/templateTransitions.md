@@ -731,24 +731,123 @@ transitions run one after the other.
 * "leave-enter" - run the leave transition then the enter
 
 ```js
-[
-    {
-        type: "div",
-        class: "div1",
-        if: transition({
-            value: c => c.someCondition,
-            mode: "enter-leave"
-        })
-    },
-    {
-        type: "div",
-        class: "div2",
-        else: true
-    },
-]
+if: transition({
+    value: c => c.someCondition,
+    mode: "enter-leave"
+})
 ```
 
 The mode propery can be a string or a callback returning a string. 
+
+This example demonstrates the various modes:
+
+```js
+// demo lab
+class Main extends Component
+{
+    showHello = true;
+
+    onClick()
+    {
+        this.showHello = !this.showHello;
+        this.invalidate();
+    }
+
+    static template = {
+        type: "div .transition-demo5",
+        $: [
+            "Mode:",
+            {
+                type: "select",
+                bind: "mode",
+                $: [
+                    $.option("concurrent"),
+                    $.option("enter-leave"),
+                    $.option("leave-enter")
+                ]
+            },
+            " ",    
+            {
+                type: "button on_click=onClick text=Cycle",
+            },
+            $.hr,
+            {
+                type: "div .container",
+                $: [
+                    {
+                        if: transition({
+                            value: c => c.showHello,
+                            mode: c => c.mode.value,
+                        }),
+                        type: "div .item .hello",
+                        text: "Hello",
+
+                    },
+                    {
+                        else: true,
+                        type: "div .item .bye",
+                        text: "Goodbye",
+                    }
+                ]
+            }
+        ]
+    }
+}
+
+css`
+.transition-demo5
+{
+    .container
+    {
+        height: 2.4rem;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    .item
+    {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 5px;
+        width: 300px;
+        text-align: center;
+        position: absolute;
+
+        &.tx-active
+        {
+            transition: opacity 1s, transform 1s;
+        }
+
+        &.tx-out
+        {
+            opacity: 0;
+        }
+
+        &.tx-enter-start
+        {
+            transform: translateY(50px);
+        }
+
+        &.tx-leave-end
+        {
+            transform: translateY(-50px);
+        }
+    }
+
+    .hello 
+    { 
+        border-color: lime 
+    }
+
+    .bye
+    { 
+        border-color: orange
+    }
+
+}
+`
+```
 
 ### name
 
