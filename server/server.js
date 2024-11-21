@@ -4,10 +4,11 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import 'express-async-errors';
 import logger from "morgan";
+import { bundleFree } from '@codeonlyjs/bundle-free';
+import livereload from 'livereload';
 import { sessionMiddleware, sessionLogout } from './session.js';
 import { routes as apiRoutes } from "./api.js";
-import { routes as landingRoutes } from "./landing.js";
-import { routes as mainSiteRoutes } from "./mainsite.js";
+import { routes as contentRoutes } from "./content.js";
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 
@@ -29,6 +30,7 @@ app.use("/", express.static(path.join(__dirname, "public")));
 
 // API routes
 app.use("/api", apiRoutes);
+app.use("/content", contentRoutes);
 
 app.use((req, res, next) => {
     next();
@@ -40,12 +42,58 @@ app.get("/logout", (req, res, next) => {
     return res.redirect("/");
 });
 
-app.use(function (req, res, next) {
-    if (!res.locals.session_user)
-        return landingRoutes(req, res, next);
+function resolveDefault(req, res)
+{
+    if (res.locals.session_user)
+        return "index.html";
     else
-        return mainSiteRoutes(req, res, next);
-});
+        return "landing.html";
+}
+
+
+// Prod or Dev?
+if (process.env.NODE_ENV == "production")
+{
+    console.log("Running as production");
+
+    // Serve bundled client
+    app.use(bundleFree({
+        path: path.join(__dirname, "../client/dist"),
+        spa: true,
+        default: resolveDefault,
+        node_modules: path.join(__dirname, "../node_modules"),
+    }));
+}
+else
+{
+    console.log("Running as development");
+
+    // Module handling
+    app.use(bundleFree({
+        path: path.join(__dirname, "../client"),
+        spa: true,
+        default: resolveDefault,
+        node_modules: path.join(__dirname, "../node_modules"),
+        modules: [ 
+            "@codeonlyjs/core",
+            "commonmark",
+        ],
+        replace: [
+            { from: "./Main.js", to: "/Main.js" },
+        ],
+        livereload: true,
+        inYaFace: true,
+    }));
+
+    // Live reload
+    let lrs = livereload.createServer({
+        extraExts: "md",
+    });
+    lrs.watch([
+        path.join(__dirname, "../client"),
+        path.join(__dirname, "../content"),
+    ]);
+}
 
 // Not found
 app.use((req, res, next) => {

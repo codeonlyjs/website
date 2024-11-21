@@ -31,7 +31,7 @@ class Main extends Component
 
 
 On template nodes with a `foreach` directive the arguments passed
-to dynamic properties callbacks changes from `(model,context)` to 
+to dynamic property callbacks changes from `(model,context)` to 
 `(item,itemContext)`.
 
 * **`item`** - is the current item from the list
@@ -190,16 +190,15 @@ The following options are supported:
 * **`itemKey`** - a callback function to return a key for an item.
 * **`condition`** - a callback function that indicates if an item should be 
   included
-* **`empty`** - template items to show when the items array is empty.
+* **`empty`** - template to show when the items array is empty.
 
 
 
 ### itemKey
 
-The `itemKey` option is a callback that provides a key value for an item.
-
-By providing a key, updates can re-use the same DOM elements from items
-in the old list for matching items in new list.
+The `itemKey` option is a callback that should provide a key value 
+for an item.  By providing a key, list item DOM elementscan more
+efficiently re-used during updates.
 
 The value returned by the `itemKey` callback can be any value that can 
 be directly compared to other keys for equality using the JavaScript `==` 
@@ -233,8 +232,9 @@ more efficient that having no keys at all.
 
 ### condition
 
-The `condition` options is a callback that can be used to filter the items 
-in the list.
+The `condition` option is a predicate callback that can be used to filter 
+which items in the array should be shown.  Return `true` to include
+an item, or `false` to exlude it.
 
 This example filters the list to only show items with a price below $100.
 
