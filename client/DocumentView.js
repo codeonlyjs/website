@@ -133,7 +133,7 @@ css`
 
     div.demo
     {
-        margin: -40px 10px 0px 10px;
+        margin: 0px 10px 0px 10px;
         background-color: rgb(from var(--fore-color) r g b / 2%);
         border-radius: 10px;
         padding: 10px;

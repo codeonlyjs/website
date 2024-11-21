@@ -1,55 +1,109 @@
-import { Component, Style } from "@codeonlyjs/core";
+import { $, Component, transition, css } from "@codeonlyjs/core";
 import { router } from "./router.js";
-
-class MyLink extends Component
-{
-    #href = "#";
-    get href() { return this.#href; }
-    set href(value) { this.#href = value; this.invalidate() }
-
-    #title = "link";
-    get title() { return this.#title; }
-    set title(value) { this.#title = value; this.invalidate() }
-
-    on_click(ev)
-    {
-        ev.preventDefault();
-        alert("Special link handling done here!");
-    }
-
-    static template = {
-        type: "a",
-        attr_href: c => c.href,
-        on_click: (c, ev) => c.on_click(ev),
-        $: {
-            type: "embed-slot", /* i:  Special name "embed-slot" */
-            bind: "content", /* i:  Make this slot available as a component property */
-            placeholder: c => " " + c.title + " ", /* i:  Revert to text if no slot content */
-        },
-    };
-
-    static slots = [ "content" ]; /* i:  Slot names need to be declared */
-}
 
 class Main extends Component
 {
+    showIt = true;
+
+    onClick()
+    {
+        this.showIt = !this.showIt;
+        this.invalidate();
+    }
+
     static template = {
-        type: "div",
+        type: "div .transition-demo1",
         $: [
-            { 
-                type: MyLink, 
-                href: "/", 
-                content: {
-                    type: "img",
-                    src: "/codeonly-icon.svg",
-                    width: 32,
-                    height: 32,
-                } 
+            {
+                type: "button on_click=onClick text=Toggle",
             },
-            { type: MyLink, href: "/profile", title: "Profile" },
+            " mode:",
+            {
+                type: "select",
+                bind: "mode",
+                $: [
+                    $.option("concurrent"),
+                    $.option("enter-leave"),
+                    $.option("leave-enter")
+                ]
+            },
+            $.hr,
+            {
+                type: "div .container",
+                $: [
+                    {
+                        if: transition({
+                            value: c => c.showIt,
+                            mode: c => c.mode.value,
+                        }),
+                        type: "div .item .hello",
+                        text: "Hello",
+
+                    },
+                    {
+                        else: true,
+                        type: "div .item .bye",
+                        text: "Goodbye",
+                    }
+                ]
+            }
         ]
     }
 }
+
+css`
+.transition-demo1
+{
+    .container
+    {
+        height: 2.4rem;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    .item
+    {
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 5px;
+        width: 300px;
+        text-align: center;
+        position: absolute;
+
+        &.tx-active
+        {
+            transition: opacity 1s, transform 1s;
+        }
+
+        &.tx-out
+        {
+            opacity: 0;
+        }
+
+        &.tx-enter-start
+        {
+            transform: translateY(50px);
+        }
+
+        &.tx-leave-end
+        {
+            transform: translateY(-50px);
+        }
+    }
+
+    .hello 
+    { 
+        border-color: lime 
+    }
+
+    .bye
+    { 
+        border-color: orange
+    }
+
+}
+`
 
 router.register({
     pattern: "/test",

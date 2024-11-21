@@ -35,25 +35,20 @@ When changing the content of an embed slot, or changing and item's key
 
 ## Declaring Transition Conditions
 
-To declare that a setting should trigger transitions, wrap the callback 
+To declare that transitions should be used, wrap the callback 
 that determines the in/out state with the `transition` directive:
 
 ```js
 import { transition } from "@codeonlyjs/core";
 
-class MyComponent extends Component
-{  
-    get includeCondition()
-    {
-        // some condition
-    }
-
-    // In template
+// ---
+// ---
     {
         if: transition(c => c.includeCondition),
         type: "div",
     }
-}
+// ---
+// ---
 ```
 
 <div class="tip">
@@ -82,23 +77,97 @@ and for boolean classes:
 }
 ```
 
-The `transition` directive declares that when the condition changes
-certain CSS classes should be added to the entering and leaving
-DOM elements.
+Here's a simple example that fades an element in/out using a transition on an 
+`if` directive.  
 
+The CSS class names used by transitions are covered in detail below, suffice to 
+say for now:
+
+* The `.tx-active` class is added to an element while a transition is active.  We
+  use this to add the CSS transition property to the element indicating that the
+  opacity should be transitioned.
+* The `.tx-out` class represents the out state of the element - in this case
+  we're saying the out state is opacity zero creating a fade in/out effect.
+
+```js
+// code demo lab
+// ---
+class Main extends Component
+{
+    showItem = true;
+
+    onClick()
+    {
+        this.showItem = !this.showItem;
+        this.invalidate();
+    }
+
+    static template = {
+        type: "div .transition-demo1",
+        $: [
+            {
+                type: "button on_click=onClick text=Toggle",
+            },
+            $.hr,
+// ---
+            {
+                if: transition(c => c.showItem),
+                type: "div .item",
+                text: "Item"
+            },
+// ---
+        ]
+    }
+}
+css`
+.transition-demo1
+{
+    .item
+    {
+        border: 1px solid var(--warning-color);
+        border-radius: 5px;
+        padding: 5px;
+        width: 300px;
+        text-align: center;
+    }
+}
+`
+
+// ---
+css`
+.transition-demo1
+{
+    .item
+    {
+        &.tx-active
+        {
+            transition: opacity 1s;
+        }
+        &.tx-out
+        {
+            opacity: 0;
+        }
+    }
+}
+`
+```
+
+<div class="tip">
+
+You'll notice in the above example that while the element fades in
+and out, there's a jump in the height when the element is added and
+removed.  
+
+This is because this example is only animating the item's opacity 
+and not its height.  See below for an example that also animates the
+height.
+
+</div>
 
 ## Key Triggered Transitions
 
 Another way to trigger transitions is by setting a `key`
-property on an element:
-
-```js
-{
-    type: "div",
-    text: c => c.counter,
-    key: transition(c => c.counter),
-}
-```
+property on an element.
 
 In this case the transition triggers when the key changes.
 
@@ -107,33 +176,293 @@ When a transition is triggered by a key change:
 * a new instance of the element is created and transitioned in
 * the old instance of the element is transitioned out
 
-This can be used to create transitions between values.  In the 
-above example you could create a cross fade effect as the
-counter value changes, or you could slide the old value
-out and the new value in etc...
-
 <div class="tip">
   
 The `key` property is not to be confused with the item keys
-used by `foreach` directices. 
+used by `foreach` directives. 
 
 </div>
 
+This example, uses the `key` property to create a cross-fade
+effect as a value changes.
+
+
+
+```js
+// lab demo code
+// ---
+class Main extends Component
+{
+    value = 1;
+
+    get display()
+    {
+        return ["Apples", "Pears", "Bananas"][this.value % 3]
+    }
+
+    onClick()
+    {
+        this.value++;
+        this.invalidate();
+    }
+
+    static template = {
+        type: "div .transition-demo2",
+        $: [
+            {
+                type: "button on_click=onClick text=Toggle",
+            },
+            $.hr,
+// ---
+            {
+                type: "div .container",
+                $:  {
+                    key: transition(c => c.display),
+                    type: "div .item",
+                    text: c => c.display,
+                },
+            }
+// ---
+        ]
+    }
+}
+// ---
+
+css`
+.transition-demo2
+{
+    .container
+    {
+        position: relative;
+        height: 1rem;
+    }
+    .item
+    {
+        position: absolute;
+        &.tx-active
+        {
+            transition: opacity 1s;
+        }
+        &.tx-out
+        {
+            opacity: 0;
+        }
+    }
+}
+`
+```
+
+<div class="tip">
+
+Notice too in the above example how the `.item` is absolutely positioned 
+within a `.container` so the old and new items can overlay each other.
+
+</div>
 
 ## Embed Slot Transitions
 
 Transitions on embed slots are declared by placing the `transition`
 directive on the content property.
 
+This example creates a new component each time the button is clicked
+and then transitions the embed slot's content property.  It also introduces 
+some transform animations and different start/end states - these will 
+be explained in more details in the next section.
+
 ```js
+// lab demo code
+// ---
+// Item component that displays text with a color
+class Item extends Component
 {
-    type: "embed-slot",
-    content: transition(c => c.content),
+    constructor(text, color)
+    {
+        super();
+        this.text = text;
+        this.color = color;
+    }
+
+    static template = { 
+        type: "div .item",
+        text: c => c.text,
+        style_color: c => c.color,
+    }
 }
+
+class Main extends Component
+{
+    value = 0;
+    entries = [
+        { text: "Apples", color: "red" },
+        { text: "Pears", color: "green" },
+        { text: "Bananas", color: "yellow" },
+    ]
+    get content()
+    {
+        let e = this.entries[this.value % 3];
+        return new Item(e.text, e.color);
+    }
+
+    onClick()
+    {
+        this.value++;
+        this.invalidate();
+    }
+
+    static template = {
+        type: "div .transition-demo3",
+        $: [
+            {
+                type: "button on_click=onClick text=Cycle",
+            },
+            $.hr,
+            {
+                type: "div .container",
+                $: 
+// ---
+                {
+                    type: "embed-slot",
+                    content: transition(c => c.content),
+                }
+// ---
+            }
+        ]
+    }
+}
+
+css`
+.transition-demo3
+{
+    .container
+    {
+        height: 1.5rem;
+        margin: 0;
+        padding: 0;
+        position: relative;
+    }
+
+    .item
+    {
+        position: absolute;
+
+        &.tx-active
+        {
+            transition: opacity 1s, transform 1s;
+        }
+
+        &.tx-out
+        {
+            opacity: 0;
+        }
+
+        &.tx-enter-start
+        {
+            transform: translateX(50px);
+        }
+
+        &.tx-leave-end
+        {
+            transform: translate(-30px, -30px);
+        }
+    }
+
+}
+`
+// ---
 ```
 
-The transition will trigger when the content value changes.
+<div class="tip">
 
+We've snipped most of the code in the above example, but don't forget you can 
+click the "Edit" link just above to see the full code sample and to experiment
+with it.
+
+</div>
+
+## Avoiding Jumps
+
+While a full discussion of CSS transition and animation techniques is beyond
+the scope of this documentation, here is the previously promised example of how
+to avoid jumps when item's are shown/hidden.
+
+The basic idea is to:
+
+1. place the CodeOnly transition directive on a container div
+2. use a CSS transition to both set and transition the container height
+3. use a nested CSS transition to transition the contained item
+
+```js
+// lab demo
+class Main extends Component
+{
+    showIt = true;
+
+    onClick()
+    {
+        this.showIt = !this.showIt;
+        this.invalidate();
+    }
+
+    static template = {
+        type: "div .transition-demo4",
+        $: [
+            {
+                type: "button on_click=onClick text=Toggle",
+            },
+            $.hr,
+            {
+                if: transition(c => c.showIt),
+                type: "div .container",
+                $: $("div .item")("Hello World!")
+            },
+            $.div("This content should smoothly transition up/down"),
+        ]
+    }
+}
+
+css`
+.transition-demo4
+{
+    .item
+    {
+        border: 1px solid var(--warning-color);
+        border-radius: 5px;
+        padding: 5px;
+        width: 300px;
+        text-align: center;
+    }
+
+    .container
+    {
+        height: 2.4rem;
+        margin: 0;
+        padding: 0;
+
+        &.tx-active
+        {
+            transition: height 1s;
+
+            .item
+            {
+                transition: transform 1s, opacity 1s;
+            }
+
+        }
+        &.tx-out
+        {
+            height: 0;
+
+            .item
+            {
+                opacity: 0;
+                transform: translateX(150px);
+            }
+
+        }
+    }
+}
+`
+```
 
 
 ## Transition CSS Classes
@@ -234,7 +563,7 @@ and left by fading out:
 ```css
 .scoping-selector-for-you-element
 {
-    /* This controls the entering transition - transform*/
+    /* This controls the entering transition - transform */
     .tx-entering
     {
         transition: transform 1s;
