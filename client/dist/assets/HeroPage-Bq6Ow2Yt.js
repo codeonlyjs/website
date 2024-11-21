@@ -138,8 +138,8 @@ css\` /* i: CSS styles (with ".counter" as scoping class) */
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CodeOnly Lab</title>
-<link href="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish/stylish.css" type="text/css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish/stylish-theme.min.js"><\/script>
+<link href="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish@1.0.10/stylish.css" type="text/css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish@1.0.10/stylish-theme.min.js"><\/script>
 
 <script type="importmap">
 {

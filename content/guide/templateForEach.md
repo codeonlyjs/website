@@ -446,5 +446,5 @@ system, use the standard
 [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget)
  mechanism, or use CodeOnly's [`notify`](Notify).
 
-Also consider using the `Component.listen()` function to simplify adding
+Also consider using [`Component.listen`](components#listening-to-external-events) to simplify adding
 and removing event listeners in the item component.
