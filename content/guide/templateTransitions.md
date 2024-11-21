@@ -127,7 +127,7 @@ css`
         border: 1px solid var(--warning-color);
         border-radius: 5px;
         padding: 5px;
-        width: 300px;
+        width: 150px;
         text-align: center;
     }
 }
@@ -428,7 +428,7 @@ css`
         border: 1px solid var(--warning-color);
         border-radius: 5px;
         padding: 5px;
-        width: 300px;
+        width: 150px;
         text-align: center;
     }
 
@@ -810,7 +810,7 @@ css`
         border: 1px solid;
         border-radius: 5px;
         padding: 5px;
-        width: 300px;
+        width: 150px;
         text-align: center;
         position: absolute;
 
