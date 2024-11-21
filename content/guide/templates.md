@@ -3,12 +3,12 @@ title: "Basics"
 ---
 # Template Basics
 
-A template is a JSON-like object that describes how create and update
+A template is a JSON-like object that describes how to create and update
 a heirarchy of DOM elements.   
 
 <div class="tip">
 
-Most of the documentation on templates assumes their use with CodeOnly
+Most of the documentation on templates assumes their use with
 Components.  For information on using the template compiler directly see
 [Template Internals](templateInternals).
 
@@ -17,8 +17,8 @@ Components.  For information on using the template compiler directly see
 
 ## Declaring a Component Template
 
-Most components declare their template as a static field named
-`template` on the component class:
+Most components declare their template as a static field 
+named `template`:
 
 ```js
 class MyComponent extends Component
@@ -39,7 +39,10 @@ There are different kinds of template nodes:
   returns a string:
 
   ```js
+  // string
   "Hello World, I'm a text node",
+
+  // callback
   () => new Date().toString(),
   ```
 
@@ -47,7 +50,10 @@ There are different kinds of template nodes:
   a callback that returns a string. 
 
   ```js
+  // HTML string
   html("<span>My Text Span</span>"),
+  
+  // callback
   html(() => `Now: <span>${new Date().toString()}</span>`),
   ```
 
@@ -89,9 +95,9 @@ There are different kinds of template nodes:
   ```
   
 
-* **Components** - templates can include components by declaring a node
+* **Components** - templates can reference other components by declaring a node
   with a `type` property that is the component class and other properties
-  declaring propertirs to be assigned to tbe component. 
+  declaring properties to be assigned to tbe component. 
 
   ```js
   {
