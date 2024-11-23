@@ -1,8 +1,7 @@
-import { Component, css, transition } from "@codeonlyjs/core";
+import { Component, css, transition, router } from "@codeonlyjs/core";
 import { MobileBar } from "./MobileBar.js";
 import { MainNavigation } from "./MainNavigation.js";
 import { SecondaryNavigation } from "./SecondaryNavigation.js";
-import { router } from "./router.js";
 import { navigationContext } from "./NavigationContext.js";
 
 // Main application

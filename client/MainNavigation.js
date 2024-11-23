@@ -1,5 +1,4 @@
 import { Component, css } from "@codeonlyjs/core";
-import { router } from "./router.js";
 import { navigationContext } from "./NavigationContext.js";
 
 // The main header

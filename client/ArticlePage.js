@@ -1,5 +1,4 @@
-import { Component } from "@codeonlyjs/core";
-import { router } from "./router.js";
+import { Component, router } from "@codeonlyjs/core";
 import { Document } from "./Document.js";
 import { LayoutDocumentation } from "./LayoutDocumentation.js";
 import { LayoutBare } from "./LayoutBare.js";

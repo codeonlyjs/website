@@ -36,28 +36,15 @@ The CodeOnly router supports the following features:
 
 To get an idea for how the router works, let's start with a simple example.
 
-### Create the Router
+### Import the Router
 
-Central to routing is the Router object itself which needs to be created
-and configured by your application.
-
-We recommend a using file named `router.js` that exports a singleton router
-instance:
-
-router.js:
+Central to routing is the Router object itself which is available as 
+the singleton instance `router`:
 
 ```js
-import { Router } from "@codeonlyjs/core";
-
-// Create the router
-export let router = new Router( /* i:  Create the router instance */
-    new WebHistoryRouterDriver() /* i:  We'll cover this later */
-);
-
-// Setup view state restoration
-new ViewStateRestoration(router); /* i:  Save and restore the scroll position between pages */
-
+import { router } from "@codeonlyjs/core";
 ```
+
 
 ### Register Route Handlers
 
@@ -67,8 +54,6 @@ object that matches URLs to pages in your app.
 This example sets up a route handler for the URL `/about`.
 
 ```js
-import { router} from "./router.js"; /* i:  This is the router object from above */
-
 router.register({ /* i:  Register this route handler with the router */
     pattern: "/about", /* i:  This is the URL we handle */
     match: (to) => { /* i:  After the pattern matches, the match function is called */
@@ -165,32 +150,10 @@ invoke the router to load the page.
 ```
 
 
-## View State Restoration
-
-When stepping backward and forward through the browser history there is 
-usually some "view state" that needs to be captured and restored.  
-
-The main example of this is saving and restoring the current 
-scroll position - nobody wants to hit the back button and then have
-to scroll to get back to where the were before.
-
-The router supports capturing any view state you need, but often the 
-scroll position is enough so we've included a component that can do this
-automatically.
-
-All you need to do is create an instance of it and pass it the router
-object.
-
-```js
-new ViewStateRestoration(router);
-```
-
-
 ## Next Steps
 
-For many single page apps, what's been described above will cover most requirements.  If
-you use the CodeOnly project generator to create a single-page app it
-will setup all this for you automatically.
+For many single page apps, what's been described above will cover most requirements.  If you use the CodeOnly project generator to create a
+single-page app it will setup all this for you automatically.
 
 For more complex setups though, let's dig into [the details](routerDetails)...
 

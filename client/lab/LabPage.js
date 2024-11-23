@@ -1,5 +1,4 @@
-import { Component, css } from "@codeonlyjs/core";
-import { router } from "../router.js";
+import { Component, css, router } from "@codeonlyjs/core";
 import { CodeEditor } from "./CodeEditor.js";
 import { Preview } from "./Preview.js";
 import { compress, decompress, bufferToBase64, base64ToBuffer } from "./Utils.js";

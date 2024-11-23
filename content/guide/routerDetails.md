@@ -57,21 +57,13 @@ responsibilities include:
 * Firing a sequence of events for each URL navigation
 * Handling clean up of cancelled navigations
 
-Almost always there is only ever a single instance of the router. 
+There is always only ever a single instance of the router, available
+as `router`
 
-The convention is to create and configure the router in a file named 
-`router.js` that exports a singleton `router` object instance:
 
 ```js
-import { Router } from "@codeonlyjs/core";
-
-// Create the router
-export let router = new Router( /* i:  Create the router instance */
-    new WebHistoryRouterDriver() /* i:  See below */
-);
+import { router } from "@codeonlyjs/core";
 ```
-
-Route handlers are registered with the router using the `register` method. 
 
 The router also has methods that can be used by your app to
 invoke navigation (`navigate`, `back`, `replace`) but these simply
@@ -259,6 +251,10 @@ The `WebHistoryRouterDriver` also listens for clicks on anchor `<a>` elements,
 inspects the `href` attribute and if it looks like an in-page link, instructs
 the router to initiate a URL load for the href.
 
+The router driver is selected by creating an instance and passing it to
+the router's `start` method.  If no driver is specified, an instance
+of the `WebHistoryRouterDriver` is used.
+
 Currently the `WebHistoryRouteDriver` is the only available driver, but may be 
 expanded with a similar driver for the Navigation API.  A server side
 router driver will also be developed for use in server-side rendering scenarios.
@@ -270,17 +266,14 @@ router driver will also be developed for use in server-side rendering scenarios.
 View state restoration is the process of maintaining any otherwise transient
 view state information when navigating through the session history.
 
-The most common kind of view state to be persisted is the current scroll position
-and the built in ViewStateRestoration object can handle this automatically.
+The most common kind of view state to be persisted is the current scroll position which is handled automatically.
 
-The built-in component normally just saves the document scroll position but it
-can be customized:
+View state restoration can be customized:
 
-* View state restoration can be customized on a per-route handler basis by adding 
-  `captureViewState()` and `restoreViewState(viewState)` functions to the route handler.
+* on a per-route basis by adding `captureViewState()` and `restoreViewState(viewState)` functions to the route handler.
 
-* By adding `captureViewState()` and `restoreViewState(viewState)` methods to the 
-  router object it can be customized globally.
+* globally by adding `captureViewState()` and `restoreViewState(viewState)`
+  methods to the router object.
 
 
 

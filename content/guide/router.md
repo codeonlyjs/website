@@ -6,17 +6,18 @@ title: "API"
 
 ## Router Class
 
-### constructor(driver, handlers)
+### constructor(handlers)
 
 Constructs a new Router object.
 
-* `driver` - the router driver to be used to communicate with the environment
 * `handlers` - an optional array of route handlers to be registered.
 
-### start()
+### start(driver)
 
-Delegates to the driver's `start()` method, passing itself as the router 
-the driver should connect with.
+Starts the router, with a the specified driver.
+
+If driver is not specified, the built in `WebHistoryRouterDriver`
+is used.
 
 ### navigate()
 

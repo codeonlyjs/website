@@ -1,6 +1,5 @@
-import { Component, css } from "@codeonlyjs/core";
+import { Component, css, router } from "@codeonlyjs/core";
 import { Header } from "./Header.js";
-import { router } from "./router.js";
 import { HomePage } from "./HomePage.js";
 
 import "./ArticlePage.js";
@@ -14,6 +13,13 @@ router.register({
         return true;
     }
 });
+
+router.register({
+    pattern: "/logout",
+    match: () => null
+});
+
+
 
 // Main 
 class Main extends Component
@@ -84,5 +90,6 @@ css`
 export function main()
 {
     new Main().mount("body");
+
     router.start();
 }
