@@ -1,4 +1,4 @@
-import { env } from "@codeonlyjs/core";
+import { getEnv } from "@codeonlyjs/core";
 
 class NavigationContext extends EventTarget
 {
@@ -52,7 +52,7 @@ class NavigationContext extends EventTarget
 
     load()
     {
-        env.load(async () => {
+        getEnv().load(async () => {
             this.error = false;
             this.toc = null;
             this.dispatchEvent(new Event("changed"));

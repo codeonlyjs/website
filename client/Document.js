@@ -1,5 +1,5 @@
 import { $, Component, html, htmlEncode, input, transition } from "@codeonlyjs/core";
-import { env } from "@codeonlyjs/core";;
+import { getEnv } from "@codeonlyjs/core";;
 import { openLabWithCode } from "./lab/LabPage.js";
 import { htmlIcon } from "./Icon.js";
 import * as commonmark from "commonmark";
@@ -16,7 +16,7 @@ export class Document
     
     load(pathname)
     {
-        return env.load(async () => {
+        return getEnv().load(async () => {
 
             // Work out "index" filename
             if (pathname == "" || pathname.endsWith("/"))
