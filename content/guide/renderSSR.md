@@ -316,6 +316,65 @@ app.get(/\/.*/, async (req, res, next) => {
 });
 ```
 
+## Passing Data to SSRWorker
+
+It is possible to pass data to `SSRWorker` both globally and on a per-render
+basis.
+
+All settings passed to `SSRWorker.init()` including the `entryFile`, `entryMain`
+and `entryHtml` options are available to components running in the worker
+as `getEnv().options`.
+
+eg: suppose you need to pass the URL of a back-end server to be used for data
+    fetch requests:
+
+```js
+await worker.init({
+    entryFile: path.join(__dirname, "../client/main_ssr.js"), 
+    entryMain: "main_ssr",
+    entryHtml,
+    backEndApiServer: "http://localhost:3005/api",
+});
+```
+
+A component being rendered could then access that setting via `getEnv().options`:
+
+```js
+class MyPage extends Component
+{
+    refresh()
+    {
+        this.load(async () => {
+            let url = getEnv().options.backEndApiServer + "/user/...";
+            let response = await fetch(url);
+        });
+    }
+}
+```
+
+Similarly, per-request data can be passed as a second parameter to the render
+method:
+
+eg: passing the id of a logged in user
+
+```js
+    let html = await worker.render(url, {
+        userId: currentUser.id,
+    });
+```
+
+The values passed as the second parameter are merged over a copy of the original
+SSRWorker options and can be accessed in the same way:
+
+```js
+let userId = getEnv().options.userId;
+```
+
+When using `SSRWorkerThread` any values passed to the worker thread need to be
+compatible with the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm) 
+since they're passed via Node's [`postMessage`](https://nodejs.org/api/worker_threads.html#portpostmessagevalue-transferlist)
+ function.
+
 
 ## Hydration
 
