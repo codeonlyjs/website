@@ -27,11 +27,12 @@ routerNotes
 routerTypical
 router
 
-# Server Side Rendering
+# Rendering
 
-ssrIntro
-ssrServer
-ssrStatic
+renderIntro
+renderSSR
+renderSSG
+renderStatic
 
 
 # Utilities
