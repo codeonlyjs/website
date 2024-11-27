@@ -16,7 +16,7 @@ Benifits of SSR include:
 
 * Improved SEO - some search engines can't properly index single-page apps because the crawler
   only sees the empty "skeleton" page and not the content that should be indexed.
-* Per-page social media meta information (Open Graph tags, Twitter cards)
+* Support for per-page social media meta information (Open Graph tags, Twitter cards)
 * Faster initial appearance - because the page is downloaded fully populated, the page can 
   be presented sooner by the browser
 
