@@ -75,10 +75,10 @@ When rendering on a server, special consideration needs to be given to:
 
 ## Quick Start
 
-The sections below describe how to setup server side rendering. 
+The sections below describe how to set up server side rendering. 
 
-To quickly get started however, the code generator can generate a 
-project already configured for SSR.
+To quickly get started the code generator can generate a project already 
+configured for SSR.
 
 With NodeJS installed, from a command line run:
 
@@ -108,14 +108,14 @@ both the client and the server.
 
 ## SSRWorker Classes
 
-To support server side rendering are two classes:
+There are two classes to support server side rendering:
 
 * `SSRWorker` - the main class responsible for loading and rendering components
   and pages
 
 * `SSRWorkerThread` - a wrapper that runs an `SSRWorker` instance on a worker thread.
 
-Both classes have identical API with the only difference being that `SSRWorkerThread` 
+Both classes have identical APIs with the only difference being that `SSRWorkerThread` 
 loads an instance of `SSRWorker` on a NodeJS Worker thread and marshals calls to it.
 
 Worker threads are the mechanism used to keep multiple server-side apps isolated.
@@ -262,7 +262,7 @@ Once the worker has been constructed and initialized, you can render pages
 using the `render` method, passing the URL of the page to be rendered:
 
 ```js
-    let html = await worker.render(url.href);
+let html = await worker.render(url.href);
 ```
 
 The `render` method performs the following steps:
@@ -358,9 +358,9 @@ method:
 eg: passing the id of a logged in user
 
 ```js
-    let html = await worker.render(url, {
-        userId: currentUser.id,
-    });
+let html = await worker.render(url, {
+    userId: currentUser.id,
+});
 ```
 
 The values passed as the second parameter are merged over a copy of the original
