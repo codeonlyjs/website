@@ -26,6 +26,38 @@ When rendering on a server, special consideration needs to be given to:
   loading that data before rendering.
 
 
+## Quick Start
+
+The sections below describe how to setup server side rendering. 
+
+To quickly get started however, the code generator can generate a 
+project already configured for SSR.
+
+With NodeJS installed, from a command line run:
+
+```
+npx codeonlyjs/cogent new fullstack MyApp
+```
+
+By default the project is generated with SSR disabled.  To enable it, open
+the `server/config.js` file, and set the `ssr` option to `true`.
+
+To confirm it's working:
+
+1. Run the project (eg: `npm run dev`)
+2. View the site in a browser (typically `http://localhost:3000`)
+3. Right click and choose "View Source"
+4. Check that the page content has been rendered and is present in the 
+   source HTML.
+
+Most of the code relating to SSR can be found in these files:
+
+* `server/server.js` (search for "ssr")
+* `client/main_ssr.js` (the main entry point when running on the server)
+
+Note that when using SSR, the code in the `client/` directory runs on
+both the client and the server.
+
 
 ## Setup
 
@@ -39,7 +71,7 @@ To support server side rendering are two classes:
 Both classes have identical API with the only difference being that `SSRWorkerThread` 
 loads an instance of `SSRWorker` on a NodeJS Worker thread and marshals calls to it.
 
-Worker threads are the mechanism CodeOnly uses to keep multiple server-side apps isolated.
+Worker threads are the mechanism used to keep multiple server-side apps isolated.
 
 To use the `SSRWorkerThread` class, first create an instance and call its `init` method:
 
@@ -61,31 +93,6 @@ The `init()` method takes an object with the following parameters:
   version of the application (see below for an example)
 * `entryMain` - the name of the exported entry point function in `entryFile`
 * `entryHtml` - the app's `index.html` file loaded to a string
-
-
-## Rendering
-
-Once the worker has been constructed and initialized, you can render pages
-using the `render` method, passing the URL of the page to be rendered:
-
-```js
-    let html = await worker.render(url.href);
-```
-
-The `render()` performs the following the steps to render a page
-to HTML.
-
-1. Sets up an `AsyncStorage` for the request with a new SSR environment 
-   instance specific to this request. This allows multiple requests to run 
-   concurrently while still being isolated from each other.
-2. Sets up an SSR router driver with the requested URL
-3. Calls the `entryMain` function in `entryFile` - the entry point into
-   your application.
-4. Invokes the router to load the URL
-5. Waits for any async route and data loads to complete
-6. Ensures any invalidated components are updated
-7. Renders all mounted components and registered CSS styles into `entryHtml`
-8. Returns the final HTML string
 
 
 ## `entryFile` and `entryMain`
@@ -147,14 +154,14 @@ let entryHtml = await fs.readFile(path.join(__dirname, "../client/index.html"), 
 
 
 
-## Use with Bundle-free
+## Use with Bundle Free
 
-If your server uses Bundle-free, you'll also want to inject the import maps and other 
-changes bundle-free provides into the `entryHtml` string.
+If your server uses Bundle Free, you'll also want to inject the import maps and other 
+changes it provides into the `entryHtml` string.
 
-This can be managed by setting up bundle-free slightly differently:
+This can be managed by setting up the Bundle Free middleware slightly differently:
 
-1. Capture a reference to the bundle-free middleware (see the `bf` variable in 
+1. Capture a reference to the middleware for later use (see the `bf` variable in 
    the following example)
 2. Set the `spa` option to `false` - since we'll be handling page loads ourself
 3. Set the `default` option to `false` - to prevent automatically loading `index.html`
@@ -196,16 +203,44 @@ and other changes into the HTML content:
 
 ```js
 // Load index.html and inject import maps etc...
-let entryHtml = await bf.patch_html_file("", path.join(bf.options.path, "index.html"));
+let entryHtml = await bf.patch_html_file(
+    "",  /* i: base subpath if necessary */
+    path.join(bf.options.path, "index.html") /* i: in either ../client or ../client/dist */
+);
 ```
+
+## Rendering
+
+Once the worker has been constructed and initialized, you can render pages
+using the `render` method, passing the URL of the page to be rendered:
+
+```js
+    let html = await worker.render(url.href);
+```
+
+The `render` method performs the following steps:
+
+1. Sets up an `AsyncStorage` for the request with a new SSR environment 
+   instance specific to this request. This allows multiple requests to run 
+   concurrently while still being isolated from each other.
+2. Sets up an SSR router driver with the requested URL
+3. Calls the `entryMain` function in `entryFile` (ie: the entry point into
+   your application).
+4. Invokes the router to load the URL
+5. Waits for any async route and data loads to complete
+6. Ensures any invalidated components are updated
+7. Injects the rendered HTML of all mounted components and registered CSS 
+   styles into `entryHtml`.
+8. Returns the final HTML string
+
 
 ## ExpressJS Page Rendering
 
 If you're using ExpressJS as the server framework library, installing an SSR page 
 rendering route handler can be done as follows.
 
-This should be done after all other route handlers as we want all unknown URL's
-to fallback to the single-page application (assuming we're using normal URL paths 
+This should be done after all other route handlers as we want to handle all 
+unknown URL's using the client application (assuming we're using normal URL paths 
 and not hashed URL paths).
 
 ```js
@@ -256,7 +291,7 @@ CodeOnly takes a simpler approach:
 While this approach is somewhat naive it's considerably simpler, very reliable and has 
 few (if any) downsides over a more complicated approach.
 
-To support the above, the `SSRWorker` makes several additional "co-ssr" injections 
+To support the above, the `SSRWorker` makes some additional injections 
 into the rendered HTML:
 
 * A meta tag indicating the page was SSR rendered:
@@ -265,8 +300,8 @@ into the rendered HTML:
     <meta name="co-ssr" value="true">
     ```
 
-* Comments to delimit any SSR rendered content that will be removed (this includes
-  mounted components and registered CSS styles)
+* Comments to delimit any SSR rendered content that needs be removed (this includes
+  mounted components and registered CSS styles):
 
     ```html
     <!--co-ssr-start-->
