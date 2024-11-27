@@ -12,7 +12,7 @@ include the fully populated and loaded data of the page - and not just a
 
 SSR has it's pros and cons and its use should be carefully considered.
 
-Benifits of SSR include:
+Benefits of SSR include:
 
 * Improved SEO - some search engines can't properly index single-page apps because the crawler
   only sees the empty "skeleton" page and not the content that should be indexed.
@@ -26,7 +26,7 @@ Downsides of SSR include:
 * All scripts and dependent libraries need to be able to run on client and server
 * Additional load on the server
 
-Often the primary quoted reason for SSR is improved SEO however most major search engines
+Often the main quoted reason for SSR is improved SEO however most major search engines
 can now run page scripts and "see" the fully populated version of a page without using SSR.
 
 A perhaps more important reason for SSR is for the inclusion of per-page social
