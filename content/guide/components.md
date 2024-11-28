@@ -91,7 +91,7 @@ class MyComponent extends Component
 
 <div class="tip">
 
-Templates are declared static because they're are compiled at runtime to JavaScript 
+Templates are declared static because they are compiled at runtime to JavaScript 
 and it would be extremely inefficient to re-compile for each component instance.  
 
 The template is compiled the first time an instance of a component is constructed 
@@ -105,7 +105,7 @@ and re-used for all subsequent instances.
 A template can use fat arrow (`=>`) callbacks for dynamic content.
 
 The callback is passed a reference to the owning component instance
-and by convention the argument is usually named `c` (for "Component"):
+and by convention the argument is usually named `c` (for "component"):
 
 This example sets a `<div>`'s inner text using the component's `greeting`
 property:
@@ -444,7 +444,7 @@ We recommend scoping your styles to a component specific CSS class
 to avoid name clashes.
 
 The example scopes its content with the class name `my-component`
-and nests styles with-in that class.  Styles declared for the `<p>` 
+and nests styles within that class.  Styles declared for the `<p>` 
 element only apply to those in this component.
 
 ```js

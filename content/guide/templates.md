@@ -357,7 +357,7 @@ class MyComponent extends Component
 
 ## Binding Elements
 
-To access the DOM nodes and nested compoonents constructed by a template 
+To access the DOM nodes and nested components constructed by a template 
 use the `bind` directive to specify the name of a property on your component.
 
 When the DOM tree is created, the specified property will be assigned a reference
