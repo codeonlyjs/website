@@ -14,7 +14,8 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         { src: 'public/*', dest: './public/' },
-        { src: 'content/*', dest: './content/' }
+        { src: 'content/*', dest: './content/' },
+        { src: ".nginx", dest: "./" }
       ],
     }),
     viteStaticGenerate({
