@@ -1,0 +1,182 @@
+[
+  {
+    "title": " Introduction",
+    "pages": [
+      {
+        "url": ".",
+        "title": "Welcome",
+        "fullTitle": "Welcome to CodeOnly"
+      },
+      {
+        "url": "start",
+        "title": "Getting Started",
+        "fullTitle": "Getting Started"
+      }
+    ]
+  },
+  {
+    "title": " Components",
+    "pages": [
+      {
+        "url": "components",
+        "title": "Overview",
+        "fullTitle": "Components Overview"
+      },
+      {
+        "url": "component",
+        "title": "API",
+        "fullTitle": "Component API"
+      }
+    ]
+  },
+  {
+    "title": " Templates",
+    "pages": [
+      {
+        "url": "templates",
+        "title": "Basics",
+        "fullTitle": "Template Basics"
+      },
+      {
+        "url": "templateText",
+        "title": "Text and HTML",
+        "fullTitle": "Text and HTML"
+      },
+      {
+        "url": "templateHtmlElements",
+        "title": "HTML Elements",
+        "fullTitle": "HTML Elements"
+      },
+      {
+        "url": "templateComponents",
+        "title": "Component References",
+        "fullTitle": "Component References"
+      },
+      {
+        "url": "templateIf",
+        "title": "If Directive",
+        "fullTitle": "If Directive"
+      },
+      {
+        "url": "templateForEach",
+        "title": "ForEach Directive",
+        "fullTitle": "ForEach Directive"
+      },
+      {
+        "url": "templateEmbedSlots",
+        "title": "Embed Slots",
+        "fullTitle": "Embed Slots"
+      },
+      {
+        "url": "templateInput",
+        "title": "Input Bindings",
+        "fullTitle": "Input Bindings"
+      },
+      {
+        "url": "templateTransitions",
+        "title": "Transitions",
+        "fullTitle": "Transitions"
+      },
+      {
+        "url": "templateFluent",
+        "title": "Fluent Templates",
+        "fullTitle": "Fluent Templates"
+      },
+      {
+        "url": "templateUpdateSemantics",
+        "title": "Update Semantics",
+        "fullTitle": "Update Semantics"
+      }
+    ]
+  },
+  {
+    "title": " Router",
+    "pages": [
+      {
+        "url": "routerBasics",
+        "title": "Basics",
+        "fullTitle": "Router Basics"
+      },
+      {
+        "url": "routerDetails",
+        "title": "Details",
+        "fullTitle": "Router Details"
+      },
+      {
+        "url": "routerNotes",
+        "title": "Notes",
+        "fullTitle": "Router Notes"
+      },
+      {
+        "url": "routerTypical",
+        "title": "Typical Setup",
+        "fullTitle": "Router Typical Setup"
+      },
+      {
+        "url": "router",
+        "title": "API",
+        "fullTitle": "Router API"
+      }
+    ]
+  },
+  {
+    "title": " Rendering",
+    "pages": [
+      {
+        "url": "renderIntro",
+        "title": "Introduction",
+        "fullTitle": "Introduction to Rendering"
+      },
+      {
+        "url": "renderSSR",
+        "title": "Server Side Rendering (SSR)",
+        "fullTitle": "Server Side Rendering"
+      },
+      {
+        "url": "renderSSG",
+        "title": "Static Site Generation (SSG)",
+        "fullTitle": "Static Site Generation"
+      },
+      {
+        "url": "renderStatic",
+        "title": "Static Rendering",
+        "fullTitle": "Static HTML Rendering"
+      }
+    ]
+  },
+  {
+    "title": " Utilities",
+    "pages": [
+      {
+        "url": "utilities",
+        "title": "Utilities",
+        "fullTitle": "Utilities"
+      },
+      {
+        "url": "Notify",
+        "title": "Notify Service",
+        "fullTitle": "Notify Service"
+      }
+    ]
+  },
+  {
+    "title": " Related",
+    "pages": [
+      {
+        "url": "stylish",
+        "title": "Stylish CSS",
+        "fullTitle": "Stylish CSS Library"
+      },
+      {
+        "url": "bundle-free",
+        "title": "Bundle Free",
+        "fullTitle": "Bundle Free"
+      },
+      {
+        "url": "cogent",
+        "title": "Cogent",
+        "fullTitle": "Cogent"
+      }
+    ]
+  }
+]

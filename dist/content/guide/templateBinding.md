@@ -1,0 +1,30 @@
+---
+title: "Binding (bind)"
+---
+# Binding (bind)
+
+To access a DOM element from within the component use, use the `bind` attribute
+to attach the element reference to the component.
+
+```js
+export class MyComponent extends Component
+{
+    onClick()
+    {
+        // this.inputField is a reference to the input DOM element
+        // created by the 'bind' property in the template
+        alert(this.inputField.value);
+    }
+
+    // This defines the DOM template
+    // for this component
+    static template = {
+        type: "div",
+        $: [
+            { type: "input", attr_type: "text", bind: "inputField" }
+            { type: "button", on_click: c => c.onClick(), $:"Click Me" }
+        ]
+    }
+}
+```
+

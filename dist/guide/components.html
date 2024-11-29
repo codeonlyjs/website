@@ -1,0 +1,669 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- HTML Meta Tags -->
+    <title>CodeOnlyJS </title>
+    <meta name="description" content="The front-end Web framework for coders." />
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="CodeOnlyJS " />
+    <meta itemprop="description" content="The front-end Web framework for coders" />
+    <meta itemprop="image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://codeonlyjs.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CodeOnlyJS " />
+    <meta property="og:description" content="The front-end Web framework for coders" />
+    <meta property="og:image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CodeOnlyJS " />
+    <meta name="twitter:description" content="The front-end Web framework for coders" />
+    <meta name="twitter:image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Apple -->
+    <link rel="apple-touch-icon" href="https://codeonlyjs.org/codeonly-icon-256.png" />
+    <!-- Meta Tags Generated via https://heymeta.com -->
+
+    <link href="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish@1.0.10/stylish.css" type="text/css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish@1.0.10/stylish-theme.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/css.min.js"></script>
+    <link id="hljs-theme" href="" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs/loader.js"></script>
+    <script>
+    require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs' } });
+    </script>
+    <script>
+    function updateHighlightTheme()
+    {
+        let el = document.getElementById("hljs-theme");
+        let themeFile = stylish.darkMode ? "github-dark.min.css" : "github.min.css";
+        let new_href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/${themeFile}`;
+        el.setAttribute("href", new_href);
+    }
+    stylish.addEventListener("darkModeChanged", updateHighlightTheme);
+    updateHighlightTheme();
+    </script>
+    <style>
+    :root
+    {
+        --dark-accent-color: #9D79E5;
+    }
+    :root.home-colors
+    {
+        --dark-body-back-color: #0a0b1a;
+        --light-body-back-color: white;
+    }
+    body
+    {
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+    <script type="module" crossorigin="crossorigin" src="/assets/index-CXDn6ClS.js"></script>
+    <!--co-ssr-start--><link href="/assets/styles-AAABk3beHUc.css" type="text/css" rel="stylesheet" /><!--co-ssr-end-->
+    <meta name="co-ssr" value="true" />
+  </head>
+  <body>
+    <!--co-ssr-start-->
+    <div id="layoutRoot">
+      <header id="header">
+        <a href="/" class="title"><img class="hide-sm" src="/public/codeonly-logo-light.svg" /><img class="hide-lg" src="/public/codeonly-icon.svg" /></a>
+        <div class="buttons">
+          <a href="/guide/" class="subtle button">Docs</a><a href="/lab" class="subtle button labLink vcenter"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 -960 960 960" preserveAspectRatio="xMidYMid slice" role="img"><path xmlns="http://www.w3.org/2000/svg" d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg> The Lab</a><input type="checkbox" class="theme-switch" />
+          <script>
+          document.querySelector(".theme-switch").checked = window.stylish.darkMode;
+          </script>
+        </div>
+      </header>
+      <div id="layoutDocumentation">
+        <header id="mobile-bar"><button id="side-panel-menu-button" class="subtle muted"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" preserveAspectRatio="xMidYMid slice" role="img"><path xmlns="http://www.w3.org/2000/svg" d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"></path></svg> Menu</button><button id="side-panel-menu-button" class="subtle muted">On this page ›</button></header>
+        <div id="div-wrapper">
+          <div id="backdrop" class=""></div>
+          <div id="div-lhs" class="">
+            <nav id="nav-main">
+              <!-- enter foreach block -->
+              <h5> Introduction</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="." class="">Welcome</a></li>
+                <li><a href="start" class="">Getting Started</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Components</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="components" class="">Overview</a></li>
+                <li><a href="component" class="">API</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Templates</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="templates" class="">Basics</a></li>
+                <li><a href="templateText" class="">Text and HTML</a></li>
+                <li><a href="templateHtmlElements" class="">HTML Elements</a></li>
+                <li><a href="templateComponents" class="">Component References</a></li>
+                <li><a href="templateIf" class="">If Directive</a></li>
+                <li><a href="templateForEach" class="">ForEach Directive</a></li>
+                <li><a href="templateEmbedSlots" class="">Embed Slots</a></li>
+                <li><a href="templateInput" class="">Input Bindings</a></li>
+                <li><a href="templateTransitions" class="">Transitions</a></li>
+                <li><a href="templateFluent" class="">Fluent Templates</a></li>
+                <li><a href="templateUpdateSemantics" class="">Update Semantics</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Router</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="routerBasics" class="">Basics</a></li>
+                <li><a href="routerDetails" class="">Details</a></li>
+                <li><a href="routerNotes" class="">Notes</a></li>
+                <li><a href="routerTypical" class="">Typical Setup</a></li>
+                <li><a href="router" class="">API</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Rendering</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="renderIntro" class="">Introduction</a></li>
+                <li><a href="renderSSR" class="">Server Side Rendering (SSR)</a></li>
+                <li><a href="renderSSG" class="">Static Site Generation (SSG)</a></li>
+                <li><a href="renderStatic" class="">Static Rendering</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Utilities</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="utilities" class="">Utilities</a></li>
+                <li><a href="Notify" class="">Notify Service</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Related</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="stylish" class="">Stylish CSS</a></li>
+                <li><a href="bundle-free" class="">Bundle Free</a></li>
+                <li><a href="cogent" class="">Cogent</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <!-- leave foreach block -->
+            </nav>
+          </div>
+          <div id="div-center">
+            <div class="document-view">
+              <h1>Components Overview</h1>
+              <p>Components are the primary building block for constructing CodeOnly
+applications. They encapsulate program logic, a DOM (aka HTML) template
+and an optional a set of CSS styles.</p>
+              <p>Components can be used either in the templates of other components
+or mounted onto the document DOM to appear in a web page.</p>
+              <h2 id="anatomy-of-a-component"><a class="hlink" href="#anatomy-of-a-component">#</a>Anatomy of a Component</h2>
+              <p>Most components will conform to this common structure:</p>
+              <pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { <span class="hljs-title class_">Component</span>, css } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@codeonlyjs/core&quot;</span>;
+
+<span class="hljs-comment">// Components extend the &#x27;Component&#x27; class</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>
+{
+    <span class="hljs-comment">// Logic</span>
+    <span class="hljs-title function_">constructor</span>(<span class="hljs-params"></span>)
+    {
+        <span class="hljs-variable language_">super</span>()
+    }
+
+    <span class="hljs-comment">// DOM template</span>
+    <span class="hljs-keyword">static</span> template = {
+
+    }
+}
+
+<span class="hljs-comment">// CSS styles</span>
+css<span class="hljs-string">`
+`</span>;
+</code></pre>
+              <div class="tip">
+                <p>By declaring logic, templates and styles in code the entire
+definition of a component can be contained in a single <code>.js</code> file.</p>
+              </div>
+              <h2 id="logic"><a class="hlink" href="#logic">#</a>Logic</h2>
+              <p>A component is just a regular JavaScript class so its &quot;logic&quot;
+can be anything you like, but will typically consist of:</p>
+              <ul>
+                <li>Business logic</li>
+                <li>Data fetching</li>
+                <li>Public properties to configure the component</li>
+                <li>Properties and methods to support the template</li>
+                <li>Event handling and dispatching</li>
+                <li>Life-cycle handlers (eg: <code>onMount()</code>, <code>onUnmount()</code>)</li>
+              </ul>
+              <h2 id="templates"><a class="hlink" href="#templates">#</a>Templates</h2>
+              <p>A component's template declares the HTML elements that will appear
+in the document and provide the visual representation of the component.</p>
+              <p>Templates are <a href="templates">covered in detail here</a>, but since they're
+central to understanding components the following is a brief introduction.</p>
+              <p>A template is a JSON-like object that describes the DOM structure of a
+component - that is the set of HTML elements that comprise the component's
+appearance.</p>
+              <p>Most components will declare their template using a static
+field named <code>template</code> on the component class.</p>
+              <pre><code class="hljs language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>
+{
+    <span class="hljs-keyword">static</span> template = {  <span class="note"><span class="inner"> This component&#x27;s template </span></span>
+        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-string">&quot;This is My Component&quot;</span>,        
+    }
+}
+</code></pre>
+              <div id="demo-0" class="demo">
+</div>
+              <div class="demo-footer">
+    <span></span>
+    <a id="edit-demo-0" class="edit-demo-link vcenter" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="22px" width="22" viewBox="0 -960 960 960"><path d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg><span> Edit</span></a>
+</div>
+              <div class="tip">
+                <p>Templates are declared static because they are compiled at runtime to JavaScript
+and it would be extremely inefficient to re-compile for each component instance.</p>
+                <p>The template is compiled the first time an instance of a component is constructed
+and re-used for all subsequent instances.</p>
+              </div>
+              <h2 id="dynamic-content"><a class="hlink" href="#dynamic-content">#</a>Dynamic Content</h2>
+              <p>A template can use fat arrow (<code>=&gt;</code>) callbacks for dynamic content.</p>
+              <p>The callback is passed a reference to the owning component instance
+and by convention the argument is usually named <code>c</code> (for &quot;component&quot;):</p>
+              <p>This example sets a <code>&lt;div&gt;</code>'s inner text using the component's <code>greeting</code>
+property:</p>
+              <pre><code class="hljs language-js">    <span class="hljs-keyword">static</span> template = {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-property">greeting</span>, <span class="note"><span class="inner">Callback to get text content </span></span>
+    }
+</code></pre>
+              <p>When the value of any dynamic content changes, the component needs to
+be updated to apply those changes in the DOM using one of these two
+methods:</p>
+              <ul>
+                <li><code>update()</code> - updates the DOM immediately</li>
+                <li><code>invalidate()</code> - schedules the component to be updated on the next
+update cycle.</li>
+              </ul>
+              <div class="tip">
+                <p>In general you should use <code>invalidate()</code> as it coaelesces multiple
+updates into a single DOM update.  This is more efficient as it saves
+the browser from multiple reflows.</p>
+              </div>
+              <p>The following example toggles the text shown in a <code>&lt;div&gt;</code> each time
+it is clicked.</p>
+              <pre><code class="hljs language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>
+{
+    #on = <span class="hljs-literal">false</span>;
+
+    <span class="hljs-comment">// A dynamic property used by the template</span>
+    <span class="hljs-keyword">get</span> <span class="hljs-title function_">text</span>() 
+    { 
+        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.#on ? <span class="hljs-string">&quot;On&quot;</span> : <span class="hljs-string">&quot;Off&quot;</span>;
+    }
+
+    <span class="hljs-title function_">onClick</span>(<span class="hljs-params"></span>)
+    {
+        <span class="hljs-variable language_">this</span>.#on = !<span class="hljs-variable language_">this</span>.#on;
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">invalidate</span>(); <span class="note"><span class="inner">Tells component to update </span></span>
+    }
+
+    <span class="hljs-keyword">static</span> template = {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-property">text</span>, <span class="note"><span class="inner">Callback for dynamic content </span></span>
+        <span class="hljs-attr">on_click</span>: <span class="hljs-string">&quot;onClick&quot;</span>,
+    }
+}
+</code></pre>
+              <div id="demo-1" class="demo">
+</div>
+              <div class="demo-footer">
+    <span></span>
+    <a id="edit-demo-1" class="edit-demo-link vcenter" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="22px" width="22" viewBox="0 -960 960 960"><path d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg><span> Edit</span></a>
+</div>
+              <p>Templates also support events, conditional blocks, list rendering,
+embed slots, CSS transitions and more.  See <a href="templates">Templates</a>
+for more on working with templates.</p>
+              <h2 id="dispatching-events"><a class="hlink" href="#dispatching-events">#</a>Dispatching Events</h2>
+              <p>The <code>Component</code> class extends the standard <code>EventTarget</code> class so
+components can dispatch (aka &quot;fire&quot; or &quot;raise&quot;) events.</p>
+              <p>Here is a custom button component dispatching a &quot;click&quot; event:</p>
+              <pre><code class="hljs language-js"><span class="hljs-comment">// A component that raises &quot;click&quot; events</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyButton</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>  <span class="note"><span class="inner"> Component extends EventTarget </span></span>
+{
+    <span class="hljs-title function_">onClick</span>(<span class="hljs-params"></span>)
+    {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">dispatchEvent</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Event</span>(<span class="hljs-string">&quot;click&quot;</span>)); <span class="note"><span class="inner">Raise event </span></span>
+    }
+
+    <span class="hljs-keyword">static</span> template = {
+        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;button&quot;</span>,
+        <span class="hljs-attr">text</span>: <span class="hljs-string">&quot;MyButton&quot;</span>,
+        <span class="hljs-attr">on_click</span>: <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-title function_">onClick</span>(),
+    }
+}
+
+<div class="snip" title="Some code omitted for clarity."><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div></code></pre>
+              <div id="demo-2" class="demo">
+</div>
+              <div class="demo-footer">
+    <span></span>
+    <a id="edit-demo-2" class="edit-demo-link vcenter" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="22px" width="22" viewBox="0 -960 960 960"><path d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg><span> Edit</span></a>
+</div>
+              <div class="tip">
+                <p>In some of the samples, like the one above, we've hidden some of the
+supporting code to help emphasize the point being made.</p>
+                <p>These snipped sections of code are indicated with the scissor icon:</p>
+                <div class="snip" title="Some code omitted for clarity." style="margin-top: 20px;margin-bottom: 20px"><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg&quot;" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div>
+                <p>To view the unabridged code open the sample in the Lab by clicking the Edit
+button.</p>
+              </div>
+              <h2 id="data-loads"><a class="hlink" href="#data-loads">#</a>Async Data Loads</h2>
+              <p>Components will often need to load data from external sources.
+This is commonly referred to as &quot;async data loading&quot; and often
+a spinner will be shown while the data is being fetched.</p>
+              <p>Since this is a common pattern for many components, the <code>Component</code>
+class includes a couple of helpers: a <code>load</code> method, a <code>loading</code> and
+<code>loadError</code> property and some associated events.</p>
+              <p>The <code>load</code> method does the following:</p>
+              <ol>
+                <li>sets the <code>loading</code> property to true</li>
+                <li>clears the <code>loadError</code> property</li>
+                <li>calls the <code>invalidate</code> method to mark the component for update</li>
+                <li>dispatches a <code>loading</code> event</li>
+                <li>calls and <code>await</code>s the supplied callback</li>
+                <li>catches and stores any thrown errors to the <code>loadError</code> property</li>
+                <li>calls the <code>invalidate</code> method again</li>
+                <li>dispatches a <code>loaded</code> event</li>
+              </ol>
+              <p>For example:</p>
+              <pre><code class="hljs language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>
+{
+    <span class="hljs-title function_">loadData</span>(<span class="hljs-params"></span>)
+    {
+        <span class="hljs-variable language_">this</span>.<span class="hljs-title function_">load</span>(<span class="hljs-title function_">async</span> () =&gt; {
+            <span class="hljs-comment">// Load data here</span>
+<div class="snip" title="Some code omitted for clarity."><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div>    });
+}
+
+
+<span class="hljs-keyword">static</span> template = [
+    {
+        <span class="hljs-attr">if</span>: <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-property">loading</span>, <span class="note"><span class="inner">Show spinner while loading </span></span>
+        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div .spinner&quot;</span>,
+    },
+    {
+        <span class="hljs-attr">else</span>: <span class="hljs-literal">true</span>, <span class="note"><span class="inner">Otherwise show loaded data </span></span>
+        <span class="hljs-attr">$</span>: [
+            <span class="hljs-comment">// Display data here</span>
+<div class="snip" title="Some code omitted for clarity."><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div>
+            ]
+        }
+    ]
+}
+</code></pre>
+              <div id="demo-3" class="demo">
+</div>
+              <div class="demo-footer">
+    <span></span>
+    <a id="edit-demo-3" class="edit-demo-link vcenter" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="22px" width="22" viewBox="0 -960 960 960"><path d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg><span> Edit</span></a>
+</div>
+              <p>Using this approach provides a couple of benefits:</p>
+              <ul>
+                <li>The <code>load</code> method is <code>async</code>, so you can <code>await</code> it to know
+when the load has finished.</li>
+                <li>It's exception safe - any thrown errors are captured and the
+<code>loading</code> flag is cleared on success or failure.</li>
+                <li>It provides an easy mechanism for a component to know if
+data, an error or a spinner should be shown.</li>
+                <li>It's integrated with a broader &quot;environment&quot; loading mechanism
+so other interested parties (eg: server side rendering) can
+be notified when the entire page is loaded - more on this later.</li>
+              </ul>
+              <p>The <code>load</code> method also supports a second parameter <code>silent</code>.  Silent
+mode allows refreshing the data without showing spinners or other
+feedback:</p>
+              <ol>
+                <li>calls and awaits the supplied callback</li>
+                <li>calls the invalidate method</li>
+              </ol>
+              <h2 id="mounting-components"><a class="hlink" href="#mounting-components">#</a>Mounting Components</h2>
+              <p>Mounting a component makes it appear on the page.</p>
+              <p>Most components are mounted automatically by parent components, but
+the root of your application needs to be mounted manually.</p>
+              <p>To mount a component, call the <code>mount</code> method passing an element
+or selector indicating where the component should be appear:</p>
+              <p>eg:</p>
+              <p><code>main.js</code></p>
+              <pre><code class="hljs language-js"><span class="hljs-comment">// Main component</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MainPage</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>
+{
+}
+
+
+<span class="hljs-comment">// Main entry point into the application</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">main</span>(<span class="hljs-params"></span>)
+{
+    <span class="hljs-comment">// Create main page and mount it in div#main</span>
+    <span class="hljs-keyword">new</span> <span class="hljs-title class_">MainPage</span>().<span class="hljs-title function_">mount</span>(<span class="hljs-string">&quot;#main&quot;</span>);
+
+    <span class="hljs-comment">// Other app initialization can go here</span>
+}
+</code></pre>
+              <p><code>index.html</code></p>
+              <pre><code class="hljs language-js">&lt;html&gt;
+<span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-comment">&lt;!-- This is where the Main component will be mounted --&gt;</span> 
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;main&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;module&quot;</span>&gt;</span><span class="language-javascript">  
+        <span class="hljs-comment">// Call &quot;main&quot; method to mount the component</span>
+        <span class="hljs-keyword">import</span> { main } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;/main.js&quot;</span>;
+        <span class="hljs-title function_">main</span>();
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span></span>
+&lt;/html&gt;
+
+</code></pre>
+              <div class="tip">
+                <p>Although this example shows how a typical single-page-application
+might mount the top-level component, the same approach can be used
+to mount smaller widgets, controls and panels - even if the rest
+of the project doesn't use CodeOnly.</p>
+              </div>
+              <h2 id="component-life-cycle"><a class="hlink" href="#component-life-cycle">#</a>Component Life-Cycle</h2>
+              <p>Components have the following life-cycle states:</p>
+              <ul>
+                <li>
+                  <p><strong>Constructed</strong>: Immediately after the JavaScript object is constructed
+but before the DOM elements have been created.</p>
+                </li>
+                <li>
+                  <p><strong>Created</strong>: After the DOM elements have been created. Usually this
+happens automatically just before the component is mounted.  If you
+need to access the DOM elements beforehand, call the <code>create()</code> method.</p>
+                </li>
+                <li>
+                  <p><strong>Mounted</strong>: After the component's DOM is attached to the document DOM.
+The component's <code>onMount()</code> method is called when it's mounted.</p>
+                </li>
+                <li>
+                  <p><strong>Unmounted</strong>: After a component is removed from the document DOM.<br />
+The component's <code>onUnmount()</code> method is called when it's unmounted.</p>
+                </li>
+                <li>
+                  <p><strong>Destroyed</strong>: After a parent component that constructed this component
+no longer needs the component it will call the component's <code>destroy()</code>
+method which releases the DOM elements associated with the component.</p>
+                </li>
+              </ul>
+              <p>In general a component should connect to external resources in the
+<code>onMount()</code> and disconnect from them in <code>onUnmount()</code>.  These are
+the most reliable mechanism to know if a component is still in use.</p>
+              <p>A component will never be destroyed while it's mounted.</p>
+              <p>A destroyed component is effectively reset to the &quot;constructed&quot; state
+and can re-created if necessary.</p>
+              <h2 id="listening-to-external-events"><a class="hlink" href="#listening-to-external-events">#</a>Listening to External Events</h2>
+              <p>When a component needs to listen to external events care must be
+taken to ensure the event handlers are removed otherwise dangling
+references to the component may prevent it from being garbage
+collected by the JavaScript runtime.</p>
+              <p>The correct way to handle this is for the component to register
+event listeners when the component is mounted and remove them
+when the component is unmounted.</p>
+              <p>While this can be done by implementing <code>onMount()</code> and <code>onUnmount()</code>
+overrides, a simpler method is to use the <code>Component.listen</code>
+method.</p>
+              <pre><code class="hljs language-js"><span class="hljs-title function_">listen</span>(target, event, handler)
+</code></pre>
+              <p>where:</p>
+              <ul>
+                <li><code>target</code> - any object that supports <code>add/removeEventListener()</code></li>
+                <li><code>event</code> - the event to listen for</li>
+                <li><code>handler</code> - a handler function for the event.</li>
+              </ul>
+              <p>The <code>listen</code> function automatically adds the event listener when
+the component is mounted and removes the event listen when the
+component is unmounted.</p>
+              <p>See <a href="component#component-class-listen">listen()</a> for more.</p>
+              <h2 id="styles"><a class="hlink" href="#styles">#</a>Styles</h2>
+              <p>To declare CSS styles associated with your component, use the
+<code>css``</code> template literal function.  It takes a CSS string and adds
+it to the <code>&lt;head&gt;</code> section of the document.</p>
+              <p>We recommend scoping your styles to a component specific CSS class
+to avoid name clashes.</p>
+              <p>The example scopes its content with the class name <code>my-component</code>
+and nests styles within that class.  Styles declared for the <code>&lt;p&gt;</code>
+element only apply to those in this component.</p>
+              <pre><code class="hljs language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>
+{
+  <span class="hljs-keyword">static</span> template = { 
+    <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>, 
+    <span class="hljs-attr">class</span>: <span class="hljs-string">&quot;my-component&quot;</span>,
+    <span class="hljs-attr">$</span>: [ 
+        <span class="hljs-comment">// Child elements</span>
+        {
+            <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;p&quot;</span>,
+            <span class="hljs-attr">text</span>: <span class="hljs-string">&quot;A Styled Paragraph&quot;</span>,
+        }
+    ]
+  }
+}
+
+css<span class="hljs-string">`
+<span class="hljs-selector-class">.my-component</span>
+{
+    <span class="hljs-selector-tag">p</span>
+    {
+        <span class="hljs-attribute">text-align</span>: center;
+        <span class="hljs-attribute">font-weight</span>: bold;
+        <span class="hljs-attribute">color</span>: orange;
+    }
+}
+`</span>; 
+</code></pre>
+              <div id="demo-4" class="demo">
+</div>
+              <div class="demo-footer">
+    <span></span>
+    <a id="edit-demo-4" class="edit-demo-link vcenter" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="22px" width="22" viewBox="0 -960 960 960"><path d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg><span> Edit</span></a>
+</div>
+              <div class="tip">
+                <p>Styles declared with <code>css``</code> are added to the document
+exactly as declared.  The above example is using nested CSS
+for scoping which requires a reasonably modern browser.</p>
+                <p>If you need to work with old browsers that don't support this you
+will need to either manually de-nest your declarations or use an
+external CSS preprocesor (LESS, SASS etc...) - but they can't be
+used with the <code>css``</code> function.</p>
+              </div>
+              <h2 id="custom-templates"><a class="hlink" href="#custom-templates">#</a>Custom Templates</h2>
+              <p>Normally components use the template declared by the static <code>template</code>
+property but this can be changed by overriding the <code>onProvideTemplate()</code>
+function.</p>
+              <pre><code class="hljs language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyComponent</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>
+{
+    <span class="hljs-comment">// Called by Component to get the template to be compiled</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-title function_">onProvideTemplate</span>(<span class="hljs-params"></span>)
+    {
+        <span class="hljs-keyword">return</span> {
+            <span class="hljs-comment">// ... template definition ...</span>
+        }
+    }
+}
+</code></pre>
+              <p>Consider, for example, a dialog class where every dialog has the same frame
+but different content in the main body.</p>
+              <pre><code class="hljs language-js"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Dialog</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Component</span>
+{
+<div class="snip" title="Some code omitted for clarity."><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div>    <span class="hljs-comment">// Override to wrap template in dialog frame</span>
+    <span class="hljs-keyword">static</span> <span class="hljs-title function_">onProvideTemplate</span>(<span class="hljs-params"></span>)
+    {
+        <span class="hljs-keyword">return</span> {
+            <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;dialog&quot;</span>,
+            <span class="hljs-attr">class</span>: <span class="hljs-string">&quot;dialog&quot;</span>,
+            <span class="hljs-attr">id</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">template</span>.<span class="hljs-property">id</span>, <span class="note"><span class="inner">From the derived class template </span></span>
+            <span class="hljs-attr">$</span>: {
+                <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;form&quot;</span>,
+                <span class="hljs-attr">method</span>: <span class="hljs-string">&quot;dialog&quot;</span>,
+                <span class="hljs-attr">$</span>: [
+                    {
+                        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;header&quot;</span>,
+                        <span class="hljs-attr">$</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">template</span>.<span class="hljs-property">title</span>, <span class="note"><span class="inner">From the derived class template </span></span>
+                    },
+                    {
+                        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;main&quot;</span>,
+                        <span class="hljs-attr">$</span>: <span class="hljs-variable language_">this</span>.<span class="hljs-property">template</span>.<span class="hljs-property">content</span>,  <span class="note"><span class="inner">From the derived class template </span></span>
+                    },
+                    {
+                        <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;footer&quot;</span>,
+                        <span class="hljs-attr">$</span>: {
+                            <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;button&quot;</span>,
+                            <span class="hljs-attr">$</span>: <span class="hljs-string">&quot;Close&quot;</span>,
+                        }
+                    },
+                ]
+            }
+        };
+    }
+}
+<div class="snip" title="Some code omitted for clarity."><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">MyDialog</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_ inherited__">Dialog</span> <span class="note"><span class="inner">extending Dialog, not Component </span></span>
+{
+    <span class="hljs-comment">// This template will be &quot;re-templated&quot; by the base Dialog class</span>
+    <span class="hljs-comment">// to wrap it in &lt;dialog&gt;, &lt;form&gt; etc...</span>
+    <span class="hljs-keyword">static</span> template = {
+        <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;My Dialog&#x27;s Title&quot;</span>,
+        <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;my-dialog&quot;</span>,
+        <span class="hljs-attr">content</span>: {
+            <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;p&quot;</span>,
+            <span class="hljs-attr">$</span>: <span class="hljs-string">&quot;Hello World!  This is the dialog&#x27;s content&quot;</span>,
+        }
+    }
+}
+
+<div class="snip" title="Some code omitted for clarity."><span class="hline"></span><svg xmlns="http://www.w3.org/2000/svg" height="16px" width="16" viewBox="0 -960 960 960"><path d="M760-120 480-400l-94 94q8 15 11 32t3 34q0 66-47 113T240-80q-66 0-113-47T80-240q0-66 47-113t113-47q17 0 34 3t32 11l94-94-94-94q-15 8-32 11t-34 3q-66 0-113-47T80-720q0-66 47-113t113-47q66 0 113 47t47 113q0 17-3 34t-11 32l494 494v40H760ZM600-520l-80-80 240-240h120v40L600-520ZM240-640q33 0 56.5-23.5T320-720q0-33-23.5-56.5T240-800q-33 0-56.5 23.5T160-720q0 33 23.5 56.5T240-640Zm240 180q8 0 14-6t6-14q0-8-6-14t-14-6q-8 0-14 6t-6 14q0 8 6 14t14 6ZM240-160q33 0 56.5-23.5T320-240q0-33-23.5-56.5T240-320q-33 0-56.5 23.5T160-240q0 33 23.5 56.5T240-160Z"></path></svg><span class="hline"></span></div></code></pre>
+              <div id="demo-5" class="demo">
+</div>
+              <div class="demo-footer">
+    <span></span>
+    <a id="edit-demo-5" class="edit-demo-link vcenter" href="#"><svg xmlns="http://www.w3.org/2000/svg" height="22px" width="22" viewBox="0 -960 960 960"><path d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg><span> Edit</span></a>
+</div>
+              <div class="tip">
+                <p>In the above example, anything not directly related to template handling has been
+omitted. Click the &quot;Edit&quot; link above to see the full code.</p>
+              </div>
+              <p>Notice how the enclosing <code>dialog</code>, <code>form</code>, <code>header</code>, <code>main</code> and <code>footer</code> elements
+are provided automatically by the base <code>Dialog</code> class, but the content of the <code>header</code>
+and <code>main</code> elements is provided by the derived <code>MyDialog</code> class</p>
+              <pre><code class="hljs language-html"><span class="hljs-tag">&lt;<span class="hljs-name">dialog</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;dialog&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;my-dialog&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;dialog&quot;</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">header</span>&gt;</span>
+            My Dialog
+        <span class="hljs-tag">&lt;/<span class="hljs-name">header</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">main</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Hello World<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">main</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">footer</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>Close<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">footer</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">dialog</span>&gt;</span>
+</code></pre>
+              <h2 id="next-steps"><a class="hlink" href="#next-steps">#</a>Next Steps</h2>
+              <ul>
+                <li>Learn more about <a href="templates">Templates</a></li>
+              </ul>
+            </div>
+            <nav class="next-previous-navigation"><a class="previous" href="start"><div class="description muted">‹ Previous</div><div class="title">Getting Started</div></a><a class="next" href="component"><div class="description muted">Next ›</div><div class="title">Component API</div></a></nav>
+          </div>
+          <div id="div-rhs" class="">
+            <nav id="secondary-nav">
+              <div class="highlight"></div>
+              <a href="#" class="title">Components Overview</a>
+              <ul class="h1">
+                <!-- enter foreach block -->
+                <li><a href="#anatomy-of-a-component">Anatomy of a Component</a><!-- IfBlock placeholder --></li>
+                <li><a href="#logic">Logic</a><!-- IfBlock placeholder --></li>
+                <li><a href="#templates">Templates</a><!-- IfBlock placeholder --></li>
+                <li><a href="#dynamic-content">Dynamic Content</a><!-- IfBlock placeholder --></li>
+                <li><a href="#dispatching-events">Dispatching Events</a><!-- IfBlock placeholder --></li>
+                <li><a href="#data-loads">Async Data Loads</a><!-- IfBlock placeholder --></li>
+                <li><a href="#mounting-components">Mounting Components</a><!-- IfBlock placeholder --></li>
+                <li><a href="#component-life-cycle">Component Life-Cycle</a><!-- IfBlock placeholder --></li>
+                <li><a href="#listening-to-external-events">Listening to External Events</a><!-- IfBlock placeholder --></li>
+                <li><a href="#styles">Styles</a><!-- IfBlock placeholder --></li>
+                <li><a href="#custom-templates">Custom Templates</a><!-- IfBlock placeholder --></li>
+                <li><a href="#next-steps">Next Steps</a><!-- IfBlock placeholder --></li>
+                <!-- leave foreach block -->
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--co-ssr-end-->
+  </body>
+</html>

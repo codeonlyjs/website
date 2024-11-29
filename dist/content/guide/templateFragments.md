@@ -1,0 +1,27 @@
+---
+title: "Fragments"
+---
+# Fragments
+
+If a template element doesn't have a type, it's considered a "fragment" 
+or multi-root element.  Any child elements of the fragment will be included directly in the fragment's parent.
+
+In this example, the one `if` condition either includes or excludes all three paragraphs from the containing div:
+
+```js
+{
+    type: 'div':
+    $: {
+        // No 'type' here, so this is a fragment
+        if: c => someCondition,
+        $: [
+            { type: "p", $: "Para 1" }
+            { type: "p", $: "Para 2" }
+            { type: "p", $: "Para 3" }
+        ]
+    }
+}
+```
+
+
+

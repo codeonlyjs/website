@@ -1,34 +1,26 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "CodeOnly Website",
   "type": "module",
   "scripts": {
-    "build": "cd client && vite build",
-    "dev": "node ./server/server.js",
-    "prod": "bash -c \"npm run build && NODE_ENV=production node ./server/server.js\"",
-    "up": "npm run build && docker-compose up --build -d",
-    "down": "docker-compose down"
+    "build": "vite build",
+    "dev": "coserv development",
+    "prod": "npm run build && coserv production"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@codeonlyjs/bundle-free": "github:codeonlyjs/bundle-free",
-    "@toptensoftware/sqlite": "github:toptensoftware/sqlite",
+    "@codeonlyjs/core": "file:../core",
+    "@codeonlyjs/coserv": "file:../coserv",
+    "@codeonlyjs/ssg": "file:../ssg",
     "commonmark": "^0.31.2",
-    "cookie-parser": "^1.4.7",
-    "express": "^4.21.1",
-    "express-async-errors": "^3.1.1",
-    "livereload": "^0.9.3",
-    "morgan": "^1.10.0",
-    "nodemailer": "^6.9.16",
-    "uuid": "^11.0.2"
+    "highlight.js": "^11.10.0"
   },
   "devDependencies": {
-    "@codeonlyjs/core": "file:../core",
-    "@codeonlyjs/stylish": "github:codeonlyjs/stylish",
-    "rollup": "^4.24.3",
-    "vite": "^5.4.9"
+    "@codeonlyjs/cogent": "github:codeonlyjs/cogent",
+    "serve": "^14.2.4",
+    "vite": "^5.4.9",
+    "vite-plugin-static-copy": "^2.0.0"
   }
 }

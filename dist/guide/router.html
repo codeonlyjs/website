@@ -1,0 +1,508 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- HTML Meta Tags -->
+    <title>CodeOnlyJS </title>
+    <meta name="description" content="The front-end Web framework for coders." />
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="CodeOnlyJS " />
+    <meta itemprop="description" content="The front-end Web framework for coders" />
+    <meta itemprop="image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://codeonlyjs.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CodeOnlyJS " />
+    <meta property="og:description" content="The front-end Web framework for coders" />
+    <meta property="og:image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CodeOnlyJS " />
+    <meta name="twitter:description" content="The front-end Web framework for coders" />
+    <meta name="twitter:image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Apple -->
+    <link rel="apple-touch-icon" href="https://codeonlyjs.org/codeonly-icon-256.png" />
+    <!-- Meta Tags Generated via https://heymeta.com -->
+
+    <link href="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish@1.0.10/stylish.css" type="text/css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish@1.0.10/stylish-theme.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/css.min.js"></script>
+    <link id="hljs-theme" href="" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs/loader.js"></script>
+    <script>
+    require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs' } });
+    </script>
+    <script>
+    function updateHighlightTheme()
+    {
+        let el = document.getElementById("hljs-theme");
+        let themeFile = stylish.darkMode ? "github-dark.min.css" : "github.min.css";
+        let new_href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/${themeFile}`;
+        el.setAttribute("href", new_href);
+    }
+    stylish.addEventListener("darkModeChanged", updateHighlightTheme);
+    updateHighlightTheme();
+    </script>
+    <style>
+    :root
+    {
+        --dark-accent-color: #9D79E5;
+    }
+    :root.home-colors
+    {
+        --dark-body-back-color: #0a0b1a;
+        --light-body-back-color: white;
+    }
+    body
+    {
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+    <script type="module" crossorigin="crossorigin" src="/assets/index-CXDn6ClS.js"></script>
+    <!--co-ssr-start--><link href="/assets/styles-AAABk3beHUc.css" type="text/css" rel="stylesheet" /><!--co-ssr-end-->
+    <meta name="co-ssr" value="true" />
+  </head>
+  <body>
+    <!--co-ssr-start-->
+    <div id="layoutRoot">
+      <header id="header">
+        <a href="/" class="title"><img class="hide-sm" src="/public/codeonly-logo-light.svg" /><img class="hide-lg" src="/public/codeonly-icon.svg" /></a>
+        <div class="buttons">
+          <a href="/guide/" class="subtle button">Docs</a><a href="/lab" class="subtle button labLink vcenter"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 -960 960 960" preserveAspectRatio="xMidYMid slice" role="img"><path xmlns="http://www.w3.org/2000/svg" d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg> The Lab</a><input type="checkbox" class="theme-switch" />
+          <script>
+          document.querySelector(".theme-switch").checked = window.stylish.darkMode;
+          </script>
+        </div>
+      </header>
+      <div id="layoutDocumentation">
+        <header id="mobile-bar"><button id="side-panel-menu-button" class="subtle muted"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" preserveAspectRatio="xMidYMid slice" role="img"><path xmlns="http://www.w3.org/2000/svg" d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"></path></svg> Menu</button><button id="side-panel-menu-button" class="subtle muted">On this page ›</button></header>
+        <div id="div-wrapper">
+          <div id="backdrop" class=""></div>
+          <div id="div-lhs" class="">
+            <nav id="nav-main">
+              <!-- enter foreach block -->
+              <h5> Introduction</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="." class="">Welcome</a></li>
+                <li><a href="start" class="">Getting Started</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Components</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="components" class="">Overview</a></li>
+                <li><a href="component" class="">API</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Templates</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="templates" class="">Basics</a></li>
+                <li><a href="templateText" class="">Text and HTML</a></li>
+                <li><a href="templateHtmlElements" class="">HTML Elements</a></li>
+                <li><a href="templateComponents" class="">Component References</a></li>
+                <li><a href="templateIf" class="">If Directive</a></li>
+                <li><a href="templateForEach" class="">ForEach Directive</a></li>
+                <li><a href="templateEmbedSlots" class="">Embed Slots</a></li>
+                <li><a href="templateInput" class="">Input Bindings</a></li>
+                <li><a href="templateTransitions" class="">Transitions</a></li>
+                <li><a href="templateFluent" class="">Fluent Templates</a></li>
+                <li><a href="templateUpdateSemantics" class="">Update Semantics</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Router</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="routerBasics" class="">Basics</a></li>
+                <li><a href="routerDetails" class="">Details</a></li>
+                <li><a href="routerNotes" class="">Notes</a></li>
+                <li><a href="routerTypical" class="">Typical Setup</a></li>
+                <li><a href="router" class="">API</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Rendering</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="renderIntro" class="">Introduction</a></li>
+                <li><a href="renderSSR" class="">Server Side Rendering (SSR)</a></li>
+                <li><a href="renderSSG" class="">Static Site Generation (SSG)</a></li>
+                <li><a href="renderStatic" class="">Static Rendering</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Utilities</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="utilities" class="">Utilities</a></li>
+                <li><a href="Notify" class="">Notify Service</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Related</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="stylish" class="">Stylish CSS</a></li>
+                <li><a href="bundle-free" class="">Bundle Free</a></li>
+                <li><a href="cogent" class="">Cogent</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <!-- leave foreach block -->
+            </nav>
+          </div>
+          <div id="div-center">
+            <div class="document-view">
+              <h1>Router API</h1>
+              <h2 id="router-class"><a class="hlink" href="#router-class">#</a>Router Class</h2>
+              <h3 id="router-class-constructor"><a class="hlink" href="#router-class-constructor">#</a>constructor(handlers)</h3>
+              <p>Constructs a new Router object.</p>
+              <ul>
+                <li><code>handlers</code> - an optional array of route handlers to be registered.</li>
+              </ul>
+              <h3 id="router-class-start"><a class="hlink" href="#router-class-start">#</a>start(driver)</h3>
+              <p>Starts the router, with a the specified driver.</p>
+              <p>If driver is not specified, the built in <code>WebHistoryRouterDriver</code>
+is used.</p>
+              <h3 id="router-class-navigate"><a class="hlink" href="#router-class-navigate">#</a>navigate()</h3>
+              <p>Bound to the driver's <code>navigate()</code> method.</p>
+              <h3 id="router-class-replace"><a class="hlink" href="#router-class-replace">#</a>replace()</h3>
+              <p>Bound to the driver's <code>replace()</code> method.</p>
+              <h3 id="router-class-back"><a class="hlink" href="#router-class-back">#</a>back()</h3>
+              <p>Bound to the driver's <code>back()</code> method.</p>
+              <h3 id="router-class-internalize"><a class="hlink" href="#router-class-internalize">#</a>internalize(url)</h3>
+              <p>Internalizes a URL.</p>
+              <p>If the <code>urlMapper</code> property has been set this method delegates to the
+mapper, otherwise a copy of the passed URL is returned.</p>
+              <ul>
+                <li>url - the URL to be internalized (may be a URL object or a string)</li>
+              </ul>
+              <p>Returns the internalized URL.</p>
+              <ul>
+                <li>If the <code>url</code> parameter is a URL object a URL object is returnd.</li>
+                <li>If the <code>url</code> parameter is a string, a string is returned.</li>
+              </ul>
+              <h3 id="router-class-externalize"><a class="hlink" href="#router-class-externalize">#</a>externalize(url)</h3>
+              <p>Externalizes a URL.</p>
+              <p>If the <code>urlMapper</code> property has been set this method delegates to the
+mapper, otherwise a copy of the passed URL is returned.</p>
+              <ul>
+                <li>url - the URL to be externalized (may be a URL object or a string)</li>
+              </ul>
+              <p>Returns the externalized URL.</p>
+              <ul>
+                <li>If the <code>url</code> parameter is a URL object a URL object is returnd.</li>
+                <li>If the <code>url</code> parameter is a string, a string is returned.</li>
+              </ul>
+              <h3 id="router-class-current"><a class="hlink" href="#router-class-current">#</a>current</h3>
+              <p>Returns the current route object.</p>
+              <h3 id="router-class-pending"><a class="hlink" href="#router-class-pending">#</a>pending</h3>
+              <p>Returns the route object that's currently being entered, but has
+not yet been confirmed.</p>
+              <h3 id="router-class-addeventlistener"><a class="hlink" href="#router-class-addeventlistener">#</a>addEventListener(event, handler)</h3>
+              <p>Adds an event listener to the router.</p>
+              <ul>
+                <li><code>event</code> - name of the event to listen for</li>
+                <li><code>handler(from, to)</code> - the callback which will be passed the route being left and the route being entered.</li>
+              </ul>
+              <p>Note, events fired during the first phase of navigation (ie: the <code>&quot;mayLeave&quot;</code>
+and <code>&quot;mayEnter&quot;</code> events) can cancel the navigation by returning false.  These
+events can also be <code>async</code> and return a promise that resolves to true or false.</p>
+              <h3 id="router-class-removeeventlistener"><a class="hlink" href="#router-class-removeeventlistener">#</a>removeEventListener(event, handler)</h3>
+              <p>Removes a previously registered event listenter.</p>
+              <h3 id="router-class-register"><a class="hlink" href="#router-class-register">#</a>register(handler)</h3>
+              <p>Registers route handlers with the router.</p>
+              <ul>
+                <li><code>handler</code> - either a single route handler, or an array of route handlers.</li>
+              </ul>
+              <h3 id="router-class-revoke"><a class="hlink" href="#router-class-revoke">#</a>revoke(predicate)</h3>
+              <p>Revokes route handlers that match a predicate.</p>
+              <ul>
+                <li><code>predicate(handler)</code> - callback that will be passed each currently registered
+handler.  Return true to revoke the handler, false to keep it.</li>
+              </ul>
+              <h2 id="route-handler-object"><a class="hlink" href="#route-handler-object">#</a>Route Handler Object</h2>
+              <p>Route handlers are plain JavaScript objects (ie: they're not a class) with
+the follow properties, all of which are options.</p>
+              <h3 id="route-handler-object-pattern"><a class="hlink" href="#route-handler-object-pattern">#</a>pattern</h3>
+              <p>A URL pattern string or a RegExp object to be used as an initial match
+against URLs.</p>
+              <p>If specified and a URL matches the pattern, or if a pattern isn't specified
+this route handler is considered as a candidate for the URL.</p>
+              <p>Considered router handlers aren't confirmed as a match until the <code>match</code>
+function (if specified) returns true.</p>
+              <h3 id="route-handler-object-match"><a class="hlink" href="#route-handler-object-match">#</a>async match(to)</h3>
+              <p>If a route handler is considered a candidate (because it didn't specify
+a <code>pattern</code> or because the pattern matched) its <code>match</code> function
+will be called to confirm the match.</p>
+              <ul>
+                <li><code>to</code> - the route object being navigated to</li>
+              </ul>
+              <p>This function should return.</p>
+              <ul>
+                <li><code>true</code> to confirm the match</li>
+                <li><code>false</code> to reject the match</li>
+                <li><code>null</code> to instruct the router and driver to abandon in-app navigation
+and perform an full external page load on the URL.</li>
+              </ul>
+              <p>This function can be <code>async</code> and return a promise for one of the above values.</p>
+              <h3 id="route-handler-object-mayenter"><a class="hlink" href="#route-handler-object-mayenter">#</a>async mayEnter(from, to)</h3>
+              <p>Notifies the route handler that a route it manages may become the
+new current route.</p>
+              <ul>
+                <li><code>from</code> - the route being navigated away from, or <code>null</code> if this is the initial page load.</li>
+                <li><code>to</code> - the route being navigated to (always a route managed by this route handler)</li>
+              </ul>
+              <p>This function should return <code>true</code> to accept the navigation, <code>false</code> to cancel
+the navigation, or a promise resolving to <code>true</code> or <code>false</code>.</p>
+              <h3 id="route-handler-object-mayleave"><a class="hlink" href="#route-handler-object-mayleave">#</a>async mayLeave(from, to)</h3>
+              <p>Notifies the route handler of the current route that it may be navigated
+away from.</p>
+              <ul>
+                <li><code>from</code> - the route being navigated away from (always a route managed by
+this route handler)</li>
+                <li><code>to</code> - the route being navigated to.</li>
+              </ul>
+              <p>This function should return <code>true</code> to accept the navigation, <code>false</code> to cancel
+the navigation, or a promise resolving to <code>true</code> or <code>false</code>.</p>
+              <h3 id="route-handler-object-didenter"><a class="hlink" href="#route-handler-object-didenter">#</a>didEnter(from, to)</h3>
+              <p>Notifies the route handler that a route it manages has become the new current
+route.</p>
+              <ul>
+                <li><code>from</code> - the route being navigated away from, or <code>null</code> if this is the
+initial page load.</li>
+                <li><code>to</code> - the new current route object (always a route object managed by this
+route handler)</li>
+              </ul>
+              <h3 id="route-handler-object-didleave"><a class="hlink" href="#route-handler-object-didleave">#</a>didLeave(from, to)</h3>
+              <p>Notifies the route handler that a route object it manages is no longer
+the current route.</p>
+              <ul>
+                <li><code>from</code> - the route object that is no longer current (always a route
+object managed by this route handler)</li>
+                <li><code>to</code> - the new current route object</li>
+              </ul>
+              <h3 id="route-handler-object-order"><a class="hlink" href="#route-handler-object-order">#</a>order</h3>
+              <p>A numeric value that sets the order of this route manager in relation to
+others.  If not specified, a value of <code>0</code> is assumed.</p>
+              <p>This setting can be used to resolve conflicts when a URL might otherwise
+match multiple route handlers, giving precedence to the handler with the
+lower <code>order</code> value.</p>
+              <p>This setting is often used with a route handler for a &quot;Not Found&quot; as a
+catch all in case no other route manager matches a URL.  By giving such
+a route handler a high order value it will always be matched after all
+other handlers.</p>
+              <h2 id="route-object"><a class="hlink" href="#route-object">#</a>Route Object</h2>
+              <p>Route objects are created by the Router when a new navigation event begins
+and will have at least the properties described here.</p>
+              <p>Usually route handlers will attach additional properties to the route object
+but that's up to your application.</p>
+              <h3 id="route-object-url"><a class="hlink" href="#route-object-url">#</a>url</h3>
+              <p>The internalized URL of the route as URL object (not a string)</p>
+              <h3 id="route-object-state"><a class="hlink" href="#route-object-state">#</a>state</h3>
+              <p>Any previously saved state associated with this route.</p>
+              <h3 id="route-object-current"><a class="hlink" href="#route-object-current">#</a>current</h3>
+              <p>True if this is the route that Router.current would return.</p>
+              <h3 id="route-object-handler"><a class="hlink" href="#route-object-handler">#</a>handler</h3>
+              <p>The route handler that is associated with this route object.</p>
+              <p>Before a route is matched to a handler, this property is <code>undefined</code>.</p>
+              <h3 id="route-object-viewstate"><a class="hlink" href="#route-object-viewstate">#</a>viewState</h3>
+              <p>If you're using the <code>ViewStateRestoration</code> component it will
+attach any previously saved view state to the route object in its
+<code>&quot;mayEnter&quot;</code> handler.</p>
+              <h2 id="viewstaterestoration-class"><a class="hlink" href="#viewstaterestoration-class">#</a>ViewStateRestoration Class</h2>
+              <p>The <code>ViewStateRestoration</code> class implements this default view
+state restoration features of the Router.</p>
+              <p>It doesn't have a public API itself, but it will call capture and
+restore methods on the route handlers and/or the router itself.</p>
+              <h3 id="viewstaterestoration-class-captureviewstate"><a class="hlink" href="#viewstaterestoration-class-captureviewstate">#</a>captureViewState()</h3>
+              <p>When capturing view state, the following methods are tried:</p>
+              <ol>
+                <li><code>captureViewState()</code> on the route handler being navigated away from.</li>
+                <li><code>captureViewState()</code> on the Router itself</li>
+                <li>Otherwise the current document scroll position is captured.</li>
+              </ol>
+              <p>The <code>captureViewState()</code> function should return an JSON serializable
+object with any view state information that should be tracked.</p>
+              <h3 id="viewstaterestoration-class-restoreviewstate"><a class="hlink" href="#viewstaterestoration-class-restoreviewstate">#</a>restoreViewState(state)</h3>
+              <p>When restoring view state, the following methods are tried:</p>
+              <ol>
+                <li><code>restoreViewState(state)</code> on the route handler being navigated to.</li>
+                <li><code>restoreViewState(state)</code> on the Router itself</li>
+                <li>Otherwise the current document scroll position is restored.</li>
+              </ol>
+              <p>The <code>restoreViewState(state)</code> function will be passed a copy of the
+view state object as previously returned from <code>captureViewState()</code></p>
+              <h2 id="webhistoryrouterdriver-class"><a class="hlink" href="#webhistoryrouterdriver-class">#</a>WebHistoryRouterDriver Class</h2>
+              <p>The <code>WebHistoryRouterDriver</code> provides the connection between the
+Router and the browser's History API and DOM.</p>
+              <p>Usually an application should only interact with it through the
+following methods which are forwarded by the Router to the driver:</p>
+              <h3 id="webhistoryrouterdriver-class-start"><a class="hlink" href="#webhistoryrouterdriver-class-start">#</a>async start(router)</h3>
+              <p>Initializes the driver by:</p>
+              <ol>
+                <li>connecting required event handlers to browser History API and DOM</li>
+                <li>performing initial page load navigation</li>
+              </ol>
+              <p>Parameters:</p>
+              <ul>
+                <li><code>router</code> - the Router this drive is to connect with.</li>
+              </ul>
+              <p>Don't call this method directly, instead call the <code>Router.start()</code>
+method which will delegate to this method.</p>
+              <h3 id="webhistoryrouterdriver-class-navigate"><a class="hlink" href="#webhistoryrouterdriver-class-navigate">#</a>async navigate(url)</h3>
+              <p>Navigates to a new URL.</p>
+              <ul>
+                <li><code>url</code> - the internal URL to navigate to.  Can be a string or a URL object.</li>
+              </ul>
+              <p>Returns a promise that resolves when navigation is complete.  The resolved
+promise is the route object of the new navigation or <code>null</code> if navigation
+was cancelled.</p>
+              <h3 id="webhistoryrouterdriver-class-back"><a class="hlink" href="#webhistoryrouterdriver-class-back">#</a>back()</h3>
+              <p>Navigates back one step in the browser history, or, if there is no previous
+entry to go back to, navigates to the home page.</p>
+              <p>This method can be used with routes to modal dialog to close the dialog and
+return to the previous route, or the home page (if the modal was loaded directly
+from an initial page load  URL).</p>
+              <h3 id="webhistoryrouterdriver-class-replace"><a class="hlink" href="#webhistoryrouterdriver-class-replace">#</a>replace(url)</h3>
+              <p>This function updates the saved state of the route and optionally updates
+the current page URL.</p>
+              <p>If a url is specified, it replaces the current URL shown in the browser
+(and the history) and updates the current route object with the new URL information.</p>
+              <p>Regardless of whether a URL is specified, this method also saves
+the <code>Router.current.state</code> to the history making it available if this
+page is returned to.</p>
+              <div class="tip">
+                <p>You should never replace the <code>Router.current.state</code> object as it
+has settings that are used internally to maintain the current history
+position.</p>
+                <p>If you need to save additional state information we recommend storing it
+in a sub-object of the state object, eg: <code>Router.current.state.myState</code>.</p>
+              </div>
+              <h2 id="urlmapper-class"><a class="hlink" href="#urlmapper-class">#</a>UrlMapper Class</h2>
+              <p>The <code>UrlMapper</code> class provides methods to internalize and external URLs
+performing two commong functions:</p>
+              <ol>
+                <li>Supporting a base URL prefix</li>
+                <li>Supporting hash based URL path</li>
+              </ol>
+              <h3 id="urlmapper-class-constructor"><a class="hlink" href="#urlmapper-class-constructor">#</a>constructor(options)</h3>
+              <p>Constructs a new <code>UrlMapper</code> object.</p>
+              <ul>
+                <li>
+                  <code>options</code> - an object with settings controlling how URLs are mapped
+                  <ul>
+                    <li><code>base</code> - a URL prefix for external URLs</li>
+                    <li><code>hash</code> - if true URLs will be externalized as hash URL paths.</li>
+                  </ul>
+                </li>
+              </ul>
+              <p>If specified, the <code>base</code> option must start and end with a slash &quot;'/'&quot;.</p>
+              <h3 id="urlmapper-class-internalize"><a class="hlink" href="#urlmapper-class-internalize">#</a>internalize(url)</h3>
+              <p>Internalizes a URL.</p>
+              <ul>
+                <li><code>url</code> - a URL object (not string) to be internalized.</li>
+              </ul>
+              <p>Throws an Error if the URL can't be internalized.</p>
+              <h3 id="urlmapper-class-externalize"><a class="hlink" href="#urlmapper-class-externalize">#</a>externalize(url)</h3>
+              <p>Externalizes a URL.</p>
+              <ul>
+                <li><code>url</code> - a URL object (not string) to be externalized.</li>
+              </ul>
+              <p>Throws an Error if the URL can't be externalized.</p>
+            </div>
+            <nav class="next-previous-navigation"><a class="previous" href="routerTypical"><div class="description muted">‹ Previous</div><div class="title">Router Typical Setup</div></a><a class="next" href="renderIntro"><div class="description muted">Next ›</div><div class="title">Introduction to Rendering</div></a></nav>
+          </div>
+          <div id="div-rhs" class="">
+            <nav id="secondary-nav">
+              <div class="highlight"></div>
+              <a href="#" class="title">Router API</a>
+              <ul class="h1">
+                <!-- enter foreach block -->
+                <li>
+                  <a href="#router-class">Router Class</a>
+                  <ul class="h2">
+                    <!-- enter foreach block -->
+                    <li><a href="#router-class-constructor">constructor(handlers)</a></li>
+                    <li><a href="#router-class-start">start(driver)</a></li>
+                    <li><a href="#router-class-navigate">navigate()</a></li>
+                    <li><a href="#router-class-replace">replace()</a></li>
+                    <li><a href="#router-class-back">back()</a></li>
+                    <li><a href="#router-class-internalize">internalize(url)</a></li>
+                    <li><a href="#router-class-externalize">externalize(url)</a></li>
+                    <li><a href="#router-class-current">current</a></li>
+                    <li><a href="#router-class-pending">pending</a></li>
+                    <li><a href="#router-class-addeventlistener">addEventListener(event, handler)</a></li>
+                    <li><a href="#router-class-removeeventlistener">removeEventListener(event, handler)</a></li>
+                    <li><a href="#router-class-register">register(handler)</a></li>
+                    <li><a href="#router-class-revoke">revoke(predicate)</a></li>
+                    <!-- leave foreach block -->
+                  </ul>
+                </li>
+                <li>
+                  <a href="#route-handler-object">Route Handler Object</a>
+                  <ul class="h2">
+                    <!-- enter foreach block -->
+                    <li><a href="#route-handler-object-pattern">pattern</a></li>
+                    <li><a href="#route-handler-object-match">async match(to)</a></li>
+                    <li><a href="#route-handler-object-mayenter">async mayEnter(from, to)</a></li>
+                    <li><a href="#route-handler-object-mayleave">async mayLeave(from, to)</a></li>
+                    <li><a href="#route-handler-object-didenter">didEnter(from, to)</a></li>
+                    <li><a href="#route-handler-object-didleave">didLeave(from, to)</a></li>
+                    <li><a href="#route-handler-object-order">order</a></li>
+                    <!-- leave foreach block -->
+                  </ul>
+                </li>
+                <li>
+                  <a href="#route-object">Route Object</a>
+                  <ul class="h2">
+                    <!-- enter foreach block -->
+                    <li><a href="#route-object-url">url</a></li>
+                    <li><a href="#route-object-state">state</a></li>
+                    <li><a href="#route-object-current">current</a></li>
+                    <li><a href="#route-object-handler">handler</a></li>
+                    <li><a href="#route-object-viewstate">viewState</a></li>
+                    <!-- leave foreach block -->
+                  </ul>
+                </li>
+                <li>
+                  <a href="#viewstaterestoration-class">ViewStateRestoration Class</a>
+                  <ul class="h2">
+                    <!-- enter foreach block -->
+                    <li><a href="#viewstaterestoration-class-captureviewstate">captureViewState()</a></li>
+                    <li><a href="#viewstaterestoration-class-restoreviewstate">restoreViewState(state)</a></li>
+                    <!-- leave foreach block -->
+                  </ul>
+                </li>
+                <li>
+                  <a href="#webhistoryrouterdriver-class">WebHistoryRouterDriver Class</a>
+                  <ul class="h2">
+                    <!-- enter foreach block -->
+                    <li><a href="#webhistoryrouterdriver-class-start">async start(router)</a></li>
+                    <li><a href="#webhistoryrouterdriver-class-navigate">async navigate(url)</a></li>
+                    <li><a href="#webhistoryrouterdriver-class-back">back()</a></li>
+                    <li><a href="#webhistoryrouterdriver-class-replace">replace(url)</a></li>
+                    <!-- leave foreach block -->
+                  </ul>
+                </li>
+                <li>
+                  <a href="#urlmapper-class">UrlMapper Class</a>
+                  <ul class="h2">
+                    <!-- enter foreach block -->
+                    <li><a href="#urlmapper-class-constructor">constructor(options)</a></li>
+                    <li><a href="#urlmapper-class-internalize">internalize(url)</a></li>
+                    <li><a href="#urlmapper-class-externalize">externalize(url)</a></li>
+                    <!-- leave foreach block -->
+                  </ul>
+                </li>
+                <!-- leave foreach block -->
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--co-ssr-end-->
+  </body>
+</html>

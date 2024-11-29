@@ -1,0 +1,366 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- HTML Meta Tags -->
+    <title>CodeOnlyJS </title>
+    <meta name="description" content="The front-end Web framework for coders." />
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="CodeOnlyJS " />
+    <meta itemprop="description" content="The front-end Web framework for coders" />
+    <meta itemprop="image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://codeonlyjs.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="CodeOnlyJS " />
+    <meta property="og:description" content="The front-end Web framework for coders" />
+    <meta property="og:image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CodeOnlyJS " />
+    <meta name="twitter:description" content="The front-end Web framework for coders" />
+    <meta name="twitter:image" content="https://codeonlyjs.org/social-card-dark-1200.png" />
+    <!-- Apple -->
+    <link rel="apple-touch-icon" href="https://codeonlyjs.org/codeonly-icon-256.png" />
+    <!-- Meta Tags Generated via https://heymeta.com -->
+
+    <link href="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish@1.0.10/stylish.css" type="text/css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/gh/codeonlyjs/stylish@1.0.10/stylish-theme.min.js"></script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/css.min.js"></script>
+    <link id="hljs-theme" href="" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs/loader.js"></script>
+    <script>
+    require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs' } });
+    </script>
+    <script>
+    function updateHighlightTheme()
+    {
+        let el = document.getElementById("hljs-theme");
+        let themeFile = stylish.darkMode ? "github-dark.min.css" : "github.min.css";
+        let new_href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.10.0/styles/${themeFile}`;
+        el.setAttribute("href", new_href);
+    }
+    stylish.addEventListener("darkModeChanged", updateHighlightTheme);
+    updateHighlightTheme();
+    </script>
+    <style>
+    :root
+    {
+        --dark-accent-color: #9D79E5;
+    }
+    :root.home-colors
+    {
+        --dark-body-back-color: #0a0b1a;
+        --light-body-back-color: white;
+    }
+    body
+    {
+        padding: 0;
+        margin: 0;
+    }
+    </style>
+    <script type="module" crossorigin="crossorigin" src="/assets/index-CXDn6ClS.js"></script>
+    <!--co-ssr-start--><link href="/assets/styles-AAABk3beHUc.css" type="text/css" rel="stylesheet" /><!--co-ssr-end-->
+    <meta name="co-ssr" value="true" />
+  </head>
+  <body>
+    <!--co-ssr-start-->
+    <div id="layoutRoot">
+      <header id="header">
+        <a href="/" class="title"><img class="hide-sm" src="/public/codeonly-logo-light.svg" /><img class="hide-lg" src="/public/codeonly-icon.svg" /></a>
+        <div class="buttons">
+          <a href="/guide/" class="subtle button">Docs</a><a href="/lab" class="subtle button labLink vcenter"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 -960 960 960" preserveAspectRatio="xMidYMid slice" role="img"><path xmlns="http://www.w3.org/2000/svg" d="M200-120q-51 0-72.5-45.5T138-250l222-270v-240h-40q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760h-40v240l222 270q32 39 10.5 84.5T760-120H200Zm0-80h560L520-492v-268h-80v268L200-200Zm280-280Z"></path></svg> The Lab</a><input type="checkbox" class="theme-switch" />
+          <script>
+          document.querySelector(".theme-switch").checked = window.stylish.darkMode;
+          </script>
+        </div>
+      </header>
+      <div id="layoutDocumentation">
+        <header id="mobile-bar"><button id="side-panel-menu-button" class="subtle muted"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 -960 960 960" preserveAspectRatio="xMidYMid slice" role="img"><path xmlns="http://www.w3.org/2000/svg" d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"></path></svg> Menu</button><button id="side-panel-menu-button" class="subtle muted">On this page ›</button></header>
+        <div id="div-wrapper">
+          <div id="backdrop" class=""></div>
+          <div id="div-lhs" class="">
+            <nav id="nav-main">
+              <!-- enter foreach block -->
+              <h5> Introduction</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="." class="">Welcome</a></li>
+                <li><a href="start" class="">Getting Started</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Components</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="components" class="">Overview</a></li>
+                <li><a href="component" class="">API</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Templates</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="templates" class="">Basics</a></li>
+                <li><a href="templateText" class="">Text and HTML</a></li>
+                <li><a href="templateHtmlElements" class="">HTML Elements</a></li>
+                <li><a href="templateComponents" class="">Component References</a></li>
+                <li><a href="templateIf" class="">If Directive</a></li>
+                <li><a href="templateForEach" class="">ForEach Directive</a></li>
+                <li><a href="templateEmbedSlots" class="">Embed Slots</a></li>
+                <li><a href="templateInput" class="">Input Bindings</a></li>
+                <li><a href="templateTransitions" class="">Transitions</a></li>
+                <li><a href="templateFluent" class="">Fluent Templates</a></li>
+                <li><a href="templateUpdateSemantics" class="">Update Semantics</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Router</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="routerBasics" class="">Basics</a></li>
+                <li><a href="routerDetails" class="">Details</a></li>
+                <li><a href="routerNotes" class="">Notes</a></li>
+                <li><a href="routerTypical" class="">Typical Setup</a></li>
+                <li><a href="router" class="">API</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Rendering</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="renderIntro" class="">Introduction</a></li>
+                <li><a href="renderSSR" class="">Server Side Rendering (SSR)</a></li>
+                <li><a href="renderSSG" class="">Static Site Generation (SSG)</a></li>
+                <li><a href="renderStatic" class="">Static Rendering</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Utilities</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="utilities" class="">Utilities</a></li>
+                <li><a href="Notify" class="">Notify Service</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <h5> Related</h5>
+              <ul>
+                <!-- enter foreach block -->
+                <li><a href="stylish" class="">Stylish CSS</a></li>
+                <li><a href="bundle-free" class="">Bundle Free</a></li>
+                <li><a href="cogent" class="">Cogent</a></li>
+                <!-- leave foreach block -->
+              </ul>
+              <!-- leave foreach block -->
+            </nav>
+          </div>
+          <div id="div-center">
+            <div class="document-view">
+              <h1>Fluent Templates</h1>
+              <p>Fluent templates are an alternative way to declare CodeOnly templates
+that can be more concise than JSON-like structured declarations.</p>
+              <p>Templates declared this way are constructed using a
+<a href="https://en.wikipedia.org/wiki/Fluent_interface">fluent-style API</a>.</p>
+              <h2 id="the-function"><a class="hlink" href="#the-function">#</a>The <code>$</code> Function</h2>
+              <p>To use fluent templates, first import the <code>$</code> function:</p>
+              <pre><code class="hljs language-js"><span class="hljs-keyword">import</span> { $ } <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@codeonlyjs/core&quot;</span>
+</code></pre>
+              <p>The <code>$</code> function is used to construct a fluent template node:</p>
+              <pre><code class="hljs language-js">$(<span class="hljs-string">&quot;div&quot;</span>)
+</code></pre>
+              <p>yields:</p>
+              <pre><code class="hljs language-js">{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>
+}
+</code></pre>
+              <p>For element names that conform to JavaScript identifiers, accessing
+a property on the <code>$</code> function also create elements:</p>
+              <pre><code class="hljs language-js">$.div   <span class="hljs-comment">// equivalent to $(&quot;div&quot;)</span>
+</code></pre>
+              <h2 id="setting-properties"><a class="hlink" href="#setting-properties">#</a>Setting Properties</h2>
+              <p>Once you've constructed a fluent node, you can set its properties
+by calling functions on the object with the property's name.</p>
+              <p>Each function you call returns the original fluent node which
+allows chaining:</p>
+              <pre><code class="hljs language-js">$.div.<span class="hljs-title function_">id</span>(<span class="hljs-string">&quot;my-id&quot;</span>).<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;class&quot;</span>)
+</code></pre>
+              <p>yields:</p>
+              <pre><code class="hljs language-js">{
+    <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>,
+    <span class="hljs-attr">id</span>: <span class="hljs-string">&quot;my-id&quot;</span>,
+    <span class="hljs-attr">class</span>: <span class="hljs-string">&quot;class&quot;</span>
+}
+</code></pre>
+              <div class="tip">
+                <p>While it might appear that fluent templates are limited to a set of hard-coded
+element and attribute names, this isn't the case.</p>
+                <p>The fluent node object uses JavaScript proxies to detect the property names
+as they're invoked allowing any element/attribute name to be set.</p>
+                <p>ie: <code>$.foo.bar(&quot;baz&quot;)</code> will give <code>&lt;foo bar=&quot;baz&quot;&gt;</code> - even though CodeOnly
+doesn't include a property named <code>foo</code> nor a function named <code>bar</code>.</p>
+              </div>
+              <h2 id="the-type-property"><a class="hlink" href="#the-type-property">#</a>The <code>type</code> Property</h2>
+              <p>The <code>type</code> property is automatically mapped to <code>attr_type</code> resolving
+the conflict between the HTML <code>type</code> attribute and the CodeOnly <code>type</code> property.</p>
+              <p>ie: this works as expected</p>
+              <pre><code class="hljs language-js">$.input.<span class="hljs-title function_">type</span>(<span class="hljs-string">&quot;password&quot;</span>)
+</code></pre>
+              <h2 id="dynamic-content"><a class="hlink" href="#dynamic-content">#</a>Dynamic Content</h2>
+              <p>Dynamic callbacks can be used anywhere they can be used in structured
+templates:</p>
+              <pre><code class="hljs language-js">$.span.<span class="hljs-title function_">text</span>(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> <span class="hljs-string">`Count: <span class="hljs-subst">${c.count}</span>`</span>)
+</code></pre>
+              <p>yields:</p>
+              <pre><code class="hljs language-js">{
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;span&quot;</span>,
+  <span class="hljs-attr">text</span>: <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> <span class="hljs-string">`Count: <span class="hljs-subst">${c.count}</span>`</span>,
+}
+</code></pre>
+              <h2 id="boolean-classes-and-named-styles"><a class="hlink" href="#boolean-classes-and-named-styles">#</a>Boolean Classes and Named Styles</h2>
+              <p>If the <code>class</code> and <code>style</code> methods are called with more than one
+parameter they are converted to boolean classes and named styles:</p>
+              <pre><code class="hljs language-js">[
+  $.div.<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;selected&quot;</span>, <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-property">isSelected</span>),
+  $.div.<span class="hljs-title function_">style</span>(<span class="hljs-string">&quot;color&quot;</span>, <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-property">color</span>),
+]
+</code></pre>
+              <p>yields</p>
+              <pre><code class="hljs language-js">[
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>,
+    <span class="hljs-attr">class_selected</span>: <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-property">isSelected</span>,
+  },
+  {
+    <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>,
+    <span class="hljs-attr">style_color</span>: <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-property">color</span>,
+  }
+]
+</code></pre>
+              <h2 id="event-handlers"><a class="hlink" href="#event-handlers">#</a>Event Handlers</h2>
+              <p>Connecting event handlers works as expected:</p>
+              <pre><code class="hljs language-js">{
+  $.input.<span class="hljs-title function_">type</span>(<span class="hljs-string">&quot;text&quot;</span>).<span class="hljs-title function_">on_click</span>(<span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-title function_">onClick</span>());
+}
+</code></pre>
+              <p>Fluent templates also allow this alternate format:</p>
+              <pre><code class="hljs language-js">{
+  $.input.<span class="hljs-title function_">type</span>(<span class="hljs-string">&quot;text&quot;</span>).<span class="hljs-title function_">on</span>(<span class="hljs-string">&quot;click&quot;</span>, <span class="hljs-function"><span class="hljs-params">c</span> =&gt;</span> c.<span class="hljs-title function_">onClick</span>());
+}
+</code></pre>
+              <h2 id="child-nodes"><a class="hlink" href="#child-nodes">#</a>Child Nodes</h2>
+              <p>A fluent node is a function that appends child nodes to the element
+being constructed.</p>
+              <p>The append function accepts a variable number of arguments and all arguments
+will be appended as child nodes.</p>
+              <p>In this example, the container has two child items, and each item
+has a text child node (&quot;Apples&quot; and &quot;Pears&quot;)</p>
+              <pre><code class="hljs language-js">$.div.<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;container&quot;</span>)(
+  $.div.<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;item1&quot;</span>)(<span class="hljs-string">&quot;Apples&quot;</span>)
+  $.div.<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;item2&quot;</span>)(<span class="hljs-string">&quot;Pears&quot;</span>)
+)
+</code></pre>
+              <p>The append function returns the same fluent node object so chaining
+order for content vs attributes doesn't matter:</p>
+              <pre><code class="hljs language-js">  <span class="hljs-comment">// This... </span>
+  $.div.<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;item2&quot;</span>)(<span class="hljs-string">&quot;Pears&quot;</span>)
+
+  <span class="hljs-comment">// is equivalent to this</span>
+  $.<span class="hljs-title function_">div</span>(<span class="hljs-string">&quot;Pears&quot;</span>).<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;item2&quot;</span>)
+</code></pre>
+              <p>You can also call the append function multiple times:</p>
+              <pre><code class="hljs language-js">$.<span class="hljs-title function_">div</span>  
+  ($.<span class="hljs-title function_">span</span>(<span class="hljs-string">&quot;apples&quot;</span>))  <span class="hljs-comment">// Append first child span</span>
+  ($.<span class="hljs-title function_">span</span>(<span class="hljs-string">&quot;pears&quot;</span>))   <span class="hljs-comment">// Append second child span</span>
+</code></pre>
+              <p>Appending an array will append each item:</p>
+              <pre><code class="hljs language-js">$.<span class="hljs-title function_">div</span>(<span class="hljs-title function_">makeChildren</span>());
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">makeChildren</span>(<span class="hljs-params"></span>)
+{
+  <span class="hljs-keyword">return</span> [
+    $.<span class="hljs-title function_">span</span>(<span class="hljs-string">&quot;apples&quot;</span>),
+    $.<span class="hljs-title function_">span</span>(<span class="hljs-string">&quot;pears&quot;</span>)
+  ]
+}
+</code></pre>
+              <h2 id="referencing-components"><a class="hlink" href="#referencing-components">#</a>Referencing Components</h2>
+              <p>To reference a component using the fluent method, pass the
+component constructor to the <code>$()</code> function:</p>
+              <pre><code class="hljs language-js">$(<span class="hljs-title class_">MyComponent</span>).<span class="hljs-title function_">title</span>(<span class="hljs-string">&quot;My Component&quot;</span>)
+</code></pre>
+              <p>yields:</p>
+              <pre><code class="hljs language-js">{
+  <span class="hljs-attr">type</span>: <span class="hljs-title class_">MyComponent</span>,
+  <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;My Component&quot;</span>
+}
+</code></pre>
+              <h2 id="mix-and-match"><a class="hlink" href="#mix-and-match">#</a>Mix and Match</h2>
+              <p>The fluent and structured formats can be inter-mixed:</p>
+              <p>eg: structured inside fluent</p>
+              <pre><code class="hljs language-js">$.div.<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;container&quot;</span>)(
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>, <span class="hljs-attr">class</span>: <span class="hljs-string">&quot;item1&quot;</span>, <span class="hljs-attr">$</span>: <span class="hljs-string">&quot;Apples&quot;</span> },
+  { <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>, <span class="hljs-attr">class</span>: <span class="hljs-string">&quot;item1&quot;</span>, <span class="hljs-attr">$</span>: <span class="hljs-string">&quot;Pears&quot;</span> },
+)
+</code></pre>
+              <p>or fluent inside structured:</p>
+              <pre><code class="hljs language-js">{
+  <span class="hljs-attr">type</span>: <span class="hljs-string">&quot;div&quot;</span>,
+  <span class="hljs-attr">class</span>: <span class="hljs-string">&quot;container&quot;</span>,
+  <span class="hljs-attr">$</span>: [
+    $.div.<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;item1&quot;</span>)(<span class="hljs-string">&quot;Apples&quot;</span>),
+    $.div.<span class="hljs-title function_">class</span>(<span class="hljs-string">&quot;item2&quot;</span>)(<span class="hljs-string">&quot;Pears&quot;</span>)
+  ]
+}
+</code></pre>
+              <h2 id="unwrapping"><a class="hlink" href="#unwrapping">#</a>Unwrapping</h2>
+              <p>A fluent node represents a template node that's under construction.</p>
+              <p>The actual structured template of a fluent node is available as the
+<code>$node</code> property.</p>
+              <p>Unwrapping is done automatically by the template compiler so usually
+you shouldn't need to do this unless you're trying to manually combine
+fluent and structured templates.</p>
+              <h2 id="when-to-use"><a class="hlink" href="#when-to-use">#</a>When to Use?</h2>
+              <p>Both template formats can be used to express any kind of content
+so their use often comes down to personal preference.</p>
+              <p>However as general guide:</p>
+              <ul>
+                <li>
+                  <p>The structured format works best for block level content (panels,
+sections, headers, etc...)</p>
+                </li>
+                <li>
+                  <p>The fluent format works best for inline-span level content (paragraphs,
+links, spans, images etc...)</p>
+                </li>
+              </ul>
+              <p>Also, we don't recommend using the fluent method for nodes using
+template directives such as <code>foreach</code> and <code>if</code> - these are more
+clearly expressed using the structured format.</p>
+            </div>
+            <nav class="next-previous-navigation"><a class="previous" href="templateTransitions"><div class="description muted">‹ Previous</div><div class="title">Transitions</div></a><a class="next" href="templateUpdateSemantics"><div class="description muted">Next ›</div><div class="title">Update Semantics</div></a></nav>
+          </div>
+          <div id="div-rhs" class="">
+            <nav id="secondary-nav">
+              <div class="highlight"></div>
+              <a href="#" class="title">Fluent Templates</a>
+              <ul class="h1">
+                <!-- enter foreach block -->
+                <li><a href="#the-function">The $ Function</a><!-- IfBlock placeholder --></li>
+                <li><a href="#setting-properties">Setting Properties</a><!-- IfBlock placeholder --></li>
+                <li><a href="#the-type-property">The type Property</a><!-- IfBlock placeholder --></li>
+                <li><a href="#dynamic-content">Dynamic Content</a><!-- IfBlock placeholder --></li>
+                <li><a href="#boolean-classes-and-named-styles">Boolean Classes and Named Styles</a><!-- IfBlock placeholder --></li>
+                <li><a href="#event-handlers">Event Handlers</a><!-- IfBlock placeholder --></li>
+                <li><a href="#child-nodes">Child Nodes</a><!-- IfBlock placeholder --></li>
+                <li><a href="#referencing-components">Referencing Components</a><!-- IfBlock placeholder --></li>
+                <li><a href="#mix-and-match">Mix and Match</a><!-- IfBlock placeholder --></li>
+                <li><a href="#unwrapping">Unwrapping</a><!-- IfBlock placeholder --></li>
+                <li><a href="#when-to-use">When to Use?</a><!-- IfBlock placeholder --></li>
+                <!-- leave foreach block -->
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--co-ssr-end-->
+  </body>
+</html>
