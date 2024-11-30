@@ -3,23 +3,45 @@ name: Publish Site
 on: [push]
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm run build
+      - name: Build Static Files
+        id: build
+        - uses: actions/checkout@v4
+        - uses: actions/setup-node@v4
+          with:
+            node-version: 20
+            registry-url: https://registry.npmjs.org/
+        - run: npm ci
+        - run: npm run build
 
-      - uses: AEnterprise/rsync-deploy@v1.0.2
-        env:
-          DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          ARGS: "-e -c -r --delete"
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          FOLDER: "./dist/"
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-          USERNAME: ${{ secrets.USERNAME }}
-          SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
+      - name: Upload static files as artifact
+        id: deployment
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+        
+
+#      - uses: AEnterprise/rsync-deploy@v1.0.2
+#        env:
+#          DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
+#          ARGS: "-e -c -r --delete"
+#          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+#          FOLDER: "./dist/"
+#          SERVER_IP: ${{ secrets.SERVER_IP }}
+#          USERNAME: ${{ secrets.USERNAME }}
+#          SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}

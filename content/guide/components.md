@@ -408,13 +408,12 @@ taken to ensure the event handlers are removed otherwise dangling
 references to the component may prevent it from being garbage
 collected by the JavaScript runtime.
 
-The correct way to handle this is for the component to register
+The correct way to handle this is for the component to add
 event listeners when the component is mounted and remove them
 when the component is unmounted.
 
-While this can be done by implementing `onMount()` and `onUnmount()`
-overrides, a simpler method is to use the `Component.listen`
-method.
+This can be done manually by overriding `onMount()` and `onUnmount()`
+but a simpler method is to use the `Component.listen` method.
 
 ```js
 listen(target, event, handler)
@@ -427,7 +426,7 @@ where:
 * `handler` - a handler function for the event.
 
 The `listen` function automatically adds the event listener when
-the component is mounted and removes the event listen when the 
+the component is mounted and removes the event listener when the 
 component is unmounted.
 
 See [listen()](component#component-class-listen) for more.
