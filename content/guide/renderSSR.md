@@ -77,8 +77,8 @@ When rendering on a server, special consideration needs to be given to:
 
 The sections below describe how to set up server side rendering. 
 
-To quickly get started the code generator can generate a project already 
-configured for SSR.
+To quickly get started, use the `cogent` code generator to generate a 
+full-stack project that's pre-configured for SSR.
 
 With NodeJS installed, from a command line run:
 
@@ -287,7 +287,7 @@ If you're using ExpressJS as the server framework library, installing an SSR pag
 rendering route handler can be done as follows.
 
 This should be done after all other route handlers as we want to handle all 
-unknown URL's using the client application (assuming we're using normal URL paths 
+unknown URL's (assuming we're using normal URL paths 
 and not hashed URL paths).
 
 ```js
@@ -321,9 +321,9 @@ app.get(/\/.*/, async (req, res, next) => {
 It is possible to pass data to `SSRWorker` both globally and on a per-render
 basis.
 
-All settings passed to `SSRWorker.init()` including the `entryFile`, `entryMain`
-and `entryHtml` options are available to components running in the worker
-as `getEnv().options`.
+All settings passed to `SSRWorker.init()` (including the `entryFile`, `entryMain`
+and `entryHtml` options) are available to components running in the worker
+as `coenv.options`.
 
 eg: suppose you need to pass the URL of a back-end server to be used for data
     fetch requests:
@@ -337,7 +337,7 @@ await worker.init({
 });
 ```
 
-A component being rendered could then access that setting via `getEnv().options`:
+A component being rendered could then access that setting via `coenv.options`:
 
 ```js
 class MyPage extends Component
@@ -345,7 +345,7 @@ class MyPage extends Component
     refresh()
     {
         this.load(async () => {
-            let url = getEnv().options.backEndApiServer + "/user/...";
+            let url = coenv.options.backEndApiServer + "/user/...";
             let response = await fetch(url);
         });
     }
@@ -364,10 +364,10 @@ let html = await worker.render(url, {
 ```
 
 The values passed as the second parameter are merged over a copy of the original
-SSRWorker options and can be accessed in the same way:
+`SSRWorker` options and can be accessed in the same way:
 
 ```js
-let userId = getEnv().options.userId;
+let userId = coenv.options.userId;
 ```
 
 When using `SSRWorkerThread` any values passed to the worker thread need to be
@@ -378,11 +378,13 @@ since they're passed via Node's [`postMessage`](https://nodejs.org/api/worker_th
 
 ## Hydration
 
-Hydration refers to the client side process of connecting the DOM elements loaded from the 
-SSR rendered HTML page with DOM elements created by scripted components.
+Hydration refers to the client side process of connecting the DOM elements 
+loaded from the SSR rendered HTML page with DOM elements created by scripted 
+components.
 
 Some frameworks solve this by trying to marry up the DOM elements created from 
-the SSR rendered page with elements constructed by script in the single page app.
+the SSR rendered page with virtual DOM elements constructed by script in the 
+single page app.
 
 CodeOnly takes a simpler approach:
 

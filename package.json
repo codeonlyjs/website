@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@codeonlyjs/cogent": "github:codeonlyjs/cogent",
+    "@codeonlyjs/coserv": "github:codeonlyjs/coserv",
     "serve": "^14.2.4",
     "vite": "^5.4.9",
     "vite-plugin-static-copy": "^2.0.0"

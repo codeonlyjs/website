@@ -35,7 +35,7 @@ export class HeroPage extends Component
                 id: "hero",
                 src: c => `/public/hero-${coenv.window?.stylish?.darkMode ? "dark" : "light"}.svg`,
             },
-            $.h2.text("The front-end Web framework for coders."),
+            $.h2.text("The Web framework for coders."),
             {
                 type: "div.row",
                 $: featureBoxes.map(x => this.makeFeatureBox(x))
@@ -51,7 +51,7 @@ export class HeroPage extends Component
 
             $.div.class("heading-graphic")(makeIcon("box", 50)),
             $.h2.text("What's in the Box?"),
-            $.p.text("Everything you need to build simple widgets or fully functional single page apps."),
+            $.p.text("Everything you need to build anything from tiny widgets to full stack single page apps."),
             featureBullets.map(x => ({
                 type: "span.featureBullet",
                 text: x

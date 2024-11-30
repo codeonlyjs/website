@@ -107,22 +107,20 @@ There's a few ways to do this:
    updated.  This approach is effective but not particularly efficient (though 
    not terrible)
 
-3. Call the `getEnv().whileBusy()` method and await the returned promise.  This
+3. Call the `coenv.whileBusy()` method and await the returned promise.  This
    waits for any pending `Component.load()` operations, any pending `nextFrame()`
    calls and any pending `Router.load()` operations.
 
 Using `whileBusy()` is the most reliable mechanism:
 
 ```js
-import { getEnv } from "@codeonlyjs/core";
-
 // First render...
 let comp = new Component();
 console.log(prettyHtml(comp.rootNode.html));
 
 // Second render...
 comp.greeting = "Goodbye";
-await getEnv().whileBusy();
+await coenv.whileBusy();
 console.log(prettyHtml(comp.rootNode.html));
 ```
 

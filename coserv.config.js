@@ -9,6 +9,14 @@ const config = {
                 { from: "./Main.js", to: "/Main.js" },
             ],
         },
+        livereload: {
+            options: {
+                extraExts: [ "md" ]
+            },
+            watch: [
+                ".",
+            ]
+        }
     }
 };
 

@@ -141,6 +141,11 @@
         "url": "renderStatic",
         "title": "Static Rendering",
         "fullTitle": "Static HTML Rendering"
+      },
+      {
+        "url": "renderAssets",
+        "title": "Render Assets",
+        "fullTitle": "Render Assets"
       }
     ]
   },

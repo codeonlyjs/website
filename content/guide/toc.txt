@@ -33,6 +33,7 @@ renderIntro
 renderSSR
 renderSSG
 renderStatic
+renderAssets
 
 
 # Utilities

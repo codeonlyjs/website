@@ -3,8 +3,7 @@ title: "Welcome"
 ---
 # Welcome to CodeOnly
 
-CodeOnly is a simple, lightweight, easy-to-learn framework for
-front-end web development. 
+CodeOnly is a simple, lightweight, easy-to-learn framework for web development. 
 
 It's designed for coders, it's fast and small and uses modern 
 JavaScript.  It's tool-free during development so there's
@@ -23,30 +22,39 @@ or proxies to debug through.
 
 ## What Can it Do?
 
-CodeOnly is primarily designed for building complete single page 
-front-end websites but can also be used to make small embellishments
-to existing projects - basically any project that needs an easy way 
-to populate and make updates to the DOM. 
+CodeOnly is primarily designed for building single page apps (SPA) 
+but can also be used to make small embellishments to existing sites -
+basically any project that needs an easy way to populate and 
+make updates to the DOM. 
+
+It also supports server-side rendering (SSR) and static site generation 
+(SSG) for fast load times and great SEO and social media engagement. We've 
+even included a project template with simple, ready to go Docker 
+container support.
+
 
 ## Features
 
 * Self Contained Componets
 * Expressive JSON-like DOM templates
-* Everything in modern JavaScript
-* No template or markup languages to learn
-* Two-way input bindings
-* Includes flexible SPA router
-    * async
-    * navigation guards
-    * uses History API
-    * normal or hashed URL paths
+* Flexible SPA router with async navigation guards
 * CSS animations and transitions 
-* Tuned to run fast
-* No proxies, wrappers or reactivity 
-* No build server
-* Debug your code exactly as you wrote it
-* Live Server auto reload
+* Two-way input element bindings
+* Static Site Generation (SSG)
+* Server Side Rendering (SSR)
+* DOM templates are JIT compiled and tuned to run fast
 * Less than 50kB minimized, 15kB gzipped.
+
+
+## Benefits
+
+* Everything in written in clean, modern JavaScript
+* No proxies, wrappers or reactivity 
+* No template or markup languages to learn
+* No build server to get in the way
+* Debug your code in the browser exactly as you wrote it
+* Edit and save your code right there in Chromium's debugger
+* Live Server auto reload
 
 
 ## Basic Example
@@ -55,8 +63,9 @@ Before getting into the details of how to setup a CodeOnly project
 let's have a look at a simple example that will give you an idea of 
 what working with CodeOnly is like.
 
-This component consists of a `div` containing a `button` and 
-a text `span` that shows how many times the button has been clicked.
+The following component consists of a `div` containing a `button` and 
+a text `span`.  Each time the button is clicked, the span is updated
+with the number of clicks.
 
 <div class="tip">
 
@@ -68,27 +77,34 @@ Hovering over the info icons in sample code shows further explanatory notes.
 // code lab demo
 class Main extends Component /* i:  Components extend the `Component` class */
 {
-  count = 0; /* i:  Class fields and functions are available to the template */
+  index = 0; /* i:  Class fields and functions are available to the template */
+
+  get character() /* i: Standard JavaScript property accessors work too*/
+  {
+    return Main.characters[this.index % 3];
+  }
 
   onClick() /* i:  Button click event handler */
   { 
-    this.count++; 
+    this.index++; 
     this.invalidate(); /* i:  Marks the component as needing DOM update */
   }
+
+  static characters = [ "Luke", "R2-D2", "C-3PO" ]
 
   static template = { /* i:  This is the component's DOM template */
     type: "div", /* i:  Root element type */
     class: "counter", /* i:  Scoping CSS class */
     $: [ /* i:  Child nodes array */
       {
-        type: "button",
-        text: `Click Me`,
-        on_click: c => c.onClick(), /* i:  `c` is the component instance */
+        type: "span",
+        text: c => c.character, /* i: `c` is the component instance */
       },
       {
-        type: "span",
-        text: c => ` Count: ${c.count}`, /* i:  Callback for dynamic content */
-      }
+        type: "button",
+        text: `Next Character`,
+        on_click: c => c.onClick(), /* i: Event handler */
+      },
     ]
   }
 }
@@ -99,7 +115,11 @@ css` /* i:  CSS styles (with '.counter' as scoping class) */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  span
+  {
+    display: inline-block;
+    width: 5rem;
+  }
 }
 `; 
 ```
@@ -109,11 +129,8 @@ Let's take a closer look some of the features of developing components this way.
 
 ## Self Contained Components
 
-One of the nicest things about developing CodeOnly components is that everything
-about a component can be contained in one regular `.js` file.
-
 Notice in the above example that the logic, DOM template and CSS styles are all
-declared together in the one place.
+declared together in the one place meaning everything about a component can be contained in one regular `.js` file.
 
 Also, because it's straight JavaScript there's no need for tooling, a build
 step or special editor support.
@@ -121,7 +138,7 @@ step or special editor support.
 
 ## Non-Reactive
 
-Unlike most other front-end frameworks, we've decided against any form of
+Unlike some other frameworks, we've decided against any form of
 automatic reactivity in CodeOnly.
 
 There's a few reasons for this but primarily we feel its just too
@@ -131,13 +148,13 @@ understand and to debug.
 
 With CodeOnly your objects are left alone. 
 
+Take another look at the above example and notice that it's all 
+vanilla JavaScript.  No markup, build steps, proxy objects or 
+wrapper functions.  It's easy to debug, easy to edit and no surprises.
+
 Of course this means you need to do a little extra work to keep the DOM
 up to date, but it's usually not that hard and we think the trade off 
 is worth it.
-
-With frontend development its usually not that hard to figure out when 
-things need to be updated.  The trickier part is actually making the
-updates - and for that CodeOnly has you covered. 
 
 
 ## JavaScript DOM Templates
@@ -153,16 +170,14 @@ Yes, it's a little more verbose but it's surprising how flexible this
 approach is.
 
 * There's no special syntax or markup to learn.
-* Templates can be included directly in the component class without
-  special tooling (ie: no dev build server)
-* You can compose and generate templates by calling functions to "create"
-  the template.
-
+* Templates can be included directly in the component class
+* It's all just JavaScript so you can call functions or reference out of 
+  line template elements to produce a final template. Compose and extend.
 
 ## Styles
 
-In the above example, notice how it includes the CSS declarations
-for the component using the `css` template literal string.
+In the above example, notice that it includes component specific CSS 
+declarations using the `css` template literal string.
 
 This approach is completely optional, but it lets us declare everything 
 about a component in the one file.

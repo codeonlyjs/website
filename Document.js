@@ -216,8 +216,13 @@ export class Document
         this.demos = [];
         for (let cb of codeBlocks)
         {
-            // Only javascript blocks
-            if (cb.info != 'js' && cb.info != 'html' && cb.info != 'css')
+            // Only certain languages
+            if (cb.info != 'js' && 
+                cb.info != 'html' && 
+                cb.info != 'css' && 
+                cb.info != 'md' &&
+                cb.info != 'yaml'
+                )
                 continue;
             
             // Get the code

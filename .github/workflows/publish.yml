@@ -34,15 +34,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-        
-
-#      - uses: AEnterprise/rsync-deploy@v1.0.2
-#        env:
-#          DEPLOY_KEY: ${{ secrets.SERVER_SSH_KEY }}
-#          ARGS: "-e -c -r --delete"
-#          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-#          FOLDER: "./dist/"
-#          SERVER_IP: ${{ secrets.SERVER_IP }}
-#          USERNAME: ${{ secrets.USERNAME }}
-#          SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}

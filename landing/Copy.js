@@ -7,16 +7,9 @@ export let featureBoxes = [
     },
     {
       title: "Build Anything",
-      body: `Embellish existing sites with tiny web widgets or build entire single page apps.  
-             (Includes SPA suitable router)`
+      body: `Tiny web widgets, single page apps (SPA), static site 
+             generation (SSG), full-stack sites, server-side rendering (SSR).  `
     },
-    /*
-    {
-        title: "Non-Reactive",
-        body: `Non-reactive and non-intrusive. No wrapper functions or proxies.
-               Everything is kept as close to pure JavaScript as possible.`
-    },
-    */
     {
         title: "Fast and Small",
         body: `Component templates are JIT compiled, produce minimal DOM updates and we've 
@@ -79,9 +72,8 @@ export let featureBullets = [
   "Components",
   "Templating",
   "SPA Router",
-  "Transitions",
-  "Live Reload",
-  "Code Generator"
+  "Server-Side Rendering (SSR)",
+  "Static Site Generation (SSG)",
 ]
 
 export let reactivityBullets = [
