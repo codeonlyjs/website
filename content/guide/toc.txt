@@ -4,7 +4,7 @@ start
 
 # Components
 components
-component
+componentsAdvanced
 
 # Templates
 templates
@@ -25,7 +25,6 @@ routerBasics
 routerDetails
 routerNotes
 routerTypical
-router
 
 # Rendering
 
@@ -36,10 +35,11 @@ renderStatic
 renderAssets
 
 
-# Utilities
+# API
 
-utilities
-Notify
+apiComponent
+apiRouter
+apiFunctions
 
 # Related
 

@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import { viteStaticGenerate } from "@codeonlyjs/core";
+import { viteGenerateStatic } from "@codeonlyjs/core";
 
 // Vite config
 export default defineConfig({
@@ -18,7 +18,7 @@ export default defineConfig({
         { src: ".nginx", dest: "./" }
       ],
     }),
-    viteStaticGenerate({
+    viteGenerateStatic({
       prebuild: "./prebuild.js",
       entryFile: "./main-ssr.js",
       entryMain: "main",

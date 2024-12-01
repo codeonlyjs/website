@@ -1,5 +1,5 @@
 ---
-title: "API"
+title: "Component API"
 ---
 # Component API
 
@@ -277,9 +277,5 @@ Updates the component's DOM, if it's marked as invalid by
 a previous call to `invalidate()`.
 
 
-
-## Next Steps
-
-* Learn more about [Templates](templates)
 
 

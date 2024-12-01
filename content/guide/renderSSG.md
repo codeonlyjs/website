@@ -45,51 +45,7 @@ await generateStatic({
 });
 ```
 
-The available options are:
-
-* `entryFile` - same as for SSG
-* `entryMain` - same as for SSG
-* `entryHtml` - same as for SSG, but as a filename (not a HTML string)
-* `entryUrls` - the internal URLs of the site to render
-* `ext` - a file extension to append to all generated pages
-* `pretty` - `true` for prettified HTML output
-* `outDir` - base output directory where generated files will be written
-* `baseUrl` - base URL used to construct URL objects passed to the router
-* `verbose` - display more output
-* `cssUrl` - path to CSS file to contain collected `css` styles
-
-All of the options are optional, with the following defaults:
-
-```js
-options = {
-    entryFile: [ "main-ssg.js", "main-ssr.js", "Main.js", ],
-    entryMain: [ "main-ssg", "main-ssr", "main" ],
-    entryHtml: [ "dist/index.html", "index-ssg.html", "index.ssr.html", "index.html" ],
-    entryUrls: [ "/" ],
-    ext: ".html",
-    pretty: true,
-    outDir: "./dist",
-    baseUrl: "http://localhost/",
-    verbose: false,
-    cssUrl: "/assets/styles-[unique].css",
-}
-```
-
-Note: 
-
-* The `entryFile`, `entryMain` and `entryHtml` options can be an array where the
-  first that exists will be used.
-* The `entryUrls` property is an array but you only need list the entry point 
-  URLs - any linked pages will be recursively rendered.  If you have content 
-  that needs to be rendered but isn't linked from else where in the site, 
-  list them here.
-* The `baseUrl` is used to construct the URL objects passed to the router.  If 
-  your site uses the full URL to construct links or display messages, this should
-  be set to the final public URL where the site will be hosted.
-* The `cssUrl` is the path where all collected `css` declarations will be written.
-  The `[unique]` placeholder will be filled in with a hash value unique to build.
-
-
+For a list of available options, see [generateStatic](apiFunctions#generatestatic).
 
 ## Vite Plugin
 
@@ -101,19 +57,14 @@ fact this is the Vite config we use to build this site).
 
 * The third-party plugin `viteStaticCopy` is used to copy other static 
   resources to the output folder.
-* The options passed to `viteStaticGenerate` are the same as above.
-* The `outDir` setting doesn't need to be specified as the plugin picks 
-  this up from the Vite build configuration.
-* The `prebuild` option is an optional script file that will be `import`ed
-  at the start of the build.  It can be used to pre-process data before the
-  build runs.  eg: build a JSON meta data file for a static blog, or in this 
-  case we use it to generate the table of contents file for the documentation.
+* The options passed to `viteGenerateStatic` are the same as above.
 
+See [`viteGenerateStatic`](apiFunctions#vitegeneratestatic) for more.
 
 ```js
 import { defineConfig } from 'vite';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
-import { viteStaticGenerate } from "@codeonlyjs/core";
+import { viteGenerateStatic } from "@codeonlyjs/core";
 
 // Vite config
 export default defineConfig({
@@ -130,7 +81,7 @@ export default defineConfig({
         { src: 'content/*', dest: './content/' },
       ],
     }),
-    viteStaticGenerate({
+    viteGenerateStatic({
       prebuild: "./prebuild.js",
       entryFile: "./main-ssr.js",
       entryMain: "main",

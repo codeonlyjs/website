@@ -19,13 +19,13 @@
     "pages": [
       {
         "url": "components",
-        "title": "Overview",
-        "fullTitle": "Components Overview"
+        "title": "Basics",
+        "fullTitle": "Component Basics"
       },
       {
-        "url": "component",
-        "title": "API",
-        "fullTitle": "Component API"
+        "url": "componentsAdvanced",
+        "title": "Advanced",
+        "fullTitle": "Advanced Components"
       }
     ]
   },
@@ -111,11 +111,6 @@
         "url": "routerTypical",
         "title": "Typical Setup",
         "fullTitle": "Router Typical Setup"
-      },
-      {
-        "url": "router",
-        "title": "API",
-        "fullTitle": "Router API"
       }
     ]
   },
@@ -144,23 +139,28 @@
       },
       {
         "url": "renderAssets",
-        "title": "Render Assets",
-        "fullTitle": "Render Assets"
+        "title": "Asset Fetching",
+        "fullTitle": "Asset Fetching"
       }
     ]
   },
   {
-    "title": " Utilities",
+    "title": " API",
     "pages": [
       {
-        "url": "utilities",
-        "title": "Utilities",
-        "fullTitle": "Utilities"
+        "url": "apiComponent",
+        "title": "Component API",
+        "fullTitle": "Component API"
       },
       {
-        "url": "Notify",
-        "title": "Notify Service",
-        "fullTitle": "Notify Service"
+        "url": "apiRouter",
+        "title": "Router API",
+        "fullTitle": "Router API"
+      },
+      {
+        "url": "apiFunctions",
+        "title": "Functions",
+        "fullTitle": "Functions"
       }
     ]
   },

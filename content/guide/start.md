@@ -222,9 +222,3 @@ This will create a new directory containing the new project files.
 Included in the new project directory will be a readme.md file with information
 about the project structure and instructions on how to run it during development and build it for production.
 
-
-
-## Next Steps
-
-* Learn more about [Components](component)
-* Learn more about [Templates](templates)
