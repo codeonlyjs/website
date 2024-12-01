@@ -181,6 +181,11 @@
         "url": "cogent",
         "title": "Cogent",
         "fullTitle": "Cogent"
+      },
+      {
+        "url": "coserv",
+        "title": "Devlopment Server",
+        "fullTitle": "CodeOnly Development Server"
       }
     ]
   }

@@ -46,3 +46,4 @@ apiFunctions
 stylish
 bundle-free
 cogent
+coserv
