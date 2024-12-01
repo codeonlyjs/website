@@ -43,7 +43,7 @@ export class HeroPage extends Component
 
             $.div.class("heading-graphic")(makeIcon("codeonly", 50)),
             $.h2.text("What is Code Only Development?"),
-            $.p.text("An approach to front-end development where everything is written in clean, modern JavaScript."),
+            $.p.text("An approach to Web development where everything is written in clean, modern JavaScript."),
             codeOnlyBullets.map(x => ({
                 type: "span.featureBullet",
                 text: x
