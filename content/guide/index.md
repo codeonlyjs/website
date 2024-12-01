@@ -64,8 +64,7 @@ let's have a look at a simple example that will give you an idea of
 what working with CodeOnly is like.
 
 The following component consists of a `div` containing a `button` and 
-a text `span`.  Each time the button is clicked, the span is updated
-with the number of clicks.
+a text `span`.  Each time the button is clicked, the span is updated.
 
 <div class="tip">
 

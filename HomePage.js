@@ -1,4 +1,4 @@
-import { $, Component, css } from "@codeonlyjs/core";
+import { $, Component, router, css } from "@codeonlyjs/core";
 import { HeroPage } from "./landing/HeroPage.js";
 
 // Main 
@@ -32,3 +32,13 @@ css`
     margin-bottom: 50px;
 }
 `;
+
+
+router.register({
+    pattern: "/",
+    match: (to) => {
+        to.page = new HomePage();
+        return true;
+    }
+});
+

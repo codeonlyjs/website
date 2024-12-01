@@ -221,7 +221,7 @@ exceptions:
   this up from the Vite build configuration.
 * The `prebuild` option is an optional script file that will be `import`ed
   at the start of the build.  It can be used to pre-process data before the
-  build runs.  eg: build a JSON meta data file for a static blog by scannin
+  build runs.  eg: build a JSON meta data file for a static blog by scanning
   markdown files etc...
 
 See also [SSG Vite Plugin](renderSSG#vite-plugin).

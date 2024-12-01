@@ -1,24 +1,10 @@
 import { Component, css, router } from "@codeonlyjs/core";
 import { Header } from "./Header.js";
-import { HomePage } from "./HomePage.js";
 
+import "./HomePage.js";
 import "./ArticlePage.js";
 import "./lab/LabPage.js";
 import "./NotFoundPage.js";
-
-router.register({
-    pattern: "/",
-    match: (to) => {
-        to.page = new HomePage();
-        return true;
-    }
-});
-
-router.register({
-    pattern: "/logout",
-    match: () => null
-});
-
 
 
 // Main 
