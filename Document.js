@@ -217,13 +217,9 @@ export class Document
         for (let cb of codeBlocks)
         {
             // Only certain languages
-            if (cb.info != 'js' && 
-                cb.info != 'html' && 
-                cb.info != 'css' && 
-                cb.info != 'md' &&
-                cb.info != 'yaml'
-                )
-                continue;
+            let language = cb.info;
+            if (!(cb.info??"").match(/^js|html|css|md|yaml$/))
+                language = "plaintext";
             
             // Get the code
             let code = cb.literal;
@@ -267,7 +263,7 @@ export class Document
 
             // Highlight the code
             let html = hljs.highlight(code, { 
-                language: cb.info, 
+                language: language, 
                 ignoreIllegals: true
             });
 

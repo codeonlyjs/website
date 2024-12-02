@@ -85,11 +85,18 @@ CDN packages for CodeOnly are available via [jsDelivr](https://www.jsdelivr.com/
 
 ES6 Library:
 
-* <https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.js>
+* ```
+  https://cdn.jsdelivr.net/gh/codeonlyjs/core@0.0.78/dist/codeonly.js
+  ```
 
 Minimized ES6 Library:
 
-* <https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.min.js>
+* ```
+  https://cdn.jsdelivr.net/gh/codeonlyjs/core@0.0.78/dist/codeonly.min.js
+  ```
+
+See the [jsdelivr docs](https://www.jsdelivr.com/?docs=gh) for more
+information on selecting specific versions.
 
 The easiest way to use these packages is with an import map:
 
@@ -97,7 +104,7 @@ The easiest way to use these packages is with an import map:
 <script type="importmap">
 {
     "imports": {
-        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core/dist/codeonly.min.js"
+        "@codeonlyjs/core": "https://cdn.jsdelivr.net/gh/codeonlyjs/core@0.0.78/dist/codeonly.min.js"
     }
 }
 </script>
