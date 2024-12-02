@@ -1,5 +1,6 @@
 import { Component, css, router } from "@codeonlyjs/core";
 import { Header } from "./Header.js";
+import { Meta } from "./Meta.js";
 
 import "./HomePage.js";
 import "./ArticlePage.js";
@@ -77,6 +78,7 @@ css`
 // Main entry point, create Application and mount
 export function main()
 {
+    new Meta().mount("head");
     new Main().mount("body");
 
     router.start();

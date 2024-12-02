@@ -60,14 +60,14 @@ router.register({
             to.document = new Document();
             await to.document.load(to.match.groups.pathname);
             to.page = new ArticlePage(to.document);
+            to.title = to.document.structure.title;
             return true;
         }
         catch (err)
         {
             if (err.pageLoadError)
             {
-                to.page = new NotFoundPage(to.url);
-                to.ssr = { status: 404 };
+                return false;
             }
             else
                 throw err;
