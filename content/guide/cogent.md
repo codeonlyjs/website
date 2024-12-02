@@ -1,5 +1,6 @@
 ---
 title: "Cogent"
+description: "CodeOnly's Code Generator Tool"
 ---
 # Cogent
 

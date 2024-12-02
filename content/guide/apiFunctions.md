@@ -1,5 +1,6 @@
 ---
 title: "Functions"
+description: "CodeOnly Function API Reference"
 ---
 # Functions
 

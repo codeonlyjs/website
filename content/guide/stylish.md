@@ -1,5 +1,6 @@
 ---
 title: "Stylish CSS"
+description: "Stylish is a clean, simple, customizable, theme aware, appearance only stylesheet."
 ---
 # Stylish CSS Library
 

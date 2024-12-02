@@ -1,5 +1,6 @@
 ---
 title: "Basics"
+description: "An introduction to CodeOnly's SPA Router"
 ---
 # Router Basics
 

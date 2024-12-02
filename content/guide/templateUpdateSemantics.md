@@ -1,5 +1,6 @@
 ---
 title: "Update Semantics"
+description: "Details on how template updates are applied to the DOM"
 ---
 # Update Semantics
 

@@ -30,12 +30,16 @@ export class Meta extends Component
 
     get name()
     {
+        return this.title;
         return "CodeOnlyJS";
     }
 
     get description()
     {
-        return "CodeOnlyHS - The Web framework for coders";
+        if (router.current?.description)
+            return router.current?.description;
+        else
+            return "CodeOnlyJS - The Web framework for coders";
     }
 
     get url()

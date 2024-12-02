@@ -1,5 +1,6 @@
 ---
-title: "Advanced"
+title: "Internals",
+description: Information on the internal workings of CodeOnly templates
 ---
 
 # Advanced Component Topics

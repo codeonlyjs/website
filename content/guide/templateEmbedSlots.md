@@ -1,5 +1,6 @@
 ---
 title: "Embed Slots"
+description: An embed slot provides a place in a CodeOnly template where other content can be loaded.
 ---
 # Embed Slots
 

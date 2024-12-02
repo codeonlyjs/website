@@ -1,5 +1,6 @@
 ---
 title: "Advanced"
+description: "Advanced topics about CodeOnly Components"
 ---
 # Advanced Components
 

@@ -1,5 +1,6 @@
 ---
 title: "Getting Started"
+description: "How to get start with CodeOnly using the "Lab", packages or project templates"
 ---
 # Getting Started
 

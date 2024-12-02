@@ -1,5 +1,6 @@
 ---
 title: "Server Side Rendering (SSR)"
+description: How to setup CodeOnly Server Side Rendering (SSR)
 ---
 
 # Server Side Rendering

@@ -1,5 +1,6 @@
 ---
 title: "Bundle Free"
+description: "Bundle Free serves NPM packages to client side scripts"
 ---
 # Bundle Free
 

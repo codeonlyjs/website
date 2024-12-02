@@ -1,5 +1,6 @@
 ---
 title: "Static Site Generation (SSG)"
+description: How to setup a CodeOnly project for static site generation (SSG)
 ---
 
 # Static Site Generation

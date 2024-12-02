@@ -1,5 +1,6 @@
 ---
 title: "Event Handlers"
+description: "Explains how to hook up event handlers to HTML elements and nested components"
 ---
 # Event Handlers
 

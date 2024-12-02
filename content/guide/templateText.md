@@ -1,5 +1,6 @@
 ---
 title: "Text and HTML"
+description: "Working with text and HTML text in CodeOnly templtaes"
 ---
 # Text and HTML
 

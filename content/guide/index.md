@@ -1,5 +1,6 @@
 ---
 title: "Welcome"
+description: Welcome to CodeOnlyJS, the Web framework for coders
 ---
 # Welcome to CodeOnly
 

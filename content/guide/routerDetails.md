@@ -1,5 +1,6 @@
 ---
 title: "Details"
+description: "Digging deeper on CodeOnly's SPA router"
 ---
 # Router Details
 

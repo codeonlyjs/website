@@ -1,5 +1,6 @@
 ---
 title: "Basics"
+description: "Introduction to CodeOnly's templates"
 ---
 # Template Basics
 

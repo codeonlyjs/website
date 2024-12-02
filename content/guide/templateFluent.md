@@ -1,5 +1,6 @@
 ---
 title: "Fluent Templates"
+description: "An alternative, concise API for building CodeOnlyJS templates"
 ---
 # Fluent Templates
 

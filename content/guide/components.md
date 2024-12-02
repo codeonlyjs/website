@@ -1,5 +1,6 @@
 ---
 title: "Basics"
+description: An introduction to working with CodeOnly Components
 ---
 # Component Basics
 

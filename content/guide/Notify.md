@@ -1,5 +1,6 @@
 ---
 title: "Notify Service"
+description: CodeOnly's NOtify servers provides a simple but effective event notification and broadcast mechanism
 ---
 # Notify Service
 

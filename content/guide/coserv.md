@@ -1,5 +1,6 @@
 ---
 title: "Devlopment Server"
+description: A simple development mode file server
 ---
 
 # CodeOnly Development Server

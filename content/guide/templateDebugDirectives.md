@@ -1,5 +1,6 @@
 ---
 title: "Debug Directives"
+description: "Debug directives let you trigger breakpoints in your CodeOnly templates"
 ---
 # Debug Directives
 

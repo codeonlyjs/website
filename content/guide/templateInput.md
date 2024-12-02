@@ -1,5 +1,6 @@
 ---
 title: "Input Bindings"
+description: "Covers two-way bindings between HTML input elements and CodeOnly components"
 ---
 # Input Bindings
 

@@ -1,5 +1,6 @@
 ---
 title: "Component API"
+description: CodeOnly Component API References
 ---
 # Component API
 

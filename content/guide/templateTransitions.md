@@ -1,5 +1,6 @@
 ---
 title: "Transitions"
+description: "How to use CSS transitions with CodeOnly templates"
 ---
 # Transitions
 

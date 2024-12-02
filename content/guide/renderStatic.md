@@ -1,5 +1,6 @@
 ---
 title: "Static Rendering"
+description: "Rendering arbitrary HTML using CodeOnly"
 ---
 
 # Static HTML Rendering

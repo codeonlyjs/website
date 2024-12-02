@@ -1,5 +1,6 @@
 ---
 title: "Introduction"
+description: An introduction and CodeOnly's SSR and SSG rendering
 ---
 # Introduction to Rendering
 

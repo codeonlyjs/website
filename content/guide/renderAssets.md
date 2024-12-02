@@ -1,5 +1,6 @@
 ---
 title: "Asset Fetching"
+description: Information on fetching static assets that works in browser and on server
 ---
 
 # Asset Fetching

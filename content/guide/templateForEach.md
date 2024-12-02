@@ -1,5 +1,6 @@
 ---
 title: "ForEach Directive"
+description: "All about list rendering in CodeOnly"
 ---
 # ForEach Directive
 

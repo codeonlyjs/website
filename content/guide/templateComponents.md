@@ -1,5 +1,6 @@
 ---
 title: "Component References"
+description: How to use components in CodeOnly templates
 ---
 # Component References
 

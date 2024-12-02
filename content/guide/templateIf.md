@@ -1,5 +1,6 @@
 ---
 title: "If Directive"
+description: "How to conditionally include and exclude content in CodeOnly templates"
 ---
 # If Directive
 

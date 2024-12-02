@@ -1,5 +1,6 @@
 ---
 title: "Fragments"
+description: "Fragments are just multi-root components"
 ---
 # Fragments
 

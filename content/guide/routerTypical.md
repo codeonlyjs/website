@@ -1,22 +1,12 @@
 ---
 title: "Typical Setup"
+description: "Demonstrates a typical CodeOnly SPA router setup"
 ---
 # Router Typical Setup
 
 The following shows how the router is typically configured and used
 in a CodeOnly project.
 
-## router.js
-
-This file creates and configures the router and exports it.
-
-```js
-import { Router, WebHistoryRouterDriver, ViewStateRestoration } from "@codeonlyjs/core";
-
-export let router = new Router(new WebHistoryRouterDriver());
-
-new ViewStateRestoration(router);
-```
 
 ## Page.js
 

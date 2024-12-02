@@ -61,6 +61,7 @@ router.register({
             await to.document.load(to.match.groups.pathname);
             to.page = new ArticlePage(to.document);
             to.title = to.document.structure.title;
+            to.description = to.document.frontmatter.description;
             return true;
         }
         catch (err)

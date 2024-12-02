@@ -1,5 +1,6 @@
 ---
 title: "Notes"
+description: "Addtional notes on using CodeOnly's SPA router"
 ---
 # Router Notes
 

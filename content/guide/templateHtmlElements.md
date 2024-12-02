@@ -1,5 +1,6 @@
 ---
 title: "HTML Elements"
+description: "Everything you need to know about working with HTML elements in CodeOnly templates"
 ---
 
 # HTML Elements

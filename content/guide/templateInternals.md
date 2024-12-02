@@ -1,5 +1,6 @@
 ---
 title: "Internals"
+description: "Learn about some of CodeOnly's internal workings"
 ---
 # Template Internals
 
