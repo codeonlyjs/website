@@ -1,6 +1,6 @@
 ---
 title: "Devlopment Server"
-description: A simple development mode file server
+description: CodeOnly's development file server
 ---
 
 # CodeOnly Development Server
@@ -8,13 +8,56 @@ description: A simple development mode file server
 `coserv` is a simple file server intended to be used primarily 
 while developing single page apps, or statically generated sites.
 
-In includes Bundle-free and LiveReload.
+In includes:
+
+* Bundle-free - NPM package serving, support for SPA normal file paths
+  and prominent in-browser error messages
+* LiveReload - automatically refresh the browser when files changed
+* Morgan Logging - console logging of requests
+
+
+## Installation
+
+Normally installation isn't required as it's included in the NPM packages
+for CodeOnly generated projects that need it.  
+
+eg: the CodeOnly SPA project uses `coserv` automatically when running
+`npm run dev` or `npm run prod`
+
+To manually install (use `--save` or `-g` as required)
+
+```
+npm install codeonlyjs/coserv
+```
+
+To run:
+
+```
+npx coserv
+```
+
+To run without installing
+
+```
+npx codeonlyjs/coserv
+```
+
+
 
 ## Configuration
 
-To use `coserv`, create a file name `coserv.config.js` in the 
-root directory of the project, with a default export that is the
-configuration to use:
+`coserv` requires a file named `coserv.config.js` in the current directory.
+
+<div class="tip">
+
+See the `<dir>` command line option to change the current directory at
+start up
+
+</div>
+
+The config file should have a default export that defines the configuration
+settings to use.
+
 
 ```js
 const config = {
@@ -46,12 +89,20 @@ The final configuration is determined by deeply merging:
 
 1. `coserv`'s built-in default configuration
 2. The root level from the configuration options
-3. Either the `development` or `production` options
+3. Either the `development` or `production` branches of the
+   configuration (or other branch as specified by NODE_ENV)
+
+<div class="tip">
+
+To see the final merged configuration, use the `--show-config`
+command line option.
+
+</div>
 
 ## Default Configuration
 
-The following shows the default configuration and you only need
-to specify options in your configuratino file that differ from
+The following shows the default configuration. You only need
+to specify options in your configuration file that differ from
 these:
 
 ```js
@@ -93,40 +144,43 @@ Most of the settings in the configuration file match exactly those
 expected by the respective modules:
 
 * `bundleFree`: See [Bundle-free](bundle-free)
+
 * `livereload`: See [Live Reload](https://www.npmjs.com/package/livereload)
+
+  - `options` - the options passed to `livereload.createServer`
+  - `watch` - the array passed to `livereload.watch`
+
 * `logging`: See [Morgan](https://www.npmjs.com/package/morgan)
 
-The following options are also supported:
 
-* `port` - the port to use
-* `host` - the host name to use
+The following `coserv` specific options are also supported:
+
+* `port` - the port to use (can be overridden by `--port`)
+* `host` - the host name to use (can be overridden by `--host`)
 
 
 
 ## Command Line Arguments
 
-Most settings are configured using the config file, but you can select
-which configuration to use from the command line:
+The following command line options are supported:
 
-* `npx coserv development` - run in development mode
-* `npx coserv production` - run production mode
-* `npx coserv NODE_ENV=other` - run in some other mode
-
-Note, if you have `coserv` installed as an NPM package in your project
-(as configured by the default SPA project template) you can run
-coserv with:
-
-`npx coserv`
-
-You can also run coserv without installing it using:
-
-`npx codeonlyjs/coserv`
+```
+      --env:<env>      Set NODE_ENV (typically development|production)
+      --dev            Shortcut for --env:development
+      --prod           Shortcut for --env:production
+  -p, --port:<port>    Set server port
+      --host:<host>    Set server host
+      --show-config    Log final configuration
+  -v, --version        Show version info
+  -h, --help           Show this help
+      <dir>            Change current working directory
+```
 
 
 
 ## Example Configuration
 
-For a complete example configuration file, this is the config we use 
-while developing this site:
+For a complete example configuration file, see the config 
+file used for this site:
 
 <https://github.com/codeonlyjs/website/blob/main/coserv.config.js>
