@@ -16,7 +16,18 @@ export class Meta extends Component
         router.addEventListener("didEnter", (from, to) => {
             this.invalidate();
             if (coenv.browser)
+            {
                 document.title = this.title;
+
+                if (window.location.hostname == "codeonlyjs.org")
+                {
+                    umami.track(props => ({ 
+                        ...props, 
+                        url: to.url.pathname + to.url.search, 
+                        title: this.title 
+                    }));
+                }
+            }
         });
     }
 

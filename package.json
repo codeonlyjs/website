@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "dev": "coserv development",
-    "prod": "npm run build && coserv production"
+    "dev": "coserv --env:development",
+    "prod": "npm run build && coserv --env:production"
   },
   "author": "",
   "license": "ISC",
