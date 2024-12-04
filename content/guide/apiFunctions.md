@@ -10,6 +10,13 @@ The `$` function is the entry point for the fluent template API.
 
 For full details, see [Fluent Templates](templateFluent).
 
+## compileTemplate(template)
+
+Compiles a template, returning a `domTreeConstructor`.
+
+This method is used internally by components and generally
+not used directly.  For more information, see [Template Internals](templateinternals).
+
 
 ## css()
 

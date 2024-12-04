@@ -86,6 +86,11 @@
         "url": "templateUpdateSemantics",
         "title": "Update Semantics",
         "fullTitle": "Update Semantics"
+      },
+      {
+        "url": "templateInternals",
+        "title": "Internals",
+        "fullTitle": "Templates Internals"
       }
     ]
   },

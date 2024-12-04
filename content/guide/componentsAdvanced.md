@@ -362,3 +362,43 @@ and `main` elements is provided by the derived `MyDialog` class
 ```
 
 
+
+
+
+## The domTree Property
+
+A component's `domTree` is the object responsible for managing the DOM
+elements associated with the component.
+
+The `domTree` is usually the object created by a compiled template
+and has methods to update the tree, get the root node of the tree etc...
+
+The `domTree` is created on demand when the component is first mounted, but
+can be manually created by calling the component's `create()` method.
+
+When a component is destroyed, its `domTree` is released, and the component
+reverts from a "created" state to a "constructed" state.  Remounting the
+component, or calling its `create()` method again will create a new `domTree`.
+
+
+
+## The setMounted Method
+
+The `setMounted` method is an internal method used to notify a component
+and its template that it has been mounted or unmounted.
+
+When a component's `setMounted` method is called, it calls `onMount()` or
+`onUmount()` method to notify the component of the new state.  It then calls
+`setMounted()` on the component's `domTree` so the notification is reflected
+recursively through all `domTree`s.
+
+You can override the `setMounted` method however it's extremely important
+that you also call `super.setMounted(mounted)` so all other nested components
+receive the notification.  
+
+When overriding `onMount()` and `onUnmount()` calling `super.onMount()` and 
+`super.onUnmount()` isn't required (unless you're extending another class 
+that expects these notification).
+
+
+

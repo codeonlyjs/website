@@ -18,6 +18,7 @@ templateInput
 templateTransitions
 templateFluent
 templateUpdateSemantics
+templateInternals
 
 # Router
 
