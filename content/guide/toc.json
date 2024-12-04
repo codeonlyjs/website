@@ -168,24 +168,24 @@
     "title": " Related",
     "pages": [
       {
-        "url": "stylish",
-        "title": "Stylish CSS",
-        "fullTitle": "Stylish CSS Library"
-      },
-      {
         "url": "bundle-free",
-        "title": "Bundle Free",
+        "title": "BundleFree",
         "fullTitle": "Bundle Free"
       },
       {
         "url": "cogent",
-        "title": "Cogent",
+        "title": "Code Generator",
         "fullTitle": "Cogent"
       },
       {
         "url": "coserv",
         "title": "Devlopment Server",
         "fullTitle": "CodeOnly Development Server"
+      },
+      {
+        "url": "stylish",
+        "title": "Stylish CSS",
+        "fullTitle": "Stylish CSS Library"
       }
     ]
   }

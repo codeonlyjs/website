@@ -43,7 +43,7 @@ apiFunctions
 
 # Related
 
-stylish
 bundle-free
 cogent
 coserv
+stylish
