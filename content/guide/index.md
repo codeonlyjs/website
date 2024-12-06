@@ -182,7 +182,7 @@ declarations using the `css` template literal string.
 This approach is completely optional, but it lets us declare everything 
 about a component in the one file.
 
-Also, notice how we've use a class to scope the CSS declarations
+Also, notice how we've used a class to scope the CSS declarations
 for this component to a CSS class applied at the root of the component's
 DOM template.  This helps avoid CSS clashes between components.
 
