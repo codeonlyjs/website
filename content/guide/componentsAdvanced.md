@@ -204,8 +204,7 @@ The `listen` function automatically adds the event listener when
 the component is mounted and removes the event listener when the 
 component is unmounted.
 
-See [listen()](apiComponent#component-class-listen) for more.
-
+See [listen()](apiComponents#Component#listen) for more.
 
 ## Custom Templates
 

@@ -146,7 +146,28 @@ export class Document
             // Capture heading text
             if (currentHeading != null && (ev.node.type === 'text' || ev.node.type === 'code'))
             {
+                // Concatenate consecutive nodes so we do a search/replace
+                // on the entire text
+                while (ev.node.next?.type === 'text')
+                {
+                    ev.node.literal += ev.node.next.literal;
+                    if (!ev.node.next.next)
+                        walker.resumeAt(ev.node.parent, false);
+                    else
+                        walker.resumeAt(ev.node.next.next, true);
+                    ev.node.next.unlink();
+                }
+                // If this is the last text node, look for {#id} suffix
+                if (ev.node.parent.lastChild == ev.node)
+                {
+                    ev.node.literal = ev.node.literal.replace(/\s*\{\s*#(.*)\s*\}\s*$/, (text, id) => {
+                        // capture the id and remove it
+                        currentHeading.userId = id;
+                        return "";
+                    });
+                }
                 headingText += ev.node.literal;
+
             }
 
             // Exiting heading?
@@ -163,7 +184,7 @@ export class Document
                 // Convert heading text to an id and build a 
                 // heirarchy of headings/sub-headings for
                 // the side panel
-                let id = convertHeadingTextToId(headingText);
+                let id = currentHeading.userId ?? convertHeadingTextToId(headingText);
                 if (id.length > 0)
                 {
                     // Create a heading
@@ -184,7 +205,11 @@ export class Document
                         if (!currentH2.subHeadings)
                             currentH2.subHeadings = [];
                         currentH2.subHeadings.push(heading);
-                        heading.id = `${currentH2.id}-${heading.id}`;
+
+                        if (!currentHeading.userId)
+                        {
+                            heading.id = `${currentH2.id}-${heading.id}`;
+                        }
                     }
                     currentHeading = false;
                 }
@@ -218,7 +243,7 @@ export class Document
         {
             // Only certain languages
             let language = cb.info;
-            if (!(cb.info??"").match(/^js|html|css|md|yaml$/))
+            if (!(cb.info??"").match(/^js|ts|html|css|md|yaml$/))
                 language = "plaintext";
             
             // Get the code

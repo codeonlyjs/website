@@ -46,7 +46,7 @@ await generateStatic({
 });
 ```
 
-For a list of available options, see [generateStatic](apiFunctions#generatestatic).
+For a list of available options, see [generateStatic](apiRendering#generateStatic).
 
 ## Vite Plugin
 
@@ -60,7 +60,7 @@ fact this is the Vite config we use to build this site).
   resources to the output folder.
 * The options passed to `viteGenerateStatic` are the same as above.
 
-See [`viteGenerateStatic`](apiFunctions#vitegeneratestatic) for more.
+See [`viteGenerateStatic`](apiRendering#viteGenerateStatic) for more.
 
 ```js
 import { defineConfig } from 'vite';

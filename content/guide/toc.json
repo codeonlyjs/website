@@ -153,9 +153,14 @@
     "title": " API",
     "pages": [
       {
-        "url": "apiComponent",
-        "title": "Component API",
-        "fullTitle": "Component API"
+        "url": "apiComponents",
+        "title": "Components API",
+        "fullTitle": "Components API"
+      },
+      {
+        "url": "apiTemplates",
+        "title": "Templates API",
+        "fullTitle": "Templates API"
       },
       {
         "url": "apiRouter",
@@ -163,9 +168,24 @@
         "fullTitle": "Router API"
       },
       {
-        "url": "apiFunctions",
-        "title": "Functions",
-        "fullTitle": "Functions"
+        "url": "apiRendering",
+        "title": "Rendering API",
+        "fullTitle": "Rendering API"
+      },
+      {
+        "url": "apiEnvironment",
+        "title": "Environment API",
+        "fullTitle": "Environment API"
+      },
+      {
+        "url": "apiUtilities",
+        "title": "Utilities",
+        "fullTitle": "Utilities"
+      },
+      {
+        "url": "apiLowLevel",
+        "title": "Low-level APIs",
+        "fullTitle": "Low-level APIs"
       }
     ]
   },

@@ -21,7 +21,7 @@ is no build step. Code changes apply instantly and you debug your code
 exactly as you wrote it - no transpiling and no surprising wrappers
 or proxies to debug through.
 
-## What Can it Do?
+## What Can it Do? {#what-do} 
 
 CodeOnly is primarily designed for building single page apps (SPA) 
 but can also be used to make small embellishments to existing sites -

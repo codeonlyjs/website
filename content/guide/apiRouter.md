@@ -1,372 +1,537 @@
 ---
-title: "Router API"
-description: "CodeOnly Router API Reference"
+title: Router API
+description: CodeOnly Router API Reference
 ---
+
 # Router API
 
+## PageCache Class {#PageCache}
 
-## Router Class
+Implements a simple MRU cache that can be used to cache Page components for route handlers 
 
-### constructor(handlers)
+```ts
+class PageCache {
+    constructor(options: {
+        max: number;
+    });
+    get(key: any, factory: (key: any) => any): any;
+}
+```
 
-Constructs a new Router object.
+### constructor() {#PageCache#constructor}
 
-* `handlers` - an optional array of route handlers to be registered.
+Constructs a new page cache
 
-### start(driver)
 
-Starts the router, with a the specified driver.
+```ts
+constructor(options: {
+    max: number;
+});
+```
 
-If driver is not specified, the built in `WebHistoryRouterDriver`
-is used.
+* **`options`** Options controlling the cache
 
-### navigate()
+* **`options.max`** The maximum number of cache entries to keep
 
-Bound to the driver's `navigate()` method.
+### get() {#PageCache#get}
 
-### replace()
+Get a cached object from the cache, or create a new one
 
-Bound to the driver's `replace()` method.
 
-### back()
+```ts
+get(key: any, factory: (key: any) => any): any;
+```
 
-Bound to the driver's `back()` method.
+* **`key`** The key for the page
 
-### internalize(url)
+* **`factory`** A callback to create the page item if not in the cache
 
-Internalizes a URL.  
+## Route {#Route}
 
-If the `urlMapper` property has been set this method delegates to the 
-mapper, otherwise a copy of the passed URL is returned.
 
-* url - the URL to be internalized (may be a URL object or a string)
+Represents a Route instance
 
-Returns the internalized URL.  
 
-* If the `url` parameter is a URL object a URL object is returnd.  
-* If the `url` parameter is a string, a string is returned.
+```ts
+type Route = {
+    url: URL;
+    state: any;
+    current: boolean;
+    handler: RouteHandler;
+    viewState?: any;
+    page?: any;
+    title?: string;
+};
+```
 
-### externalize(url)
+### current {#Route#current}
 
-Externalizes a URL.
 
-If the `urlMapper` property has been set this method delegates to the 
-mapper, otherwise a copy of the passed URL is returned.
+True when this is the current route
 
-* url - the URL to be externalized (may be a URL object or a string)
 
-Returns the externalized URL.
+```ts
+current: boolean;
+```
 
-* If the `url` parameter is a URL object a URL object is returnd.  
-* If the `url` parameter is a string, a string is returned.
+### handler {#Route#handler}
 
-### current
 
-Returns the current route object.
+The handler associated with this route
 
-### pending
 
-Returns the route object that's currently being entered, but has
-not yet been confirmed.
+```ts
+handler: RouteHandler;
+```
 
+### page {#Route#page}
 
-### addEventListener(event, handler)
 
-Adds an event listener to the router.
+The page component for this route
 
-* `event` - name of the event to listen for
-* `handler(from, to)` - the callback which will be passed the route being left and the route being entered.
 
-Note, events fired during the first phase of navigation (ie: the `"mayLeave"` 
-and `"mayEnter"` events) can cancel the navigation by returning false.  These
-events can also be `async` and return a promise that resolves to true or false.
+```ts
+page?: any;
+```
 
-### removeEventListener(event, handler)
+### state {#Route#state}
 
-Removes a previously registered event listenter.
 
-### register(handler)
+State associated with the route
 
-Registers route handlers with the router.
 
-* `handler` - either a single route handler, or an array of route handlers.
+```ts
+state: any;
+```
 
+### title {#Route#title}
 
 
-### revoke(predicate)
+The route's page title
 
-Revokes route handlers that match a predicate.
 
-* `predicate(handler)` - callback that will be passed each currently registered
-handler.  Return true to revoke the handler, false to keep it.
+```ts
+title?: string;
+```
 
+### url {#Route#url}
 
 
-## Route Handler Object
+The route's URL
 
-Route handlers are plain JavaScript objects (ie: they're not a class) with
-the follow properties, all of which are options.
 
-### pattern
+```ts
+url: URL;
+```
 
-A URL pattern string or a RegExp object to be used as an initial match
-against URLs.
+### viewState {#Route#viewState}
 
-If specified and a URL matches the pattern, or if a pattern isn't specified
-this route handler is considered as a candidate for the URL.
 
-Considered router handlers aren't confirmed as a match until the `match` 
-function (if specified) returns true.
+The route's view state
 
 
+```ts
+viewState?: any;
+```
 
-### async match(to)
+## RouteHandler {#RouteHandler}
 
-If a route handler is considered a candidate (because it didn't specify
-a `pattern` or because the pattern matched) its `match` function
-will be called to confirm the match.
 
-* `to` - the route object being navigated to
+RouteHandlers handle mapping URLs to Route instances
 
-This function should return.
 
-* `true` to confirm the match
-* `false` to reject the match
-* `null` to instruct the router and driver to abandon in-app navigation
-and perform an full external page load on the URL.
+```ts
+type RouteHandler = {
+    pattern?: string | RegExp;
+    match?: (route: Route) => Promise<boolean>;
+    mayEnter?: (from: Route, to: Route) => Promise<boolean>;
+    mayLeave?: (from: Route, to: Route) => Promise<boolean>;
+    didEnter?: (from: Route, to: Route) => boolean;
+    didLeave?: (from: Route, to: Route) => boolean;
+    cancelEnter?: (from: Route, to: Route) => boolean;
+    cancelLeave?: (from: Route, to: Route) => boolean;
+    order?: number;
+    captureViewState?: (route: Route) => object;
+    restoreViewState?: (route: Route, state: object) => void;
+};
+```
 
-This function can be `async` and return a promise for one of the above values.
+### cancelEnter {#RouteHandler#cancelEnter}
 
 
-### async mayEnter(from, to)
+Notifies that a route that could have been entered was cancelled
 
-Notifies the route handler that a route it manages may become the 
-new current route.
 
-* `from` - the route being navigated away from, or `null` if this is the initial page load.
-* `to` - the route being navigated to (always a route managed by this route handler)
+```ts
+cancelEnter?: (from: Route, to: Route) => boolean;
+```
 
-This function should return `true` to accept the navigation, `false` to cancel
-the navigation, or a promise resolving to `true` or `false`.
+### cancelLeave {#RouteHandler#cancelLeave}
 
-### async mayLeave(from, to)
 
-Notifies the route handler of the current route that it may be navigated
-away from.
+Notifies that a route that could have been left was cancelled
 
-* `from` - the route being navigated away from (always a route managed by 
-  this route handler)
-* `to` - the route being navigated to.
 
-This function should return `true` to accept the navigation, `false` to cancel
-the navigation, or a promise resolving to `true` or `false`.
+```ts
+cancelLeave?: (from: Route, to: Route) => boolean;
+```
 
+### captureViewState {#RouteHandler#captureViewState}
 
-### didEnter(from, to)
 
-Notifies the route handler that a route it manages has become the new current
-route.
+A callback to capture the view state for this route handler's routes
 
-* `from` - the route being navigated away from, or `null` if this is the
-  initial page load.
-* `to` - the new current route object (always a route object managed by this 
-  route handler)
 
+```ts
+captureViewState?: (route: Route) => object;
+```
 
-### didLeave(from, to)
+### didEnter {#RouteHandler#didEnter}
 
-Notifies the route handler that a route object it manages is no longer
-the current route.
 
-* `from` - the route object that is no longer current (always a route 
-  object managed by this route handler)
-* `to` - the new current route object
+Notifies that a route for this handler has been entered
 
 
-### order
+```ts
+didEnter?: (from: Route, to: Route) => boolean;
+```
 
-A numeric value that sets the order of this route manager in relation to
-others.  If not specified, a value of `0` is assumed.
+### didLeave {#RouteHandler#didLeave}
 
-This setting can be used to resolve conflicts when a URL might otherwise
-match multiple route handlers, giving precedence to the handler with the
-lower `order` value.
 
-This setting is often used with a route handler for a "Not Found" as a
-catch all in case no other route manager matches a URL.  By giving such
-a route handler a high order value it will always be matched after all
-other handlers.
+Notifies that a route for this handler has been left
 
 
+```ts
+didLeave?: (from: Route, to: Route) => boolean;
+```
 
-## Route Object
+### match {#RouteHandler#match}
 
-Route objects are created by the Router when a new navigation event begins
-and will have at least the properties described here.
 
-Usually route handlers will attach additional properties to the route object
-but that's up to your application.
+A callback to confirm the URL match
 
-### url
 
-The internalized URL of the route as URL object (not a string)
+```ts
+match?: (route: Route) => Promise<boolean>;
+```
 
-### state
+### mayEnter {#RouteHandler#mayEnter}
 
-Any previously saved state associated with this route.
 
-### current
+Notifies that a route for this handler may be entered
 
-True if this is the route that Router.current would return.
 
-### handler
+```ts
+mayEnter?: (from: Route, to: Route) => Promise<boolean>;
+```
 
-The route handler that is associated with this route object. 
+### mayLeave {#RouteHandler#mayLeave}
 
-Before a route is matched to a handler, this property is `undefined`.
 
-### viewState
+Notifies that a route for this handler may be left
 
-If you're using the `ViewStateRestoration` component it will
-attach any previously saved view state to the route object in its
-`"mayEnter"` handler.
 
+```ts
+mayLeave?: (from: Route, to: Route) => Promise<boolean>;
+```
 
-## ViewStateRestoration Class
+### order {#RouteHandler#order}
 
-The `ViewStateRestoration` class implements this default view
-state restoration features of the Router.
 
-It doesn't have a public API itself, but it will call capture and
-restore methods on the route handlers and/or the router itself.
+Order of this route handler when compared to all others (default = 0, lowest first)
 
-### captureViewState()
 
-When capturing view state, the following methods are tried:
+```ts
+order?: number;
+```
 
-1. `captureViewState()` on the route handler being navigated away from.
-2. `captureViewState()` on the Router itself
-3. Otherwise the current document scroll position is captured.
+### pattern {#RouteHandler#pattern}
 
-The `captureViewState()` function should return an JSON serializable
-object with any view state information that should be tracked.
 
-### restoreViewState(state)
+A string pattern or regular expression to match URL pathnames to this route handler
 
-When restoring view state, the following methods are tried:
 
-1. `restoreViewState(state)` on the route handler being navigated to.
-2. `restoreViewState(state)` on the Router itself
-3. Otherwise the current document scroll position is restored.
+```ts
+pattern?: string | RegExp;
+```
 
-The `restoreViewState(state)` function will be passed a copy of the
-view state object as previously returned from `captureViewState()`
+### restoreViewState {#RouteHandler#restoreViewState}
 
-## WebHistoryRouterDriver Class
 
-The `WebHistoryRouterDriver` provides the connection between the
-Router and the browser's History API and DOM.
+A callback to restore the view state for this route handler's routes
 
-Usually an application should only interact with it through the
-following methods which are forwarded by the Router to the driver:
 
+```ts
+restoreViewState?: (route: Route, state: object) => void;
+```
 
+## Router Class {#Router}
 
-### async start(router)
 
-Initializes the driver by:
+The Router class - handles URL load requests, creating
+route objects using route handlers and firing associated
+events
 
-1. connecting required event handlers to browser History API and DOM
-2. performing initial page load navigation
 
-Parameters:
+```ts
+class Router {
+    constructor(handlers: RouteHandler[]);
+    start(driver: object): any;
+    navigate: any;
+    replace: any;
+    back: any;
+    urlMapper: UrlMapper;
+    internalize(url: URL | string): URL | string;
+    externalize(url: URL | string): URL | string;
+    get current(): Route;
+    get pending(): Route;
+    addEventListener(event: string, handler: RouterEventAsync | RouterEventSync): void;
+    removeEventListener(event: string, handler: RouterEventAsync | RouterEventSync): void;
+    register(handlers: RouteHandler | RouteHandler[]): void;
+    revoke(predicate: (handler: RouteHandler) => boolean): void;
+    captureViewState: (route: Route) => object;
+    restoreViewState: (route: Route, state: object) => void;
+}
+```
 
-* `router` - the Router this drive is to connect with.
+### addEventListener() {#Router#addEventListener}
 
-Don't call this method directly, instead call the `Router.start()`
-method which will delegate to this method.
+Adds an event listener
 
+Available events are:
+  - "mayEnter", "mayLeave" (async, cancellable events)
+  - "didEnter" and "didLeave" (sync, non-cancellable events)
+  - "cancel" (sync, notification only)
 
 
-### async navigate(url)
 
-Navigates to a new URL.
+```ts
+addEventListener(event: string, handler: RouterEventAsync | RouterEventSync): void;
+```
 
-* `url` - the internal URL to navigate to.  Can be a string or a URL object.
+* **`event`** The event to listen to
 
-Returns a promise that resolves when navigation is complete.  The resolved
-promise is the route object of the new navigation or `null` if navigation
-was cancelled.
+* **`handler`** The event handler function
 
+### back {#Router#back}
 
 
-### back()
+Navigates back one step in the history, or if there is
+no previous history navigates to the root URL
 
-Navigates back one step in the browser history, or, if there is no previous
-entry to go back to, navigates to the home page.
 
-This method can be used with routes to modal dialog to close the dialog and
-return to the previous route, or the home page (if the modal was loaded directly
-from an initial page load  URL).
+```ts
+back: any;
+```
 
+### captureViewState {#Router#captureViewState}
 
+a callback to capture the view state for this route handler's routes
 
-### replace(url)
 
-This function updates the saved state of the route and optionally updates
-the current page URL.
+```ts
+captureViewState: (route: Route) => object;
+```
 
-If a url is specified, it replaces the current URL shown in the browser 
-(and the history) and updates the current route object with the new URL information.
+### constructor() {#Router#constructor}
 
-Regardless of whether a URL is specified, this method also saves
-the `Router.current.state` to the history making it available if this
-page is returned to.
+Constructs a new Router instance
 
-<div class="tip">
 
-You should never replace the `Router.current.state` object as it 
-has settings that are used internally to maintain the current history
-position.
+```ts
+constructor(handlers: RouteHandler[]);
+```
 
-If you need to save additional state information we recommend storing it
-in a sub-object of the state object, eg: `Router.current.state.myState`.
+* **`handlers`** An array of router handlers to initially register
 
-</div>
+### current {#Router#current}
 
+The current route object
 
-## UrlMapper Class
 
-The `UrlMapper` class provides methods to internalize and external URLs
-performing two commong functions:
+```ts
+get current(): Route;
+```
 
-1. Supporting a base URL prefix
-2. Supporting hash based URL path
+### externalize() {#Router#externalize}
 
-### constructor(options)
+Externalizes a URL
 
-Constructs a new `UrlMapper` object.
 
-* `options` - an object with settings controlling how URLs are mapped
-    - `base` - a URL prefix for external URLs
-    - `hash` - if true URLs will be externalized as hash URL paths.
+```ts
+externalize(url: URL | string): URL | string;
+```
 
-If specified, the `base` option must start and end with a slash "'/'".
+* **`url`** The URL to internalize
 
-### internalize(url)
+### internalize() {#Router#internalize}
 
-Internalizes a URL.
+Internalizes a URL
 
-* `url` - a URL object (not string) to be internalized.
 
-Throws an Error if the URL can't be internalized.
+```ts
+internalize(url: URL | string): URL | string;
+```
 
+* **`url`** The URL to internalize
 
-### externalize(url)
+### navigate {#Router#navigate}
 
-Externalizes a URL.
 
-* `url` - a URL object (not string) to be externalized.
+Navigates to a new URL
 
-Throws an Error if the URL can't be externalized.
+
+```ts
+navigate: any;
+```
+
+* **`url`** The external URL to navigate to
+
+### pending {#Router#pending}
+
+The route currently being navigated to
+
+
+```ts
+get pending(): Route;
+```
+
+### register() {#Router#register}
+
+Registers one or more route handlers with the router
+
+
+```ts
+register(handlers: RouteHandler | RouteHandler[]): void;
+```
+
+* **`handlers`** The handler or handlers to register
+
+### removeEventListener() {#Router#removeEventListener}
+
+Removes a previously added event handler
+
+
+
+```ts
+removeEventListener(event: string, handler: RouterEventAsync | RouterEventSync): void;
+```
+
+* **`event`** The event to remove the listener for
+
+* **`handler`** The event handler function to remove
+
+### replace {#Router#replace}
+
+
+Replaces the current URL, without performing a navigation
+
+
+```ts
+replace: any;
+```
+
+* **`url`** The new URL to display
+
+### restoreViewState {#Router#restoreViewState}
+
+a callback to restore the view state for this route handler's routes
+
+
+```ts
+restoreViewState: (route: Route, state: object) => void;
+```
+
+### revoke() {#Router#revoke}
+
+Revoke previously used handlers by matching to a predicate
+
+
+```ts
+revoke(predicate: (handler: RouteHandler) => boolean): void;
+```
+
+* **`predicate`** Callback passed each route handler, return true to remove
+
+### start() {#Router#start}
+
+Starts the router, using the specified driver
+
+
+```ts
+start(driver: object): any;
+```
+
+* **`driver`** The router driver to use
+
+### urlMapper {#Router#urlMapper}
+
+
+An option URL mapper to be used for URL internalization and
+externalization.
+
+
+```ts
+urlMapper: UrlMapper;
+```
+
+## UrlMapper Class {#UrlMapper}
+
+Provides URL internalization and externalization 
+
+```ts
+class UrlMapper {
+    constructor(options: {
+        base: string;
+        hash: boolean;
+    });
+    internalize(url: URL): URL;
+    externalize(url: URL, asset?: boolean): URL;
+}
+```
+
+### constructor() {#UrlMapper#constructor}
+
+Constructs a new Url Mapper
+
+
+```ts
+constructor(options: {
+    base: string;
+    hash: boolean;
+});
+```
+
+* **`options`** Options for how to map URLs
+
+* **`options.base`** The base URL of the external URL
+
+* **`options.hash`** True to use hashed URLs
+
+### externalize() {#UrlMapper#externalize}
+
+Externalizes a URL
+
+
+
+```ts
+externalize(url: URL, asset?: boolean): URL;
+```
+
+* **`url`** The URL to externalize
+
+* **`asset`** If true, ignores the hash option (used to externalize asset URLs with base only)
+
+### internalize() {#UrlMapper#internalize}
+
+Internalizes a URL
+
+
+
+```ts
+internalize(url: URL): URL;
+```
+
+* **`url`** The URL to internalize
 

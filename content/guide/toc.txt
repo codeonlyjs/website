@@ -38,9 +38,13 @@ renderAssets
 
 # API
 
-apiComponent
+apiComponents
+apiTemplates
 apiRouter
-apiFunctions
+apiRendering
+apiEnvironment
+apiUtilities
+apiLowLevel
 
 # Related
 
