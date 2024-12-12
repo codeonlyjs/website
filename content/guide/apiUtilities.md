@@ -32,13 +32,14 @@ function css(strings: string[], values: string[]): void;
 
 ## fetchJsonAsset() {#fetchJsonAsset}
 
-Fetches a JSON asset
 
- In the browser, issues a fetch request for an asset
- On the server, uses fs.readFile to load a local file asset
+Fetches a JSON asset.
 
- The asset path must be absolute (start with a '/') and is
- resolved relative to the project root.
+In the browser, issues a fetch request for an asset
+On the server, uses fs.readFile to load a local file asset.
+
+The asset path must be absolute (start with a '/') and is
+resolved relative to the project root.
 
 
 
@@ -50,13 +51,14 @@ function fetchJsonAsset(path: string): Promise<object>;
 
 ## fetchTextAsset() {#fetchTextAsset}
 
-Fetches a text asset
 
- In the browser, issues a fetch request for an asset
- On the server, uses fs.readFile to load a local file asset
+Fetches a text asset.
 
- The asset path must be absolute (start with a '/') and is
- resolved relative to the project root.
+In the browser, issues a fetch request for an asset
+On the server, uses fs.readFile to load a local file asset.
+
+The asset path must be absolute (start with a '/') and is
+resolved relative to the project root.
 
 
 
@@ -68,7 +70,9 @@ function fetchTextAsset(path: string): Promise<string>;
 
 ## htmlEncode() {#htmlEncode}
 
-Encodes a string to make it safe for use in HTML
+
+Encodes a string to make it safe for use in HTML.
+
 
 
 ```ts
@@ -80,7 +84,7 @@ function htmlEncode(str: string): string;
 ## INotify {#INotify}
 
 
-Interface to a notify service instance
+Interface to a notify service instance.
 
 
 ```ts
@@ -95,49 +99,52 @@ type INotify =
 ### (call signature)
 
 
-Fires a notification
+Fires a notification.
+
 
 
 ```ts
 (sourceObject: any, ...args: any[]): void;
 ```
 
-* **`sourceObject`** The source object or value of the event
+* **`sourceObject`** The event source object or value
 
 * **`args`** Optional arguments to pass to the event handlers
 
 ### addEventListener {#INotify#addEventListener}
 
 
-Adds an event listener to the notify servers
+Adds an event listener to the notify service.
+
 
 
 ```ts
 addEventListener: (sourceObject: any, handler: any) => void;
 ```
 
-* **`sourceObject`** The source object or value to listen to
+* **`sourceObject`** The event source object or value
 
 * **`handler`** The event handler
 
 ### removeEventListener {#INotify#removeEventListener}
 
 
-Removes previously registered event listener to the notify servers
+Removes previously registered event listener from the notify service.
+
 
 
 ```ts
 removeEventListener: (sourceObject: any, handler: any) => void;
 ```
 
-* **`sourceObject`** The source object or value to listen to
+* **`sourceObject`** The event source object or value
 
 * **`handler`** The event handler
 
 ## nextFrame() {#nextFrame}
 
 
-Invokes a callback on the next update cycle
+Invokes a callback on the next update cycle.
 
 
 
@@ -145,9 +152,9 @@ Invokes a callback on the next update cycle
 function nextFrame(callback: () => void, order?: number): void;
 ```
 
-* **`callback`** The callback to be invoked
+* **`callback`** The callback to be invoked.
 
-* **`order`** The priority of the callback in related to others (lowest first, default 0)
+* **`order`** The priority of the callback in related to others (lowest first, default 0).
 
 ## notify {#notify}
 
@@ -188,7 +195,8 @@ function postNextFrame(callback: () => void): void;
 
 ## urlPattern() {#urlPattern}
 
-Converts a URL pattern string to a regular expression string
+
+Converts a URL pattern string to a regular expression string.
 
 
 

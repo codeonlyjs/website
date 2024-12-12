@@ -7,7 +7,9 @@ description: CodeOnly Router API Reference
 
 ## PageCache Class {#PageCache}
 
-Implements a simple MRU cache that can be used to cache Page components for route handlers 
+
+Implements a simple MRU cache that can be used to cache page components used by route handlers.
+
 
 ```ts
 class PageCache {
@@ -20,7 +22,9 @@ class PageCache {
 
 ### constructor() {#PageCache#constructor}
 
-Constructs a new page cache
+
+Constructs a new page cache.
+
 
 
 ```ts
@@ -35,21 +39,26 @@ constructor(options: {
 
 ### get() {#PageCache#get}
 
-Get a cached object from the cache, or create a new one
+
+Get an object from the cache, or if no matches found invoke a callback
+to create a new instance.
+
 
 
 ```ts
 get(key: any, factory: (key: any) => any): any;
 ```
 
-* **`key`** The key for the page
+* **`key`** The key for the page.
 
-* **`factory`** A callback to create the page item if not in the cache
+* **`factory`** A callback to create the item when not found in the cache.
 
 ## Route {#Route}
 
 
-Represents a Route instance
+Route objects store information about the current navigation, including the
+URL, the matched handler and anything else the handler wants to associate with
+the route.
 
 
 ```ts
@@ -67,7 +76,9 @@ type Route = {
 ### current {#Route#current}
 
 
-True when this is the current route
+`true` when this is the current route.
+
+There will only ever be one current route.
 
 
 ```ts
@@ -77,7 +88,7 @@ current: boolean;
 ### handler {#Route#handler}
 
 
-The handler associated with this route
+The [`RouteHandler`](apiRouter#RouteHandler) associated with this route.
 
 
 ```ts
@@ -87,7 +98,10 @@ handler: RouteHandler;
 ### page {#Route#page}
 
 
-The page component for this route
+The page component for this route.
+
+CodeOnly nevers sets or uses this property, but it is included here because
+by convention, most applications will set a `page` property.
 
 
 ```ts
@@ -97,7 +111,12 @@ page?: any;
 ### state {#Route#state}
 
 
-State associated with the route
+State associated with the route.
+
+The router stores important information in the state object so the clients
+should never edit settings in the state object.  An application can however
+store additional information in the state object, by setting properties on
+it and then calling the [`replace`](apiRouter#Router#replace) method.
 
 
 ```ts
@@ -109,6 +128,9 @@ state: any;
 
 The route's page title
 
+CodeOnly nevers sets or uses this property, but it is included here because
+by convention, most applications will set a `title` property.
+
 
 ```ts
 title?: string;
@@ -117,7 +139,7 @@ title?: string;
 ### url {#Route#url}
 
 
-The route's URL
+The route's internalized URL.
 
 
 ```ts
@@ -127,7 +149,14 @@ url: URL;
 ### viewState {#Route#viewState}
 
 
-The route's view state
+The route's view state.
+
+This information will be available on the Route object once
+the `mayEnter` event has been fired by the Router.
+
+By default the web history router driver will save and restore the current document
+scroll position but applications can save and restore additional custom information
+as necessary. For more information see [View State Restoration](routerDetails#view-state-restoration).
 
 
 ```ts
@@ -137,7 +166,16 @@ viewState?: any;
 ## RouteHandler {#RouteHandler}
 
 
-RouteHandlers handle mapping URLs to Route instances
+A route handler is an object that handles the navigation to and from a particular URL.
+
+Route handlers are registered with the router during app startup and are called by the
+router when a URL is loaded and needs to be matched to a particular handler.
+
+When a route handler matches a URL it will usually store additional information on the
+[`Route`](apiRouter#Route) object that describes the component or page to be displayed for that
+URL along with any other information the handler or the application might find useful.
+
+See [Route Handlers](routerDetails#route-handlers) for more information.
 
 
 ```ts
@@ -159,7 +197,7 @@ type RouteHandler = {
 ### cancelEnter {#RouteHandler#cancelEnter}
 
 
-Notifies that a route that could have been entered was cancelled
+Notifies that a route that may have been entered was cancelled.
 
 
 ```ts
@@ -169,7 +207,7 @@ cancelEnter?: (from: Route, to: Route) => boolean;
 ### cancelLeave {#RouteHandler#cancelLeave}
 
 
-Notifies that a route that could have been left was cancelled
+Notifies that a route that may have been left was cancelled.
 
 
 ```ts
@@ -179,7 +217,7 @@ cancelLeave?: (from: Route, to: Route) => boolean;
 ### captureViewState {#RouteHandler#captureViewState}
 
 
-A callback to capture the view state for this route handler's routes
+A callback to capture the view state for this route handler's routes.
 
 
 ```ts
@@ -189,7 +227,7 @@ captureViewState?: (route: Route) => object;
 ### didEnter {#RouteHandler#didEnter}
 
 
-Notifies that a route for this handler has been entered
+Notifies that a route for this handler has been entered.
 
 
 ```ts
@@ -199,7 +237,7 @@ didEnter?: (from: Route, to: Route) => boolean;
 ### didLeave {#RouteHandler#didLeave}
 
 
-Notifies that a route for this handler has been left
+Notifies that a route for this handler has been left.
 
 
 ```ts
@@ -209,7 +247,7 @@ didLeave?: (from: Route, to: Route) => boolean;
 ### match {#RouteHandler#match}
 
 
-A callback to confirm the URL match
+A callback to confirm the URL match. If not specified all URL's matching the pattern will be considered matches.
 
 
 ```ts
@@ -219,7 +257,7 @@ match?: (route: Route) => Promise<boolean>;
 ### mayEnter {#RouteHandler#mayEnter}
 
 
-Notifies that a route for this handler may be entered
+Notifies that a route for this handler may be entered.
 
 
 ```ts
@@ -229,7 +267,7 @@ mayEnter?: (from: Route, to: Route) => Promise<boolean>;
 ### mayLeave {#RouteHandler#mayLeave}
 
 
-Notifies that a route for this handler may be left
+Notifies that a route for this handler may be left.
 
 
 ```ts
@@ -239,7 +277,7 @@ mayLeave?: (from: Route, to: Route) => Promise<boolean>;
 ### order {#RouteHandler#order}
 
 
-Order of this route handler when compared to all others (default = 0, lowest first)
+Order of this route handler in relation to all others (default = 0, lowest first).
 
 
 ```ts
@@ -249,7 +287,7 @@ order?: number;
 ### pattern {#RouteHandler#pattern}
 
 
-A string pattern or regular expression to match URL pathnames to this route handler
+A string pattern (see [`urlPattern`](apiUtilities#urlPattern)) or regular expression to match URL pathnames to this route handler. If not specified, all URL's will match.
 
 
 ```ts
@@ -259,7 +297,7 @@ pattern?: string | RegExp;
 ### restoreViewState {#RouteHandler#restoreViewState}
 
 
-A callback to restore the view state for this route handler's routes
+A callback to restore the view state for this route handler's routes.
 
 
 ```ts
@@ -269,7 +307,10 @@ restoreViewState?: (route: Route, state: object) => void;
 ## router {#router}
 
 
-Default [Router](apiRouter#Router) Instance
+Default [Router](apiRouter#Router) instance.
+
+Nearly all applications only ever need a single router
+instance and can use this pre-created instance.
 
 
 ```ts
@@ -279,18 +320,17 @@ let router: Router;
 ## Router Class {#Router}
 
 
-The Router class - handles URL load requests, creating
-route objects using route handlers and firing associated
-events
+A Router handles URL load requests, by creating route objects matching them to
+route handlers and firing associated events.
 
 
 ```ts
 class Router {
     constructor(handlers: RouteHandler[]);
-    start(driver: object): any;
-    navigate: any;
-    replace: any;
-    back: any;
+    start(driver: object | null): Promise<any>;
+    navigate: (url: URL | string) => Promise<Route>;
+    replace: (url: URL | string) => void;
+    back: () => void;
     urlMapper: UrlMapper;
     internalize(url: URL | string): URL | string;
     externalize(url: URL | string): URL | string;
@@ -307,12 +347,19 @@ class Router {
 
 ### addEventListener() {#Router#addEventListener}
 
-Adds an event listener
+
+Adds an event listener.
 
 Available events are:
-  - "mayEnter", "mayLeave" (async, cancellable events)
-  - "didEnter" and "didLeave" (sync, non-cancellable events)
-  - "cancel" (sync, notification only)
+  - `mayEnter`, `mayLeave` async, cancellable
+  - `didEnter`, `didLeave` sync, non-cancellable
+  - `cancel` - sync, notification only
+
+The async cancellable events should return `Promise<boolean>` where a
+resolved value of `false` cancels the navigation.
+
+All event handlers receive two arguments a `from` and `to` route object.  For the
+initial page load, the `from` parameter will be `null`.
 
 
 
@@ -328,16 +375,18 @@ addEventListener(event: string, handler: RouterEventAsync | RouterEventSync): vo
 
 
 Navigates back one step in the history, or if there is
-no previous history navigates to the root URL
+no previous history navigates to the root URL.
 
 
 ```ts
-back: any;
+back: () => void;
 ```
 
 ### captureViewState {#Router#captureViewState}
 
-a callback to capture the view state for this route handler's routes
+
+A callback to capture the view state for a route.
+
 
 
 ```ts
@@ -346,18 +395,23 @@ captureViewState: (route: Route) => object;
 
 ### constructor() {#Router#constructor}
 
+
 Constructs a new Router instance
+
 
 
 ```ts
 constructor(handlers: RouteHandler[]);
 ```
 
-* **`handlers`** An array of router handlers to initially register
+* **`handlers`** *
+An array of router handlers to initially register, however usually
+handlers are registered using the [register](apiRouter#Router#register) method.
 
 ### current {#Router#current}
 
-The current route object
+
+The current route object.
 
 
 ```ts
@@ -366,7 +420,9 @@ get current(): Route;
 
 ### externalize() {#Router#externalize}
 
-Externalizes a URL
+
+Externalizes a URL.
+
 
 
 ```ts
@@ -377,7 +433,9 @@ externalize(url: URL | string): URL | string;
 
 ### internalize() {#Router#internalize}
 
-Internalizes a URL
+
+Internalizes a URL.
+
 
 
 ```ts
@@ -389,18 +447,17 @@ internalize(url: URL | string): URL | string;
 ### navigate {#Router#navigate}
 
 
-Navigates to a new URL
+Navigates to a new URL.
 
 
 ```ts
-navigate: any;
+navigate: (url: URL | string) => Promise<Route>;
 ```
-
-* **`url`** The external URL to navigate to
 
 ### pending {#Router#pending}
 
-The route currently being navigated to
+
+The route currently being navigated to, but not yet committed.
 
 
 ```ts
@@ -409,7 +466,9 @@ get pending(): Route;
 
 ### register() {#Router#register}
 
-Registers one or more route handlers with the router
+
+Registers one or more route handlers.
+
 
 
 ```ts
@@ -420,7 +479,8 @@ register(handlers: RouteHandler | RouteHandler[]): void;
 
 ### removeEventListener() {#Router#removeEventListener}
 
-Removes a previously added event handler
+
+Removes a previously registered event handler.
 
 
 
@@ -435,18 +495,18 @@ removeEventListener(event: string, handler: RouterEventAsync | RouterEventSync):
 ### replace {#Router#replace}
 
 
-Replaces the current URL, without performing a navigation
+Replaces the current URL, without performing a navigation.
 
 
 ```ts
-replace: any;
+replace: (url: URL | string) => void;
 ```
-
-* **`url`** The new URL to display
 
 ### restoreViewState {#Router#restoreViewState}
 
-a callback to restore the view state for this route handler's routes
+
+A callback to restore the view state for a route.
+
 
 
 ```ts
@@ -455,31 +515,36 @@ restoreViewState: (route: Route, state: object) => void;
 
 ### revoke() {#Router#revoke}
 
-Revoke previously used handlers by matching to a predicate
+
+Revoke previously registered handlers that match a predicate callback.
+
 
 
 ```ts
 revoke(predicate: (handler: RouteHandler) => boolean): void;
 ```
 
-* **`predicate`** Callback passed each route handler, return true to remove
+* **`predicate`** Callback passed each route handler, return `true` to remove
 
 ### start() {#Router#start}
+
 
 Starts the router, using the specified driver
 
 
+
 ```ts
-start(driver: object): any;
+start(driver: object | null): Promise<any>;
 ```
 
-* **`driver`** The router driver to use
+* **`driver`** The router driver to use, or `null` to use the default Web History router driver.
 
 ### urlMapper {#Router#urlMapper}
 
 
-An option URL mapper to be used for URL internalization and
+An optional URL mapper to be used for URL internalization and
 externalization.
+
 
 
 ```ts

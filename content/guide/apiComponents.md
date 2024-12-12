@@ -15,6 +15,8 @@ and an optional a set of CSS styles.
 Components can be used either in the templates of other components
 or mounted onto the document DOM to appear in a web page.
 
+See also [Component Basics](components).
+
 
 
 ```ts
@@ -53,9 +55,9 @@ class Component extends EventTarget {
 ### create() {#Component#create}
 
 
-Ensures the DOM elements of this component have been created.
+Ensures this component's [DomTree](apiLowLevel#DomTree) has been created.
 
-Calling this method does nothing if the component is already created.
+Calling this method does nothing if the DomTree is already created.
 
 
 
@@ -66,7 +68,7 @@ create(): void;
 ### created {#Component#created}
 
 
-Returns true if this component's DOM elements have been created.
+Returns true if this component's [DomTree](apiLowLevel#DomTree) has been created.
 
 
 
@@ -77,7 +79,7 @@ get created(): boolean;
 ### destroy() {#Component#destroy}
 
 
-Destroys this components [`DomTree`](apiLowLevel#DomTree) returning it to
+Destroys this component's [`DomTree`](apiLowLevel#DomTree) returning it to
 the constructed, but non-created state.
 
 A destroyed component can be re-created by remounting it
@@ -121,8 +123,12 @@ static get domTreeConstructor(): DomTreeConstructor;
 ### invalid {#Component#invalid}
 
 
-Indicates if this component is had pending updates due to
-previous call to [`invalidate`](apiComponents#Component#invalidate).
+Indicates if this component in invalid.
+
+A component is invalid if it has been invalidated by
+a previous call to [`invalidate`](apiComponents#Component#invalidate) and
+hasn't yet be updated.
+
 
 
 ```ts
@@ -132,12 +138,12 @@ get invalid(): boolean;
 ### invalidate() {#Component#invalidate}
 
 
-Marks this component as requiring a DOM update.
+Invalidates this component, marking it as requiring a DOM update.
 
 Does nothing if the component hasn't yet been created.
 
-This method is bound to the component instance
-and can be used as an event listener to invalidate the
+This method is bound to the component instance and can be used
+directly as the handler for an event listener to invalidate the
 component when an event is triggered.
 
 
@@ -161,8 +167,8 @@ static get isSingleRoot(): boolean;
 ### isSingleRoot {#Component#isSingleRoot}
 
 
-Returns true if this component instance has, and will only ever
-have a single root node
+Returns true if this component instance is guaranteed to always only
+have a single root node.
 
 
 
@@ -184,23 +190,25 @@ listen(target: object, event: string, handler?: Function): void;
 
 * **`target`** Any object that supports addEventListener and removeEventListener
 
-* **`event`** The event to listen for
+* **`event`** The event to listen to
 
-* **`handler`** The event listener to add.  If not provided, the component's [invalidate](apiComponents#Component#invalidate) method is used.
+* **`handler`** The event handler to add.  If not provided, the component's [invalidate](apiComponents#Component#invalidate) method is used.
 
 ### load() {#Component#load}
 
+
 Performs an async data load operation.
 
-The callback function is typically an async function that performs
-a data request.  While in the callback, the [loading](apiComponents#Component#loading) property
-will return `true`.  If the callback throws an error, it will be captured
-to the [loadError](apiComponents#Component#loadError) property.
+The callback function is an async function that performs an async data load.
+While in the callback, the [loading](apiComponents#Component#loading) property returns `true`.
+
+If the callback throws an error, it will be captured to the [loadError](apiComponents#Component#loadError)
+property.
 
 Before calling and after returning from the callback, the component is
 invalidated so visual elements (eg: spinners) can be updated.
 
-If the silent parameter is `true` the `loading` property isn't set and
+If the silent parameter is `true` the [loading](apiComponents#Component#loading) property isn't set and
 the component is only invalidated after returning from the callback.
 
 
@@ -216,7 +224,7 @@ load(callback: () => Promise<any>, silent?: boolean): Promise<any>;
 ### loadError {#Component#loadError}
 
 
-Gets the error object thrown during the last call to (see [`load`](apiComponents#Component#load)).
+Gets the error object thrown during the last call to [`load`](apiComponents#Component#load).
 
 
 
@@ -225,7 +233,8 @@ get loadError(): Error | null;
 ```
 
 
-Sets the error object associated with the (see [`load`](apiComponents#Component#load)) operation.
+Sets the error object associated with the current call to [`load`](apiComponents#Component#load).
+
 
 
 ```ts
@@ -236,7 +245,8 @@ set loadError(value: Error | null);
 
 ### loading {#Component#loading}
 
-Indicates if the component is currently in an [`load`](apiComponents#Component#load) operation
+
+Indicates if the component is currently in an [`load`](apiComponents#Component#load) operation.
 
 
 
@@ -260,7 +270,7 @@ mount(el: Element | string): void;
 ### mounted {#Component#mounted}
 
 
-Indicates if the component is current mounted.
+Returns `true` if the component is currently mounted.
 
 
 
@@ -274,8 +284,8 @@ get mounted(): boolean;
 Notifies a component that is has been mounted.
 
 Override this method to receive the notification.  External
-resources (eg: adding event listeners to external objects) should be
-acquired when the component is mounted.
+resources should be acquired when the component is mounted.
+(eg: adding event listeners to external objects)
 
 
 
@@ -316,8 +326,8 @@ static onProvideTemplate(): {};
 Notifies a component that is has been unmounted.
 
 Override this method to receive the notification.  External
-resources (eg: removing event listeners from external objects) should be
-released when the component is unmounted.
+resources should be released when the component is unmounted.
+(eg: removing event listeners from external objects)
 
 
 
@@ -328,8 +338,8 @@ onUnmount(): void;
 ### rootNode {#Component#rootNode}
 
 
-Returns the single root node of this component if it is a single
-root node component.
+Returns the single root node of this component (if it is a single
+root node component).
 
 
 
@@ -340,7 +350,7 @@ get rootNode(): Node;
 ### rootNodes {#Component#rootNodes}
 
 
-Returns the root nodes of this element, creating them if necessary.
+Returns an array of root DOM nodes for this element, creating them if necessary.
 
 
 
@@ -351,18 +361,21 @@ get rootNodes(): Node[];
 ### setMounted() {#Component#setMounted}
 
 
-Notifies the object is has been mounted or unmounted
+Notifies the object it has been mounted or unmounted
+
 
 
 ```ts
 setMounted(mounted: boolean): void;
 ```
 
-* **`mounted`** True when the object has been mounted, false when unmounted
+* **`mounted`** `true` if the object has been mounted, `false` if unmounted
 
 ### template (static) {#Component.template}
 
-The template to be used by this component class 
+
+The template to be used by this component class
+
 
 ```ts
 static template: {};
@@ -381,11 +394,12 @@ unlisten(target: object, event: string, handler?: Function): void;
 
 * **`target`** Any object that supports addEventListener and removeEventListener
 
-* **`event`** The event being listened for
+* **`event`** The event being listened to
 
-* **`handler`** The event listener to remove.  If not provided, the component's [invalidate](apiComponents#Component#invalidate) method is used.
+* **`handler`** The event handler to remove.  If not provided, the component's [invalidate](apiComponents#Component#invalidate) method is used.
 
 ### unmount() {#Component#unmount}
+
 
 Unmounts this component
 
@@ -403,10 +417,10 @@ the component is not marked as invalid.
 
 Does nothing if the component's DOM elements haven't been created.
 
-If the component has been invalidate, returns it to the valid state.
+If the component has been invalidated, returns it to the valid state.
 
-This method is bound to the component instance
-and can be used as an event listener to update the
+This method is bound to the component instance and can be used
+directly as the handler for an event listener to update the
 component when an event is triggered.
 
 

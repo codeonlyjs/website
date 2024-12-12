@@ -72,7 +72,7 @@ export class SecondaryNavigation extends Component
         if (scrollPos > 20)
         {
             let vh = window.innerHeight || 0;
-            scrollPos += + vh / 2 - 200;
+            scrollPos += 150;
             for (let hc of this.#headingCoords)
             {
                 if (hc.top > scrollPos)
