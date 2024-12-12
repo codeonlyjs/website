@@ -9,7 +9,7 @@ description: CodeOnly Components API Reference
 
 
 Components are the primary building block for constructing CodeOnly
-applications. They encapsulate program logic, a DOM (aka HTML) template
+applications. They encapsulate program logic, a DOM template
 and an optional a set of CSS styles.
 
 Components can be used either in the templates of other components
@@ -20,7 +20,7 @@ or mounted onto the document DOM to appear in a web page.
 ```ts
 class Component extends EventTarget {
     static get domTreeConstructor(): DomTreeConstructor;
-    static onProvideDomTreeConstructor(): import("core/TemplateCompiler").DomTreeConstructor;
+    static onProvideDomTreeConstructor(): DomTreeConstructor;
     static onProvideTemplate(): {};
     static get isSingleRoot(): boolean;
     static template: {};
@@ -35,14 +35,14 @@ class Component extends EventTarget {
     get invalid(): boolean;
     validate(): void;
     set loadError(value: Error | null);
-    get loadError(): Error;
+    get loadError(): Error | null;
     get loading(): boolean;
-    load(callback: () => any, silent?: boolean): any;
+    load(callback: () => Promise<any>, silent?: boolean): Promise<any>;
     destroy(): void;
     onMount(): void;
     onUnmount(): void;
-    listen(target: EventTarget, event: string, handler?: Function): void;
-    unlisten(target: EventTarget, event: string, handler?: Function): void;
+    listen(target: object, event: string, handler?: Function): void;
+    unlisten(target: object, event: string, handler?: Function): void;
     get mounted(): boolean;
     setMounted(mounted: boolean): void;
     mount(el: Element | string): void;
@@ -52,7 +52,8 @@ class Component extends EventTarget {
 
 ### create() {#Component#create}
 
-Ensures the DOM elements of this component are created.
+
+Ensures the DOM elements of this component have been created.
 
 Calling this method does nothing if the component is already created.
 
@@ -64,7 +65,8 @@ create(): void;
 
 ### created {#Component#created}
 
-Returns true if this component's DOM elements have been created
+
+Returns true if this component's DOM elements have been created.
 
 
 
@@ -74,11 +76,12 @@ get created(): boolean;
 
 ### destroy() {#Component#destroy}
 
-Destroys this components `domTree` returning it to
-the constructed but not created state.
 
-A destroyed component can be recreated by remounting it
-or by calling its [Component#create](#Component#create) method.
+Destroys this components [`DomTree`](apiLowLevel#DomTree) returning it to
+the constructed, but non-created state.
+
+A destroyed component can be re-created by remounting it
+or by calling its [create](apiComponents#Component#create) method.
 
 
 
@@ -89,7 +92,7 @@ destroy(): void;
 ### domTree {#Component#domTree}
 
 
-Gets the `domTree` for this component, creating it if necessary
+Gets the [`DomTree`](apiLowLevel#DomTree) for this component, creating it if necessary.
 
 
 
@@ -99,14 +102,16 @@ get domTree(): DomTree;
 
 ### domTreeConstructor (static) {#Component.domTreeConstructor}
 
-Gets the `domTreeConstructor` for this component class.
 
-A `domTreeConstructor` is the constructor function used to
-create `domTree` instances for this component class.
+Gets the [`DomTreeConstructor`](apiLowLevel#DomTreeConstructor) for this component class.
+
+The DomTreeConstructor is the constructor function used to
+create [`DomTree`](apiLowLevel#DomTree) instances for this component class.
 
 The first time this property is accessed, it calls the
-static `onProvideDomTreeConstructor` method to actually provide the
-instance.
+static [`onProvideDomTreeConstructor`](apiComponents#Component.onProvideDomTreeConstructor) method to
+provide the instance.
+
 
 
 ```ts
@@ -115,7 +120,9 @@ static get domTreeConstructor(): DomTreeConstructor;
 
 ### invalid {#Component#invalid}
 
-Indicates if this component is currently marked as invalid
+
+Indicates if this component is had pending updates due to
+previous call to [`invalidate`](apiComponents#Component#invalidate).
 
 
 ```ts
@@ -124,11 +131,12 @@ get invalid(): boolean;
 
 ### invalidate() {#Component#invalidate}
 
+
 Marks this component as requiring a DOM update.
 
 Does nothing if the component hasn't yet been created.
 
-This method is implicitly bound to the component instance
+This method is bound to the component instance
 and can be used as an event listener to invalidate the
 component when an event is triggered.
 
@@ -140,8 +148,9 @@ invalidate(): void;
 
 ### isSingleRoot (static) {#Component.isSingleRoot}
 
-Indicates if instances of this component class will be guaranteed
-to only ever have a single root node
+
+Returns `true` if every instance of this component class will only
+ever have a single root node.
 
 
 
@@ -150,6 +159,7 @@ static get isSingleRoot(): boolean;
 ```
 
 ### isSingleRoot {#Component#isSingleRoot}
+
 
 Returns true if this component instance has, and will only ever
 have a single root node
@@ -162,30 +172,30 @@ get isSingleRoot(): boolean;
 
 ### listen() {#Component#listen}
 
-Registers an event listener to be added to an object when
-automatically when the component is mounted, and removed when
-unmounted
+
+Registers an event listener to be automatically added to an object when
+when the component is mounted, and removed when unmounted.
 
 
 
 ```ts
-listen(target: EventTarget, event: string, handler?: Function): void;
+listen(target: object, event: string, handler?: Function): void;
 ```
 
-* **`target`** The object dispatching the events
+* **`target`** Any object that supports addEventListener and removeEventListener
 
 * **`event`** The event to listen for
 
-* **`handler`** The event listener to add/remove.  If not provided, the component's [Component#invalidate](#Component#invalidate) method is used.
+* **`handler`** The event listener to add.  If not provided, the component's [invalidate](apiComponents#Component#invalidate) method is used.
 
 ### load() {#Component#load}
 
 Performs an async data load operation.
 
 The callback function is typically an async function that performs
-a data request.  While in the callback, the [Component#loading](#Component#loading) property
+a data request.  While in the callback, the [loading](apiComponents#Component#loading) property
 will return `true`.  If the callback throws an error, it will be captured
-to the [Component#loadError](#Component#loadError) property.
+to the [loadError](apiComponents#Component#loadError) property.
 
 Before calling and after returning from the callback, the component is
 invalidated so visual elements (eg: spinners) can be updated.
@@ -196,7 +206,7 @@ the component is only invalidated after returning from the callback.
 
 
 ```ts
-load(callback: () => any, silent?: boolean): any;
+load(callback: () => Promise<any>, silent?: boolean): Promise<any>;
 ```
 
 * **`callback`** The callback to perform the load operation
@@ -205,16 +215,17 @@ load(callback: () => any, silent?: boolean): any;
 
 ### loadError {#Component#loadError}
 
-Gets the error object (if any) that was thrown during the last async data [Component#load](#Component#load) operation.
+
+Gets the error object thrown during the last call to (see [`load`](apiComponents#Component#load)).
 
 
 
 ```ts
-get loadError(): Error;
+get loadError(): Error | null;
 ```
 
 
-Sets the error object associated with the current async data [Component#load](#Component#load) operation.
+Sets the error object associated with the (see [`load`](apiComponents#Component#load)) operation.
 
 
 ```ts
@@ -225,7 +236,7 @@ set loadError(value: Error | null);
 
 ### loading {#Component#loading}
 
-Indicates if the component is currently in an async data [Component#load](#Component#load) operation
+Indicates if the component is currently in an [`load`](apiComponents#Component#load) operation
 
 
 
@@ -234,6 +245,7 @@ get loading(): boolean;
 ```
 
 ### mount() {#Component#mount}
+
 
 Mounts this component against an element in the document.
 
@@ -247,6 +259,7 @@ mount(el: Element | string): void;
 
 ### mounted {#Component#mounted}
 
+
 Indicates if the component is current mounted.
 
 
@@ -257,7 +270,8 @@ get mounted(): boolean;
 
 ### onMount() {#Component#onMount}
 
-Notifies a component that is has been mounted
+
+Notifies a component that is has been mounted.
 
 Override this method to receive the notification.  External
 resources (eg: adding event listeners to external objects) should be
@@ -271,22 +285,25 @@ onMount(): void;
 
 ### onProvideDomTreeConstructor() (static) {#Component.onProvideDomTreeConstructor}
 
-Provides the `domTreeConstructor` to be used by this component class.
 
-This method is only called once per component class and should provide
-a constructor function that can create `domTree` instances.
+Provides the [`DomTreeConstructor`](apiLowLevel#DomTreeConstructor) to be used by this
+component class.
+
+This method is called once per component class and should provide
+a constructor function that can create DomTree instances.
 
 
 ```ts
-static onProvideDomTreeConstructor(): import("core/TemplateCompiler").DomTreeConstructor;
+static onProvideDomTreeConstructor(): DomTreeConstructor;
 ```
 
 ### onProvideTemplate() (static) {#Component.onProvideTemplate}
 
+
 Provides the template to be used by this component class.
 
-This method is only called once per component class and should provide
-the template to be compiled for this component class
+This method is called once per component class and should provide
+the template to be compiled for this component class.
 
 
 ```ts
@@ -295,7 +312,8 @@ static onProvideTemplate(): {};
 
 ### onUnmount() {#Component#onUnmount}
 
-Notifies a component that is has been mounted
+
+Notifies a component that is has been unmounted.
 
 Override this method to receive the notification.  External
 resources (eg: removing event listeners from external objects) should be
@@ -309,8 +327,9 @@ onUnmount(): void;
 
 ### rootNode {#Component#rootNode}
 
-Returns the single root node of this component (if it is a single
-root node component)
+
+Returns the single root node of this component if it is a single
+root node component.
 
 
 
@@ -320,7 +339,8 @@ get rootNode(): Node;
 
 ### rootNodes {#Component#rootNodes}
 
-Returns the root nodes of this element
+
+Returns the root nodes of this element, creating them if necessary.
 
 
 
@@ -350,20 +370,20 @@ static template: {};
 
 ### unlisten() {#Component#unlisten}
 
-Removes an event listener previously registered with [Component#listen](#Component#listen)
+
+Removes an event listener previously registered with [listen](apiComponents#Component#listen)
 
 
 
 ```ts
-unlisten(target: EventTarget, event: string, handler?: Function): void;
+unlisten(target: object, event: string, handler?: Function): void;
 ```
 
-* **`target`** The object dispatching the events
+* **`target`** Any object that supports addEventListener and removeEventListener
 
-* **`event`** The event to listen for
+* **`event`** The event being listened for
 
-* **`handler`** The event listener to add/remove.  If not
-provided, the component's [Component#invalidate](#Component#invalidate) method is used.
+* **`handler`** The event listener to remove.  If not provided, the component's [invalidate](apiComponents#Component#invalidate) method is used.
 
 ### unmount() {#Component#unmount}
 
@@ -377,14 +397,15 @@ unmount(): void;
 
 ### update() {#Component#update}
 
+
 Immediately updates this component's DOM elements - even if
 the component is not marked as invalid.
 
 Does nothing if the component's DOM elements haven't been created.
 
-If the component is marked as invalid, returns it to the valid state.
+If the component has been invalidate, returns it to the valid state.
 
-This method is implicitly bound to the component instance
+This method is bound to the component instance
 and can be used as an event listener to update the
 component when an event is triggered.
 
@@ -396,7 +417,9 @@ update(): void;
 
 ### validate() {#Component#validate}
 
-Updates this component if it's marked as invalid
+
+Updates this component if it has been marked as invalid
+by a previous call to [`invalidate`](apiComponents#Component#invalidate).
 
 
 

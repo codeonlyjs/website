@@ -266,6 +266,16 @@ A callback to restore the view state for this route handler's routes
 restoreViewState?: (route: Route, state: object) => void;
 ```
 
+## router {#router}
+
+
+Default [Router](apiRouter#Router) Instance
+
+
+```ts
+let router: Router;
+```
+
 ## Router Class {#Router}
 
 

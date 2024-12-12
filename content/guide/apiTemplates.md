@@ -5,6 +5,16 @@ description: CodeOnly Templates API Reference
 
 # Templates API
 
+## $ {#$}
+
+
+Entry point into the fluent template builder API
+
+
+```ts
+let $: any;
+```
+
 ## compileTemplate() {#compileTemplate}
 
 Compiles a template into a domTreeConstructor function

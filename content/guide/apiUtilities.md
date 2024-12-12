@@ -77,6 +77,63 @@ function htmlEncode(str: string): string;
 
 * **`str`** The string to encode
 
+## INotify {#INotify}
+
+
+Interface to a notify service instance
+
+
+```ts
+type INotify =
+{
+    (sourceObject: any, ...args: any[]): void;
+    addEventListener: (sourceObject: any, handler: any) => void;
+    removeEventListener: (sourceObject: any, handler: any) => void;
+}
+```
+
+### (call signature)
+
+
+Fires a notification
+
+
+```ts
+(sourceObject: any, ...args: any[]): void;
+```
+
+* **`sourceObject`** The source object or value of the event
+
+* **`args`** Optional arguments to pass to the event handlers
+
+### addEventListener {#INotify#addEventListener}
+
+
+Adds an event listener to the notify servers
+
+
+```ts
+addEventListener: (sourceObject: any, handler: any) => void;
+```
+
+* **`sourceObject`** The source object or value to listen to
+
+* **`handler`** The event handler
+
+### removeEventListener {#INotify#removeEventListener}
+
+
+Removes previously registered event listener to the notify servers
+
+
+```ts
+removeEventListener: (sourceObject: any, handler: any) => void;
+```
+
+* **`sourceObject`** The source object or value to listen to
+
+* **`handler`** The event handler
+
 ## nextFrame() {#nextFrame}
 
 
@@ -92,18 +149,28 @@ function nextFrame(callback: () => void, order?: number): void;
 
 * **`order`** The priority of the callback in related to others (lowest first, default 0)
 
-## Notify() {#Notify}
+## notify {#notify}
 
 
-Implements a simple notification and broadcast service
+Default [Notify](apiUtilities#Notify) Instance
 
 
 ```ts
-function Notify(): {
-    (sourceObject: any, ...args: any[]): void;
-    addEventListener: (sourceObject: any, handler: any) => void;
-    removeEventListener: (sourceObject: any, handler: any) => void;
-};
+let notify: INotify;
+```
+
+## Notify() {#Notify}
+
+
+Creates a new notify service instance.
+
+Usuauly notify instances don't need to be created and the
+default [notify](apiUtilities#notify) instance can be used directly.
+
+
+
+```ts
+function Notify(): INotify;
 ```
 
 ## postNextFrame() {#postNextFrame}
