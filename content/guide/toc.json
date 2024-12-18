@@ -11,6 +11,11 @@
         "url": "start",
         "title": "Getting Started",
         "fullTitle": "Getting Started"
+      },
+      {
+        "url": "cheat",
+        "title": "Cheat Sheet",
+        "fullTitle": "Cheat Sheet"
       }
     ]
   },

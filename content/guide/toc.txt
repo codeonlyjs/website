@@ -1,6 +1,7 @@
 # Introduction
 index
 start
+cheat
 
 # Components
 components
